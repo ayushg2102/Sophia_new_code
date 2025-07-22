@@ -1,0 +1,172 @@
+.create-task-modal .ant-modal-content {
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.18);
+  background: #f6f8fa;
+}
+
+.create-task-modal .ant-modal-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-bottom: none;
+  padding: 28px 32px 18px 32px;
+}
+
+.create-task-modal .ant-modal-title {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.create-task-modal .ant-modal-close {
+  color: #fff;
+  opacity: 0.85;
+  font-size: 18px;
+}
+
+.create-task-modal .ant-modal-close:hover {
+  opacity: 1;
+}
+
+.create-task-modal .ant-modal-body {
+  padding: 32px 32px 24px 32px;
+  background: #f6f8fa;
+}
+
+.create-task-form .ant-form-item-label > label {
+  font-weight: 700;
+  color: #3b3b4f;
+  font-size: 15px;
+  letter-spacing: 0.1px;
+}
+
+.create-task-form .ant-input,
+.create-task-form .ant-select-selector,
+.create-task-form .ant-picker {
+  border-radius: 10px;
+  border: 2px solid #e5e7eb;
+  transition: all 0.3s cubic-bezier(.4,0,.2,1);
+  background: #fff;
+}
+
+.create-task-form .ant-input:hover,
+.create-task-form .ant-select-selector:hover,
+.create-task-form .ant-picker:hover {
+  border-color: #6366f1;
+}
+
+.create-task-form .ant-input:focus,
+.create-task-form .ant-select-focused .ant-select-selector,
+.create-task-form .ant-picker-focused {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.08);
+}
+
+.create-task-form .ant-btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  height: 42px;
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.18);
+  letter-spacing: 0.2px;
+}
+
+.create-task-form .ant-btn-primary:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(102, 126, 234, 0.22);
+}
+
+.create-task-form .ant-btn-dashed {
+  border-color: #6366f1;
+  color: #6366f1;
+  border-radius: 10px;
+  font-weight: 600;
+  background: #f4f7ff;
+  transition: all 0.2s;
+}
+
+.create-task-form .ant-btn-dashed:hover {
+  border-color: #4338ca;
+  color: #4338ca;
+  background: #e0e7ff;
+}
+
+.create-task-form .ant-divider-horizontal {
+  border-top: 2px solid #e0e7ff;
+  margin: 28px 0 18px 0;
+}
+
+.create-task-form .subtasks-section {
+  margin-bottom: 18px;
+}
+
+.create-task-form .subtasks-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.create-task-form .subtasks-title {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 700;
+  color: #4f46e5;
+  letter-spacing: 0.2px;
+}
+
+.create-task-form .subtask-card {
+  border: 1.5px solid #e0e7ff;
+  border-radius: 18px;
+  padding: 28px 28px 22px 28px;
+  margin-bottom: 28px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.06);
+  transition: box-shadow 0.2s;
+}
+
+.create-task-form .subtask-card:hover {
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.13);
+  border-color: #6366f1;
+}
+
+.create-task-form .subtask-card .ant-input,
+.create-task-form .subtask-card .ant-input:focus {
+  background: #f8fafc;
+}
+
+.create-task-form .subtask-card .ant-btn-text {
+  color: #ef4444;
+  font-size: 16px;
+  margin-left: 8px;
+}
+
+.create-task-form .subtask-card .ant-btn-text:hover {
+  color: #b91c1c;
+  background: #fef2f2;
+}
+
+.create-task-form .subtask-instructions-label {
+  font-weight: 600;
+  color: #6366f1;
+  margin-bottom: 4px;
+  display: block;
+  font-size: 13px;
+}
+
+.create-task-form .ant-form-item {
+  margin-bottom: 18px;
+}
+
+.create-task-form .ant-form-item:last-child {
+  margin-bottom: 0;
+}
+
+.create-task-form .ant-space {
+  width: 100%;
+}
+
+.create-task-form .ant-btn {
+  min-width: 100px;
+}
