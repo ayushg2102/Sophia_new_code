@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { Layout, Row, Col, Typography, Button, Card, Tag, Collapse } from 'antd';
+import { Layout, Row, Col, Typography, Button, Card, Tag, Tabs } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { 
   CheckCircleOutlined, 
-  ClockCircleOutlined, 
+  ClockCircleOutlined,
+  EmployeeOutlined, 
   AlertOutlined, 
   PlayCircleOutlined,
-  PlusOutlined,
-  SettingOutlined
+  PlusOutlined
 } from '@ant-design/icons';
 import Header from '../../components/Header/Header';
 import MetricCard from '../../components/Dashboard/MetricCard';
@@ -18,42 +18,23 @@ import './Dashboard.css';
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
-const { Panel } = Collapse;
 
-// Define the 8 categories and their descriptions
+// Define categories from tasks.json
 const CATEGORIES = [
   {
-    key: 'Alerts & Monitoring',
-    description: 'These tasks relate to Social media, email and website monitoring and their corresponding alerts',
-  },
+    key: 'Alerts & Monitoring - Compliance'  },
   {
-    key: 'Compliance Declaration',
-    description: 'Compliance declaration provided TO client and received FROM sub-managers',
-  },
+    key: 'Compliance Client Declarations'  },
   {
-    key: 'Compliance Reviews',
-    description: 'Internal compliance reviews and compliance reviews done for clients.',
-  },
+    key: 'Compliance Reminders Management'  },
   {
-    key: 'Compliance Training',
-    description: 'Compliance training carried out',
-  },
+    key: 'Compliance Reviews'  },
   {
-    key: 'Contract Renewals',
-    description: 'Tracking if certain contracts are renewed',
-  },
+    key: 'Document Analysis and Information Gathering'  },
   {
-    key: 'Declarations',
-    description: 'Declarations to be received FROM staff OR Non compliance declarations sent to clients, vendors and sub-managers.',
-  },
+    key: 'Industry Trend Analysis & Updates'  },
   {
-    key: 'Meetings',
-    description: "This covers task's related to the quarterly CORS meeting",
-  },
-  {
-    key: 'Regulatory Form',
-    description: 'Forms that Compliance needs to fill or review before filing.',
-  },
+    key: 'Regulatory Form Filing'  },
 ];
 
 const Dashboard: React.FC = () => {
@@ -115,7 +96,7 @@ const Dashboard: React.FC = () => {
           <Row gutter={[16, 16]} className="metrics-row">
             <Col xs={24} sm={12} md={6}>
               <MetricCard
-                title="Active Tasks"
+                title="Tasks Completed"
                 value={mockDashboardMetrics.active_tasks}
                 icon={<PlayCircleOutlined />}
                 color="#1677ff"
@@ -124,7 +105,7 @@ const Dashboard: React.FC = () => {
             </Col>
             <Col xs={24} sm={12} md={6}>
               <MetricCard
-                title="Due This Week"
+                title="Overdue Items"
                 value={mockDashboardMetrics.due_this_week}
                 icon={<ClockCircleOutlined />}
                 color="#faad14"
@@ -133,7 +114,7 @@ const Dashboard: React.FC = () => {
             </Col>
             <Col xs={24} sm={12} md={6}>
               <MetricCard
-                title="Completed"
+                title="Active Employees"
                 value={mockDashboardMetrics.completed}
                 icon={<CheckCircleOutlined />}
                 color="#52c41a"
@@ -142,7 +123,7 @@ const Dashboard: React.FC = () => {
             </Col>
             <Col xs={24} sm={12} md={6}>
               <MetricCard
-                title="Actions Pending"
+                title="Pending Actions"
                 value={mockDashboardMetrics.actions_pending}
                 icon={<AlertOutlined />}
                 color="#ff4d4f"
@@ -157,55 +138,40 @@ const Dashboard: React.FC = () => {
           <Row gutter={24} className="main-content">
             <Col xs={24} lg={24}>
               <div className="tasks-section">
-                <div className="section-header">
-                  <div className="section-title-container">
-                    {/* <SettingOutlined className="section-icon" /> */}
-                    <Title level={4} className="section-title">Categories</Title>
-                  </div>
-                </div>
-
-                <div className="categories-list">
-                  <Collapse
-                    accordion
-                    className="categories-accordion"
-                    expandIconPosition="end"
-                    bordered={false}
-                    style={{ background: 'transparent' }}
-                    defaultActiveKey={CATEGORIES.map((cat) => cat.key)}
-                  >
-                    {CATEGORIES.map((category) => {
-                      const categoryTasks = tasks.filter((task) => task.task_category === category.key);
-                      return (
-                        <Panel
-                          header={
-                            <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
-                                <Title level={4} style={{ margin: 0 }}>{category.key}</Title>
-                                <Button type="link" onClick={() => navigate(`/all-tasks?category=${encodeURIComponent(category.key)}`)} style={{ fontWeight: 500 }}>
-                                  View All
-                                </Button>
-                              </div>
-                              <Text type="secondary" style={{ fontSize: 14 }}>{category.description}</Text>
-                            </div>
-                          }
-                          key={category.key}
-                          className="category-section-card"
-                          style={{
-                            background: '#fff',
-                            borderRadius: 16,
-                            boxShadow: '0 2px 12px rgba(0,0,0,0.07)',
-                            marginBottom: 32,
-                            border: '1px solid #f0f0f0',
-                            padding: 0
-                          }}
-                        >
-                          <Row gutter={[24, 24]} style={{ padding: 24 }}>
+                <h2 className="category-heading">Categories</h2>
+                <Tabs
+                  tabPosition="left"
+                  style={{ 
+                    background: '#fff',
+                    borderRadius: 16,
+                    overflow: 'hidden',
+                    boxShadow: '0 2px 12px rgba(0,0,0,0.07)'
+                  }}
+                  className="category-tabs"
+                  tabBarStyle={{
+                    textAlign: 'left',
+                    padding: '8px 0'
+                  }}
+                  items={CATEGORIES.map(category => {
+                    const categoryTasks = tasks.filter((task) => task.task_category === category.key);
+                    return {
+                      label: category.key,
+                      key: category.key,
+                      children: (
+                        <div>
+                          {/* <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+                            <Title level={4} style={{ margin: 0 }}>{category.key}</Title>
+                            <Button type="link" onClick={() => navigate(`/all-tasks?category=${encodeURIComponent(category.key)}`)} style={{ fontWeight: 500 }}>
+                              View All
+                            </Button>
+                          </div> */}
+                          <Row gutter={[24, 24]}>
                             {categoryTasks.length === 0 ? (
-                              <Col span={24} style={{ textAlign: 'center', color: '#aaa' }}>
+                              <Col span={24} style={{ textAlign: 'left', color: '#aaa' }}>
                                 <Text type="secondary">No tasks in this category.</Text>
                               </Col>
                             ) : (
-                              categoryTasks.slice(0, 4).map((task) => (
+                              categoryTasks.slice(0, 8).map((task) => (
                                 <Col xs={24} sm={12} md={8} lg={6} key={task.task_id}>
                                   <Card
                                     className="task-square-card"
@@ -233,17 +199,16 @@ const Dashboard: React.FC = () => {
                                       </Tag>
                                       <Tag color={task.frequency === 'Daily' ? 'yellow' : 'default'}>{task.frequency}</Tag>
                                     </div>
-                                    {/* Subtasks List removed as per new requirements */}
                                   </Card>
                                 </Col>
                               ))
                             )}
                           </Row>
-                        </Panel>
-                      );
-                    })}
-                  </Collapse>
-                </div>
+                        </div>
+                      ),
+                    };
+                  })}
+                />
               </div>
             </Col>
             

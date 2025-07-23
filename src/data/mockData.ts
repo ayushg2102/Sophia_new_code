@@ -52,203 +52,895 @@ export const mockEmployeeContributions: EmployeeContribution[] = [
 ];
 
 export const mockTasks: Task[] = [
-  // --- 8 tasks for each of the 8 categories ---
-  ...[...Array(8)].map((_, i) => ({
-    task_id: `alerts-monitoring-${i + 1}`,
-    task_category: "Alerts & Monitoring",
-    task_short_description: `Alerts & Monitoring Task ${i + 1}`,
-    frequency: "Daily" as const,
-    task_due_date: `2025-02-${(i + 1).toString().padStart(2, "0")}`,
-    status: "active" as const,
-    description: `Monitor and respond to alerts for system ${i + 1}.`,
-    subtasks: [...Array(5)].map((_, j) => ({
-      subtask_id: `alerts-monitoring-${i + 1}-subtask-${j + 1}`,
-      subtask_short_description: `Subtask ${
-        j + 1
-      } for Alerts & Monitoring Task ${i + 1}`,
-      status: "due" as const,
-      period_considered: `Feb ${i + 1}, 2025`,
-      employees_analyzed: j + 1,
-      employee_contributions: mockEmployeeContributions.slice(0, 2),
-      instructions: `Instructions for subtask ${
-        j + 1
-      } of Alerts & Monitoring Task ${i + 1}`,
-    })),
-    //add a key below namely actions which will contain 1) instructions and 2) tools used like 'Send Email', 'Send Reminder', 'Block Calendar'
+  {
+    task_id: "task-052",
+    task_category: "Regulatory Form Filing",
+    task_short_description: "Form 13 F",
+    frequency: "Quarterly",
+    task_due_date: "2025-08-14",
+    status: "active",
+    description: "Quarterly Form 13F filing requirement",
+    subtasks: []
+  },
+  {
+    task_id: "task-053",
+    task_category: "Regulatory Form Filing",
+    task_short_description: "Form 13 H",
+    frequency: "Annual",
+    task_due_date: "2025-02-14",
+    status: "active",
+    description: "Annual Form 13H filing requirement",
+    subtasks: []
+  },
+  {
+    task_id: "task-054",
+    task_category: "Regulatory Form Filing",
+    task_short_description: "Form 600 H",
+    frequency: "Annual",
+    task_due_date: "2025-04-01",
+    status: "active",
+    description: "Annual Form 600H filing requirement",
+    subtasks: []
+  },
+  {
+    task_id: "task-055",
+    task_category: "Regulatory Form Filing",
+    task_short_description: "Form 600 J",
+    frequency: "Annual",
+    task_due_date: "2025-04-01",
+    status: "active",
+    description: "Annual Form 600J filing requirement",
+    subtasks: []
+  },
+  {
+    task_id: "task-166",
+    task_category: "Regulatory Form Filing",
+    task_short_description: "Form 700 & Disclosure of Contributions and Gifts",
+    frequency: "Annual",
+    task_due_date: "2025-04-01",
+    status: "active",
+    description: "Annual Form 700 filing and disclosure requirement",
+    subtasks: []
+  },
+  {
+    task_id: "task-057",
+    task_category: "Regulatory Form Filing",
+    task_short_description: "Form ADV",
+    frequency: "Annual",
+    task_due_date: "2025-03-31",
+    status: "active",
+    description: "Annual Form ADV filing requirement",
+    subtasks: []
+  },
+  {
+    task_id: "task-058",
+    task_category: "Regulatory Form Filing",
+    task_short_description: "Form CRS",
+    frequency: "Annual",
+    task_due_date: "2025-03-31",
+    status: "active",
+    description: "Annual Form CRS filing requirement",
+    subtasks: []
+  },
+  {
+    task_id: "task-059",
+    task_category: "Regulatory Form Filing",
+    task_short_description: "Form D",
+    frequency: "Annual",
+    task_due_date: "2025-12-31",
+    status: "active",
+    description: "Annual Form D filing requirement",
+    subtasks: []
+  },
+  {
+    task_id: "task-060",
+    task_category: "Regulatory Form Filing",
+    task_short_description: "Form LM-10",
+    frequency: "Annual",
+    task_due_date: "2025-03-31",
+    status: "active",
+    description: "Annual Form LM-10 filing requirement",
+    subtasks: []
+  },
+  {
+    task_id: "task-061",
+    task_category: "Regulatory Form Filing",
+    task_short_description: "Form PF",
+    frequency: "Annual",
+    task_due_date: "2025-04-30",
+    status: "active",
+    description: "Annual Form PF filing requirement",
+    subtasks: []
+  },
+  {
+    task_id: "task-184",
+    task_category: "Regulatory Form Filing",
+    task_short_description: "State Reporting Requirement - CA",
+    frequency: "Annual",
+    task_due_date: "2025-02-07",
+    status: "active",
+    description: "Annual state reporting requirement for California",
+    subtasks: []
+  },
+  {
+    task_id: "task-187",
+    task_category: "Regulatory Form Filing",
+    task_short_description: "State Reporting Requirement - CT",
+    frequency: "Annual",
+    task_due_date: "2025-05-31",
+    status: "active",
+    description: "Annual state reporting requirement for Connecticut",
+    subtasks: []
+  },
+  {
+    task_id: "task-190",
+    task_category: "Regulatory Form Filing",
+    task_short_description: "State Reporting Requirement - NC",
+    frequency: "Annual",
+    task_due_date: "2025-04-15",
+    status: "active",
+    description: "Annual state reporting requirement for North Carolina",
+    subtasks: []
+  },
+  {
+    task_id: "task-051",
+    task_category: "Industry Trend Analysis & Updates",
+    task_short_description: "Industry Trend Analysis & Updates",
+    frequency: "Monthly",
+    task_due_date: "2025-12-31",
+    status: "active",
+    description: "Regular monitoring and analysis of industry trends and regulatory updates",
+    subtasks: []
+  },
+  {
+    task_id: "task-044",
+    task_category: "Compliance Reviews",
+    task_short_description: "Compliance Program Review - Distribute to Clients",
+    frequency: "Annual",
+    task_due_date: "2025-12-31",
+    status: "active",
+    description: "Annual compliance program review distribution to clients",
+    subtasks: []
+  },
+  {
+    task_id: "task-045",
+    task_category: "Compliance Reviews",
+    task_short_description: "Compliance Review - Share with Clients",
+    frequency: "Quarterly",
+    task_due_date: "2025-12-31",
+    status: "active",
+    description: "Semi-annual compliance review sharing with clients",
+    subtasks: []
+  },
+  {
+    task_id: "task-046",
+    task_category: "Compliance Reviews",
+    task_short_description: "M &T Review",
+    frequency: "Quarterly",
+    task_due_date: "2025-10-15",
+    status: "active",
+    description: "Quarterly M&T compliance review",
+    subtasks: []
+  },
+  {
+    task_id: "task-139",
+    task_category: "Compliance Reviews",
+    task_short_description: "NYS Teachers - Marketing Permission Letter",
+    frequency: "Annual",
+    task_due_date: "2025-09-01",
+    status: "active",
+    description: "Annual marketing permission letter for NYS Teachers",
+    subtasks: []
+  },
+  {
+    task_id: "task-142",
+    task_category: "Compliance Reviews",
+    task_short_description: "Permission to use NYS Teachers Name in Pitch Books",
+    frequency: "Annual",
+    task_due_date: "2025-08-01",
+    status: "active",
+    description: "Annual permission for using NYS Teachers name in pitch books",
+    subtasks: []
+  },
+  {
+    task_id: "task-145",
+    task_category: "Compliance Reviews",
+    task_short_description: "PSERS - Compliance Review",
+    frequency: "Annual",
+    task_due_date: "2025-05-16",
+    status: "active",
+    description: "Annual PSERS compliance review",
+    subtasks: []
+  },
+  {
+    task_id: "task-012",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Compliance Training",
+    frequency: "Annual",
+    task_due_date: "2025-11-01",
+    status: "active",
+    description: "Annual compliance training program",
+    subtasks: []
+  },
+  {
+    task_id: "task-013",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Affidavit of Use for - #UNKNOWN!",
+    frequency: "Once in six years",
+    task_due_date: "2026-06-23",
+    status: "active",
+    description: "Six-year affidavit of use filing",
+    subtasks: []
+  },
+  {
+    task_id: "task-014",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Affidavit of Use for - XPONANCE (name)",
+    frequency: "Once in six years",
+    task_due_date: "2026-06-23",
+    status: "active",
+    description: "Six-year affidavit of use filing for XPONANCE name",
+    subtasks: []
+  },
+  {
+    task_id: "task-015",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Affidavit of Use for - YOUR SUCCESS OUR PASSION",
+    frequency: "Once in six years",
+    task_due_date: "2026-06-23",
+    status: "active",
+    description: "Six-year affidavit of use filing for company slogan",
+    subtasks: []
+  },
+  {
+    task_id: "task-016",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Annual desk audit",
+    frequency: "Annual",
+    task_due_date: "2025-06-15",
+    status: "active",
+    description: "Annual desk audit review",
+    subtasks: []
+  },
+  {
+    task_id: "task-017",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Board/ Shareholder Meetings",
+    frequency: "Quarterly",
+    task_due_date: "2025-07-15",
+    status: "active",
+    description: "Quarterly board and shareholder meetings",
+    subtasks: []
+  },
+  {
+    task_id: "task-018",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "CFA - GIPS",
+    frequency: "Annual",
+    task_due_date: "2025-05-01",
+    status: "active",
+    description: "Annual CFA GIPS compliance review",
+    subtasks: []
+  },
+  {
+    task_id: "task-055",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Compliance Manual distribution",
+    frequency: "Annual",
+    task_due_date: "2025-12-31",
+    status: "active",
+    description: "Annual compliance manual distribution",
+    subtasks: []
+  },
+  {
+    task_id: "task-058",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Compliance Program Review Report - To the Board of Directors",
+    frequency: "Annual",
+    task_due_date: "2025-06-30",
+    status: "active",
+    description: "Annual compliance program review report for Board of Directors",
+    subtasks: []
+  },
+  {
+    task_id: "task-021",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "COR Meeting",
+    frequency: "Quarterly",
+    task_due_date: "2025-08-15",
+    status: "active",
+    description: "Quarterly COR meeting",
+    subtasks: []
+  },
+  {
+    task_id: "task-064",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Delivery of Audited Financials",
+    frequency: "Annual",
+    task_due_date: "2025-05-01",
+    status: "active",
+    description: "Annual delivery of audited financial statements",
+    subtasks: []
+  },
+  {
+    task_id: "task-067",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Email Alert & Monitoring",
+    frequency: "Monthly",
+    task_due_date: "2025-08-15",
+    status: "active",
+    description: "Monthly email alert and monitoring review",
+    subtasks: []
+  },
+  {
+    task_id: "task-070",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Executed contracts - Client and Sub-managers",
+    frequency: "Annual",
+    task_due_date: "2025-11-15",
+    status: "active",
+    description: "Annual review of executed contracts with clients and sub-managers",
+    subtasks: []
+  },
+  {
+    task_id: "task-073",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "FINRA registration fees",
+    frequency: "Annual",
+    task_due_date: "2025-12-31",
+    status: "active",
+    description: "Annual FINRA registration fee payment",
+    subtasks: []
+  },
+  {
+    task_id: "task-026",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Fixed Income Factsheets Review",
+    frequency: "Quarterly",
+    task_due_date: "2025-07-15",
+    status: "active",
+    description: "Quarterly fixed income factsheets review",
+    subtasks: []
+  },
+  {
+    task_id: "task-027",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Global Equities Factsheets Review",
+    frequency: "Quarterly",
+    task_due_date: "2025-07-30",
+    status: "active",
+    description: "Quarterly global equities factsheets review",
+    subtasks: []
+  },
+  {
+    task_id: "task-082",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Mass Prim - 3rd Party Disclosure",
+    frequency: "Annual",
+    task_due_date: "2025-04-08",
+    status: "active",
+    description: "Annual Mass PRIM third party disclosure",
+    subtasks: []
+  },
+  {
+    task_id: "task-085",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "NYS Teachers Contract renewal letter",
+    frequency: "Annual",
+    task_due_date: "2025-04-01",
+    status: "active",
+    description: "Annual NYS Teachers contract renewal letter",
+    subtasks: []
+  },
+  {
+    task_id: "task-088",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "On-site Visit Report Review",
+    frequency: "Monthly",
+    task_due_date: "2025-08-05",
+    status: "active",
+    description: "Monthly on-site visit report review",
+    subtasks: []
+  },
+  {
+    task_id: "task-031",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Privacy Notice Clients",
+    frequency: "Annual",
+    task_due_date: "2025-03-31",
+    status: "active",
+    description: "Annual privacy notice distribution to clients",
+    subtasks: []
+  },
+  {
+    task_id: "task-094",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Renewal Fees for Investment Adviser Rep",
+    frequency: "Annual",
+    task_due_date: "2025-11-30",
+    status: "active",
+    description: "Annual investment adviser representative renewal fees",
+    subtasks: []
+  },
+  {
+    task_id: "task-033",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "SOC Reports",
+    frequency: "Annual",
+    task_due_date: "2025-03-31",
+    status: "active",
+    description: "Annual SOC reports review",
+    subtasks: []
+  },
+  {
+    task_id: "task-034",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Staff Declarations",
+    frequency: "Quarterly",
+    task_due_date: "2025-07-10",
+    status: "active",
+    description: "Quarterly staff declarations collection",
+    subtasks: []
+  },
+  {
+    task_id: "task-035",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Staff Declarations",
+    frequency: "Annual",
+    task_due_date: "2025-12-31",
+    status: "active",
+    description: "Annual staff declarations collection",
+    subtasks: []
+  },
+  {
+    task_id: "task-106",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Sub-Advisors Declarations",
+    frequency: "Annual",
+    task_due_date: "2025-05-16",
+    status: "active",
+    description: "Annual sub-advisors declarations collection",
+    subtasks: []
+  },
+  {
+    task_id: "task-112",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "IL SURS - Compliance Certification - Sub-Advisors",
+    frequency: "Annual",
+    task_due_date: "2025-08-18",
+    status: "active",
+    description: "Annual IL SURS compliance certification for sub-advisors",
+    subtasks: []
+  },
+  {
+    task_id: "task-115",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Maryland State - Compliance Questionnaire and Certificate",
+    frequency: "Annual",
+    task_due_date: "2025-07-30",
+    status: "active",
+    description: "Annual Maryland State compliance questionnaire and certification",
+    subtasks: []
+  },
+  {
+    task_id: "task-118",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Sub-Manager's Proxy Voting Policies to the CIT Client",
+    frequency: "Annual",
+    task_due_date: "2025-10-18",
+    status: "active",
+    description: "Annual sub-manager's proxy voting policies submission to CIT client",
+    subtasks: []
+  },
+  {
+    task_id: "task-041",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Systematic Equities Factsheets Review",
+    frequency: "Quarterly",
+    task_due_date: "2025-07-15",
+    status: "active",
+    description: "Quarterly systematic equities factsheets review",
+    subtasks: []
+  },
+  {
+    task_id: "task-042",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Trademark Registration - FIS Globe Logo",
+    frequency: "Once in six years",
+    task_due_date: "2029-03-31",
+    status: "active",
+    description: "Six-year trademark registration renewal for FIS Globe Logo",
+    subtasks: []
+  },
+  {
+    task_id: "task-043",
+    task_category: "Compliance Reminders Management",
+    task_short_description: "Vendor Declarations",
+    frequency: "Quarterly",
+    task_due_date: "2025-07-10",
+    status: "active",
+    description: "Quarterly vendor declarations collection",
+    subtasks: []
+  },
+  {
+    task_id: "task-004",
+    task_category: "Compliance Client Declarations",
+    task_short_description: "Baltimore ERS - Compliance with MFN Provisions",
+    frequency: "Annual",
+    task_due_date: "2025-07-01",
+    status: "active",
+    description: "Annual Baltimore ERS compliance with MFN provisions",
+    subtasks: [
+      {
+        subtask_id: "subtask-ERISAclientsNoticeasperDOLRegulation-2025",
+        subtask_short_description: "ERISA clients - Notice as per DOL Regulation - 2025",
+        subtask_description: "ERISA clients - Notice as per DOL Regulation for 2025",
+        due_date: "2025-04-15",
+        task_id: "task-004",
+        status: "due",
+        last_status_change_date: "2025-07-17",
+        subtask_create_date: "2025-07-01"
+      }
+    ]
+  },
+  {
+    task_id: "task-007",
+    task_category: "Compliance Client Declarations",
+    task_short_description: "ERISA clients - Notice as per DOL Regulation",
+    frequency: "Annual",
+    task_due_date: "2025-07-01",
+    status: "active",
+    description: "Annual ERISA clients DOL regulation notice",
+    subtasks: []
+  },
+  {
+    task_id: "task-007",
+    task_category: "Compliance Client Declarations",
+    task_short_description: "ERISA clients - Notice as per DOL Regulation",
+    frequency: "Annual",
+    task_due_date: "2025-07-01",
+    status: "active",
+    description: "Annual ERISA clients DOL regulation notice",
+    subtasks: []
+  },
+  {
+    task_id: "task-013",
+    task_category: "Compliance Client Declarations",
+    task_short_description: "IMRF Compliance Questionnaire",
+    frequency: "Annual",
+    task_due_date: "2025-05-12",
+    status: "active",
+    description: "Annual IMRF compliance questionnaire submission",
+    subtasks: []
+  },
+  {
+    task_id: "task-016",
+    task_category: "Compliance Client Declarations",
+    task_short_description: "Mass PRIM - Disclosure regarding 3rd party individuals who receive fees",
+    frequency: "Annual",
+    task_due_date: "2025-09-15",
+    status: "active",
+    description: "Annual Mass PRIM third party fee disclosure",
+    subtasks: []
+  },
+  {
+    task_id: "task-007",
+    task_category: "Compliance Client Declarations",
+    task_short_description: "NYC SYS - Compliance Letter",
+    frequency: "Quarterly",
+    task_due_date: "2025-07-31",
+    status: "active",
+    description: "Quarterly NYC SYS compliance letter submission",
+    subtasks: []
+  },
+  {
+    task_id: "task-022",
+    task_category: "Compliance Client Declarations",
+    task_short_description: "NYC Systems - Ethics and Compliance Questionnaire",
+    frequency: "Annual",
+    task_due_date: "2025-04-30",
+    status: "active",
+    description: "Annual NYC Systems ethics and compliance questionnaire",
+    subtasks: []
+  },
+  {
+    task_id: "task-025",
+    task_category: "Compliance Client Declarations",
+    task_short_description: "NYS Common - Compliance Manual",
+    frequency: "Annual",
+    task_due_date: "2025-06-30",
+    status: "active",
+    description: "Annual NYS Common compliance manual review",
+    subtasks: []
+  },
+  {
+    task_id: "task-028",
+    task_category: "Compliance Client Declarations",
+    task_short_description: "NYSCRF - Compliance Questionnaire",
+    frequency: "Annual",
+    task_due_date: "2025-01-31",
+    status: "active",
+    description: "Annual NYSCRF compliance questionnaire submission",
+    subtasks: []
+  },
+  {
+    task_id: "task-031",
+    task_category: "Compliance Client Declarations",
+    task_short_description: "NYSTR - ESG Questionnaire",
+    frequency: "Annual",
+    task_due_date: "2025-08-14",
+    status: "active",
+    description: "Annual NYSTR ESG questionnaire submission",
+    subtasks: []
+  },
+  {
+    task_id: "task-001",
+    task_category: "Alerts & Monitoring - Compliance",
+    task_short_description: "Website Review",
+    frequency: "Quarterly",
+    task_due_date: "2025-07-21",
+    status: "active",
+    description: "Quarterly review of website for compliance monitoring",
+    subtasks: [
+      {
+        subtask_id: "subtask-WebsiteReviewAlert-Quarter1",
+        subtask_short_description: "Website Review Alert - Quarter1",
+        subtask_description: "Website Review Alert for Quarter1",
+        due_date: "2025-01-21",
+        task_id: "task-001",
+        status: "due",
+        last_status_change_date: "2025-07-17",
+        subtask_create_date: "2025-07-01"
+      },
+      {
+        subtask_id: "subtask-WebsiteReviewAlert-Quarter2",
+        subtask_short_description: "Website Review Alert - Quarter2",
+        subtask_description: "Website Review Alert for Quarter2",
+        due_date: "2025-04-21",
+        task_id: "task-001",
+        status: "due",
+        last_status_change_date: "2025-07-17",
+        subtask_create_date: "2025-07-01"
+      },
+      {
+        subtask_id: "subtask-WebsiteReviewAlert-Quarter3",
+        subtask_short_description: "Website Review Alert - Quarter3",
+        subtask_description: "Website Review Alert for Quarter3",
+        due_date: "2025-07-21",
+        task_id: "task-001",
+        status: "due",
+        last_status_change_date: "2025-07-17",
+        subtask_create_date: "2025-07-01"
+      },
+      {
+        subtask_id: "subtask-WebsiteReviewAlert-Quarter4",
+        subtask_short_description: "Website Review Alert - Quarter4",
+        subtask_description: "Website Review Alert for Quarter4",
+        due_date: "2025-10-21",
+        task_id: "task-001",
+        status: "due",
+        last_status_change_date: "2025-07-17",
+        subtask_create_date: "2025-07-01"
+      }
+    ],
+    last_run_date: "2023-12-15",
+    next_run_date: "2024-01-15",
+    renewal_date: "2024-04-01",
+    cadence: "Quarterly" as const,
     actions: [
       {
-        action_id: `alerts-monitoring-${i + 1}`,
-        instructions: `1. Send calendar invite – use calendar invite format.
-
-2. Calendar invite should have two reminders:  
-   • First is one week before the due date  
-   • Second is on the due date
-
-3. Send email reminder on the dates given in custom reminder dates.  
-   • If a custom reminder date is not provided, then use the standard (std) reminder date, i.e., 1 week before the due date.
-
-4. Email should be sent using the standard email format.
-
-5. If the person to whom the reminder is sent responds back saying the task is done, mark the task as completed (FS).
-`,
+        action_id: "action-WebsiteReviewAlert-Quarter1",
+        // action_short_description: "Website Review Alert - Quarter1",
+        instructions: "Political Contribution Check",
         tools_used: ["Send Email", "Send Reminder", "Block Calendar"],
       },
-    ],
-  })),
-  ...[...Array(8)].map((_, i) => ({
-    task_id: `compliance-declaration-${i + 1}`,
-    task_category: "Compliance Declaration",
-    task_short_description: `Compliance Declaration Task ${i + 1}`,
-    frequency: "One-Time" as const,
-    task_due_date: `2025-03-${(i + 1).toString().padStart(2, "0")}`,
-    status: "active" as const,
-    description: `Collect and review compliance declarations for group ${
-      i + 1
-    }.`,
-    subtasks: [...Array(5)].map((_, j) => ({
-      subtask_id: `compliance-declaration-${i + 1}-subtask-${j + 1}`,
-      subtask_short_description: `Subtask ${
-        j + 1
-      } for Compliance Declaration Task ${i + 1}`,
-      status: "due" as const,
-      period_considered: `Mar ${i + 1}, 2025`,
-      employees_analyzed: j + 2,
-      employee_contributions: mockEmployeeContributions.slice(0, 2),
-      instructions: `Instructions for subtask ${
-        j + 1
-      } of Compliance Declaration Task ${i + 1}`,
-    })),
-  })),
-  ...[...Array(8)].map((_, i) => ({
-    task_id: `compliance-reviews-${i + 1}`,
-    task_category: "Compliance Reviews",
-    task_short_description: `Compliance Review Task ${i + 1}`,
-    frequency: "Quarterly" as const,
-    task_due_date: `2025-04-${(i + 1).toString().padStart(2, "0")}`,
-    status: "active" as const,
-    description: `Conduct compliance review for department ${i + 1}.`,
-    subtasks: [...Array(5)].map((_, j) => ({
-      subtask_id: `compliance-reviews-${i + 1}-subtask-${j + 1}`,
-      subtask_short_description: `Subtask ${j + 1} for Compliance Review Task ${
-        i + 1
-      }`,
-      status: "due" as const,
-      period_considered: `Apr ${i + 1}, 2025`,
-      employees_analyzed: j + 3,
-      employee_contributions: mockEmployeeContributions.slice(0, 2),
-      instructions: `Instructions for subtask ${
-        j + 1
-      } of Compliance Review Task ${i + 1}`,
-    })),
-  })),
-  ...[...Array(8)].map((_, i) => ({
-    task_id: `compliance-training-${i + 1}`,
-    task_category: "Compliance Training",
-    task_short_description: `Compliance Training Task ${i + 1}`,
-    frequency: "One-Time" as const,
-    task_due_date: `2025-05-${(i + 1).toString().padStart(2, "0")}`,
-    status: "active" as const,
-    description: `Organize compliance training session ${i + 1}.`,
-    subtasks: [...Array(5)].map((_, j) => ({
-      subtask_id: `compliance-training-${i + 1}-subtask-${j + 1}`,
-      subtask_short_description: `Subtask ${
-        j + 1
-      } for Compliance Training Task ${i + 1}`,
-      status: "due" as const,
-      period_considered: `May ${i + 1}, 2025`,
-      employees_analyzed: j + 4,
-      employee_contributions: mockEmployeeContributions.slice(0, 2),
-      instructions: `Instructions for subtask ${
-        j + 1
-      } of Compliance Training Task ${i + 1}`,
-    })),
-  })),
-  ...[...Array(8)].map((_, i) => ({
-    task_id: `contract-renewals-${i + 1}`,
-    task_category: "Contract Renewals",
-    task_short_description: `Contract Renewal Task ${i + 1}`,
-    frequency: "One-Time" as const,
-    task_due_date: `2025-06-${(i + 1).toString().padStart(2, "0")}`,
-    status: "active" as const,
-    description: `Renew contract for vendor ${i + 1}.`,
-    subtasks: [...Array(5)].map((_, j) => ({
-      subtask_id: `contract-renewals-${i + 1}-subtask-${j + 1}`,
-      subtask_short_description: `Subtask ${j + 1} for Contract Renewal Task ${
-        i + 1
-      }`,
-      status: "due" as const,
-      period_considered: `Jun ${i + 1}, 2025`,
-      employees_analyzed: j + 5,
-      employee_contributions: mockEmployeeContributions.slice(0, 2),
-      instructions: `Instructions for subtask ${
-        j + 1
-      } of Contract Renewal Task ${i + 1}`,
-    })),
-  })),
-  ...[...Array(8)].map((_, i) => ({
-    task_id: `declarations-${i + 1}`,
-    task_category: "Declarations",
-    task_short_description: `Declarations Task ${i + 1}`,
-    frequency: "Monthly" as const,
-    task_due_date: `2025-07-${(i + 1).toString().padStart(2, "0")}`,
-    status: "active" as const,
-    description: `Collect declarations from staff group ${i + 1}.`,
-    subtasks: [...Array(5)].map((_, j) => ({
-      subtask_id: `declarations-${i + 1}-subtask-${j + 1}`,
-      subtask_short_description: `Subtask ${j + 1} for Declarations Task ${
-        i + 1
-      }`,
-      status: "due" as const,
-      period_considered: `Jul ${i + 1}, 2025`,
-      employees_analyzed: j + 6,
-      employee_contributions: mockEmployeeContributions.slice(0, 2),
-      instructions: `Instructions for subtask ${j + 1} of Declarations Task ${
-        i + 1
-      }`,
-    })),
-  })),
-  ...[...Array(8)].map((_, i) => ({
-    task_id: `meetings-${i + 1}`,
-    task_category: "Meetings",
-    task_short_description: `Meetings Task ${i + 1}`,
-    frequency: "Quarterly" as const,
-    task_due_date: `2025-08-${(i + 1).toString().padStart(2, "0")}`,
-    status: "active" as const,
-    description: `Organize meeting for group ${i + 1}.`,
-    subtasks: [...Array(5)].map((_, j) => ({
-      subtask_id: `meetings-${i + 1}-subtask-${j + 1}`,
-      subtask_short_description: `Subtask ${j + 1} for Meetings Task ${i + 1}`,
-      status: "due" as const,
-      period_considered: `Aug ${i + 1}, 2025`,
-      employees_analyzed: j + 7,
-      employee_contributions: mockEmployeeContributions.slice(0, 2),
-      instructions: `Instructions for subtask ${j + 1} of Meetings Task ${
-        i + 1
-      }`,
-    })),
-  })),
-  ...[...Array(8)].map((_, i) => ({
-    task_id: `regulatory-form-${i + 1}`,
-    task_category: "Regulatory Form",
-    task_short_description: `Regulatory Form Task ${i + 1}`,
-    frequency: "Monthly" as const,
-    task_due_date: `2025-09-${(i + 1).toString().padStart(2, "0")}`,
-    status: "active" as const,
-    description: `Prepare regulatory form for department ${i + 1}.`,
-    subtasks: [...Array(5)].map((_, j) => ({
-      subtask_id: `regulatory-form-${i + 1}-subtask-${j + 1}`,
-      subtask_short_description: `Subtask ${j + 1} for Regulatory Form Task ${
-        i + 1
-      }`,
-      status: "due" as const,
-      period_considered: `Sep ${i + 1}, 2025`,
-      employees_analyzed: j + 8,
-      employee_contributions: mockEmployeeContributions.slice(0, 2),
-      instructions: `Instructions for subtask ${
-        j + 1
-      } of Regulatory Form Task ${i + 1}`,
-    })),
-  })),
+      {
+        action_id: "action-WebsiteReviewAlert-Quarter1",
+        // action_short_description: "Website Review Alert - Quarter1",
+        instructions: "Contribution Alert System",
+        tools_used: ["Send Email", "Send Reminder", "Block Calendar","Write Report"],
+      }
+    ]
+  },
+  {
+    task_id: "task-050",
+    task_category: "Document Analysis and Information Gathering",
+    task_short_description: "Multiple Standard Documents Reviewed by Compliance",
+    frequency: "Monthly",
+    task_due_date: "2025-12-31",
+    status: "active",
+    description: "Regular monitoring and analysis of industry trends and regulatory updates",
+    subtasks: []
+  },
+  // --- 8 tasks for each of the 8 categories ---
+  // ...[...Array(8)].map((_, i) => ({
+  //   task_id: `alerts-monitoring-${i + 1}`,
+  //   task_category: "Alerts & Monitoring - Compliance",
+  //   task_short_description: `Alerts & Monitoring Task ${i + 1}`,
+  //   frequency: "Daily" as const,
+  //   last_run_date: "2023-12-15",
+  //   next_run_date: "2024-01-15",
+  //   renewal_date: "2024-04-01",
+  //   cadence: "Quarterly" as const,
+  //   task_due_date: `2025-02-${(i + 1).toString().padStart(2, "0")}`,
+  //   status: "active" as const,
+  //   description: `Monitor and respond to alerts for system ${i + 1}.`,
+  //   subtasks: [...Array(5)].map((_, j) => ({
+  //     subtask_id: `alerts-monitoring-${i + 1}-subtask-${j + 1}`,
+  //     subtask_short_description: `Subtask ${
+  //       j + 1
+  //     } for Alerts & Monitoring Task ${i + 1}`,
+  //     status: "due" as const,
+  //     period_considered: `Feb ${i + 1}, 2025`,
+  //     employees_analyzed: j + 1,
+  //     employee_contributions: mockEmployeeContributions.slice(0, 2),
+  //     instructions: `Instructions for subtask ${
+  //       j + 1
+  //     } of Alerts & Monitoring Task ${i + 1}`,
+  //   })),
+  //   //add a key below namely actions which will contain 1) instructions and 2) tools used like 'Send Email', 'Send Reminder', 'Block Calendar'
+  //   actions: [
+  //     {
+  //       action_id: `alerts-monitoring-${i + 1}`,
+  //       instructions: ``,
+  //       tools_used: ["Send Email", "Send Reminder", "Block Calendar"],
+  //     },
+  //   ],
+  // })),
+  // ...[...Array(8)].map((_, i) => ({
+  //   task_id: `compliance-declaration-${i + 1}`,
+  //   task_category: "Compliance Client Declarations",
+  //   task_short_description: `Compliance Declaration Task ${i + 1}`,
+  //   frequency: "One-Time" as const,
+  //   task_due_date: `2025-03-${(i + 1).toString().padStart(2, "0")}`,
+  //   status: "active" as const,
+  //   description: `Collect and review compliance declarations for group ${
+  //     i + 1
+  //   }.`,
+  //   subtasks: [...Array(5)].map((_, j) => ({
+  //     subtask_id: `compliance-declaration-${i + 1}-subtask-${j + 1}`,
+  //     subtask_short_description: `Subtask ${
+  //       j + 1
+  //     } for Compliance Declaration Task ${i + 1}`,
+  //     status: "due" as const,
+  //     period_considered: `Mar ${i + 1}, 2025`,
+  //     employees_analyzed: j + 2,
+  //     employee_contributions: mockEmployeeContributions.slice(0, 2),
+  //     instructions: `Instructions for subtask ${
+  //       j + 1
+  //     } of Compliance Declaration Task ${i + 1}`,
+  //   })),
+  // })),
+  // ...[...Array(8)].map((_, i) => ({
+  //   task_id: `compliance-reviews-${i + 1}`,
+  //   task_category: "Compliance Reviews",
+  //   task_short_description: `Compliance Review Task ${i + 1}`,
+  //   frequency: "Quarterly" as const,
+  //   task_due_date: `2025-04-${(i + 1).toString().padStart(2, "0")}`,
+  //   status: "active" as const,
+  //   description: `Conduct compliance review for department ${i + 1}.`,
+  //   subtasks: [...Array(5)].map((_, j) => ({
+  //     subtask_id: `compliance-reviews-${i + 1}-subtask-${j + 1}`,
+  //     subtask_short_description: `Subtask ${j + 1} for Compliance Review Task ${
+  //       i + 1
+  //     }`,
+  //     status: "due" as const,
+  //     period_considered: `Apr ${i + 1}, 2025`,
+  //     employees_analyzed: j + 3,
+  //     employee_contributions: mockEmployeeContributions.slice(0, 2),
+  //     instructions: `Instructions for subtask ${
+  //       j + 1
+  //     } of Compliance Review Task ${i + 1}`,
+  //   })),
+  // })),
+  // ...[...Array(8)].map((_, i) => ({
+  //   task_id: `compliance-training-${i + 1}`,
+  //   task_category: "Compliance Reminders Management",
+  //   task_short_description: `Compliance Training Task ${i + 1}`,
+  //   frequency: "One-Time" as const,
+  //   task_due_date: `2025-05-${(i + 1).toString().padStart(2, "0")}`,
+  //   status: "active" as const,
+  //   description: `Organize compliance training session ${i + 1}.`,
+  //   subtasks: [...Array(5)].map((_, j) => ({
+  //     subtask_id: `compliance-training-${i + 1}-subtask-${j + 1}`,
+  //     subtask_short_description: `Subtask ${
+  //       j + 1
+  //     } for Compliance Training Task ${i + 1}`,
+  //     status: "due" as const,
+  //     period_considered: `May ${i + 1}, 2025`,
+  //     employees_analyzed: j + 4,
+  //     employee_contributions: mockEmployeeContributions.slice(0, 2),
+  //     instructions: `Instructions for subtask ${
+  //       j + 1
+  //     } of Compliance Training Task ${i + 1}`,
+  //   })),
+  // })),
+  // ...[...Array(8)].map((_, i) => ({
+  //   task_id: `contract-renewals-${i + 1}`,
+  //   task_category: "Document Analysis and Information Gathering",
+  //   task_short_description: `Contract Renewal Task ${i + 1}`,
+  //   frequency: "One-Time" as const,
+  //   task_due_date: `2025-06-${(i + 1).toString().padStart(2, "0")}`,
+  //   status: "active" as const,
+  //   description: `Renew contract for vendor ${i + 1}.`,
+  //   subtasks: [...Array(5)].map((_, j) => ({
+  //     subtask_id: `contract-renewals-${i + 1}-subtask-${j + 1}`,
+  //     subtask_short_description: `Subtask ${j + 1} for Contract Renewal Task ${
+  //       i + 1
+  //     }`,
+  //     status: "due" as const,
+  //     period_considered: `Jun ${i + 1}, 2025`,
+  //     employees_analyzed: j + 5,
+  //     employee_contributions: mockEmployeeContributions.slice(0, 2),
+  //     instructions: `Instructions for subtask ${
+  //       j + 1
+  //     } of Contract Renewal Task ${i + 1}`,
+  //   })),
+  // })),
+  // ...[...Array(8)].map((_, i) => ({
+  //   task_id: `declarations-${i + 1}`,
+  //   task_category: "Industry Trend Analysis & Updates",
+  //   task_short_description: `Declarations Task ${i + 1}`,
+  //   frequency: "Monthly" as const,
+  //   task_due_date: `2025-07-${(i + 1).toString().padStart(2, "0")}`,
+  //   status: "active" as const,
+  //   description: `Collect declarations from staff group ${i + 1}.`,
+  //   subtasks: [...Array(5)].map((_, j) => ({
+  //     subtask_id: `declarations-${i + 1}-subtask-${j + 1}`,
+  //     subtask_short_description: `Subtask ${j + 1} for Declarations Task ${
+  //       i + 1
+  //     }`,
+  //     status: "due" as const,
+  //     period_considered: `Jul ${i + 1}, 2025`,
+  //     employees_analyzed: j + 6,
+  //     employee_contributions: mockEmployeeContributions.slice(0, 2),
+  //     instructions: `Instructions for subtask ${j + 1} of Declarations Task ${
+  //       i + 1
+  //     }`,
+  //   })),
+  // })),
+  // ...[...Array(8)].map((_, i) => ({
+  //   task_id: `meetings-${i + 1}`,
+  //   task_category: "Meetings",
+  //   task_short_description: `Meetings Task ${i + 1}`,
+  //   frequency: "Quarterly" as const,
+  //   task_due_date: `2025-08-${(i + 1).toString().padStart(2, "0")}`,
+  //   status: "active" as const,
+  //   description: `Organize meeting for group ${i + 1}.`,
+  //   subtasks: [...Array(5)].map((_, j) => ({
+  //     subtask_id: `meetings-${i + 1}-subtask-${j + 1}`,
+  //     subtask_short_description: `Subtask ${j + 1} for Meetings Task ${i + 1}`,
+  //     status: "due" as const,
+  //     period_considered: `Aug ${i + 1}, 2025`,
+  //     employees_analyzed: j + 7,
+  //     employee_contributions: mockEmployeeContributions.slice(0, 2),
+  //     instructions: `Instructions for subtask ${j + 1} of Meetings Task ${
+  //       i + 1
+  //     }`,
+  //   })),
+  // })),
+  // ...[...Array(8)].map((_, i) => ({
+  //   task_id: `regulatory-form-${i + 1}`,
+  //   task_category: "Regulatory Form Filing",
+  //   task_short_description: `Regulatory Form Filing Task ${i + 1}`,
+  //   frequency: "Monthly" as const,
+  //   task_due_date: `2025-09-${(i + 1).toString().padStart(2, "0")}`,
+  //   status: "active" as const,
+  //   description: `Prepare regulatory form for department ${i + 1}.`,
+  //   subtasks: [...Array(5)].map((_, j) => ({
+  //     subtask_id: `regulatory-form-${i + 1}-subtask-${j + 1}`,
+  //     subtask_short_description: `Subtask ${j + 1} for Regulatory Form Filing Task ${
+  //       i + 1
+  //     }`,
+  //     status: "due" as const,
+  //     period_considered: `Sep ${i + 1}, 2025`,
+  //     employees_analyzed: j + 8,
+  //     employee_contributions: mockEmployeeContributions.slice(0, 2),
+  //     instructions: `Instructions for subtask ${
+  //       j + 1
+  //     } of Regulatory Form Filing Task ${i + 1}`,
+  //   })),
+  // })),
   // 1. Alerts & Monitoring
   {
     task_id: "cat-1",
@@ -655,10 +1347,10 @@ export const mockTasks: Task[] = [
       },
     ],
   },
-  // 8. Regulatory Form
+  // 8. Regulatory Form Filing
   {
     task_id: "cat-8",
-    task_category: "Regulatory Form",
+    task_category: "Regulatory Form Filing",
     task_short_description: "Regulatory Filing Preparation",
     frequency: "Monthly" as const,
     task_due_date: "2025-02-15",
@@ -709,106 +1401,6 @@ export const mockTasks: Task[] = [
         employees_analyzed: 4,
         employee_contributions: mockEmployeeContributions.slice(0, 2),
         instructions: "Confirm all forms were submitted.",
-      },
-    ],
-  },
-  {
-    task_id: "task-001",
-    task_category: "Compliance",
-    task_short_description: "Quarterly Risk Assessment",
-    frequency: "Quarterly" as const,
-    task_due_date: "2025-01-21",
-    status: "active" as const,
-    description:
-      "Conduct comprehensive risk assessment across all business units to identify potential compliance issues and mitigation strategies.",
-    subtasks: [
-      {
-        subtask_id: "subtask-RiskAssessment-Q1",
-        subtask_short_description: "Risk Assessment - Quarter 1",
-        status: "completed" as const,
-        started_at: "2025-01-07 03:19",
-        completed_at: "2025-01-07 03:45",
-        duration: "25 min 57 sec",
-        period_considered: "Jun 1, 2025 - Jun 30, 2025",
-        employees_analyzed: 43,
-        employee_contributions: mockEmployeeContributions,
-        instructions: `GOAL\nEnsure the risk assessment for Quarter 1 is completed on time. Track progress through submitted reports and team updates.\n\nWHAT SHOULD SOPHIA MONITOR OR LOOK FOR\n- Email notifications for report submissions\n- Updates in the compliance worklist\n- Calendar for deadlines and holidays\n⚠️ Adjust for weekends and Xponance holidays.`,
-      },
-      {
-        subtask_id: "subtask-RiskAssessment-Q2",
-        subtask_short_description: "Risk Assessment - Quarter 2",
-        status: "due" as const,
-        period_considered: "Jul 1, 2025 - Sep 30, 2025",
-        employees_analyzed: 45,
-        employee_contributions: mockEmployeeContributions,
-        instructions: `GOAL\nEnsure the risk assessment for Quarter 2 is completed on time. Track progress through submitted reports and team updates.\n\nWHAT SHOULD SOPHIA MONITOR OR LOOK FOR\n- Email notifications for report submissions\n- Updates in the compliance worklist\n- Calendar for deadlines and holidays\n⚠️ Adjust for weekends and Xponance holidays.`,
-      },
-    ],
-  },
-  {
-    task_id: "task-002",
-    task_category: "Compliance",
-    task_short_description: "Website Review",
-    frequency: "Monthly" as const,
-    task_due_date: "2025-02-01",
-    status: "active" as const,
-    description:
-      "Monthly review of website compliance with regulatory requirements.",
-    subtasks: [
-      {
-        subtask_id: "subtask-WebsiteReview-Jan",
-        subtask_short_description: "Website Review - January",
-        status: "in-progress" as const,
-        started_at: "2025-01-20 09:00",
-        period_considered: "Jan 1, 2025 - Jan 31, 2025",
-        employees_analyzed: 12,
-        employee_contributions: mockEmployeeContributions.slice(0, 5),
-        instructions: `GOAL\nEnsure the January website review is performed and documented. Track completion via email confirmations and worklist updates.\n\nWHAT SHOULD SOPHIA MONITOR OR LOOK FOR\n- Email inbox for review confirmations\n- Worklist for status updates\n- Calendar for review deadlines\n⚠️ Adjust for weekends and Xponance holidays.`,
-      },
-    ],
-  },
-  {
-    task_id: "task-003",
-    task_category: "Alerts & Monitoring",
-    task_short_description: "Daily Transaction Monitoring",
-    frequency: "Daily" as const,
-    task_due_date: "2025-01-25",
-    status: "active" as const,
-    description:
-      "Monitor daily transactions for suspicious activities and ensure AML compliance protocols are followed.",
-    subtasks: [
-      {
-        subtask_id: "subtask-TransactionMonitoring-Daily",
-        subtask_short_description: "Daily Transaction Monitoring - Jan 24",
-        status: "completed" as const,
-        started_at: "2025-01-24 08:00",
-        completed_at: "2025-01-24 10:30",
-        duration: "2 hours 30 min",
-        period_considered: "Jan 24, 2025",
-        employees_analyzed: 8,
-        employee_contributions: mockEmployeeContributions.slice(0, 3),
-        instructions: `GOAL\nEnsure daily transaction monitoring is completed and anomalies are flagged. Track completion via system logs and analyst updates.\n\nWHAT SHOULD SOPHIA MONITOR OR LOOK FOR\n- System logs for monitoring completion\n- Analyst updates for flagged transactions\n- Calendar for daily deadlines\n⚠️ Adjust for weekends and Xponance holidays.`,
-      },
-    ],
-  },
-  {
-    task_id: "task-004",
-    task_category: "Data Privacy",
-    task_short_description: "Data Privacy Impact Assessment",
-    frequency: "Quarterly" as const,
-    task_due_date: "2025-03-15",
-    status: "pending" as const,
-    description:
-      "Conduct privacy impact assessment for new data processing activities under GDPR requirements.",
-    subtasks: [
-      {
-        subtask_id: "subtask-PrivacyImpact-Q1",
-        subtask_short_description: "Privacy Impact Assessment - Q1",
-        status: "due" as const,
-        period_considered: "Jan 1, 2025 - Mar 31, 2025",
-        employees_analyzed: 25,
-        employee_contributions: mockEmployeeContributions.slice(0, 6),
-        instructions: `GOAL\nEnsure privacy impact assessment for Q1 is completed and documented. Track progress via assessment reports and compliance updates.\n\nWHAT SHOULD SOPHIA MONITOR OR LOOK FOR\n- Email notifications for assessment completion\n- Worklist for status updates\n- Calendar for deadlines\n⚠️ Adjust for weekends and Xponance holidays.`,
       },
     ],
   },

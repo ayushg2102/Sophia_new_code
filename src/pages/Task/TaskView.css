@@ -8,6 +8,71 @@
   background: transparent;
 }
 
+.task-progress {
+  margin-top: 20px;
+  padding: 0 8px;
+}
+
+.progress-status {
+  text-align: right;
+  margin-bottom: 8px;
+  color: #666;
+  font-size: 14px;
+}
+
+.subtask-tags {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.action-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.action-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.action-card .ant-card-body {
+  padding: 20px;
+}
+
+.action-buttons {
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+}
+
+.action-buttons .ant-btn {
+  padding: 4px 16px;
+  height: 36px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-buttons .ant-btn-primary {
+  background: #1890ff;
+  border: none;
+}
+
+.action-buttons .ant-btn-default {
+  border-color: #d9d9d9;
+  color: #595959;
+}
+
+.action-tag {
+  border-radius: 16px;
+  padding: 2px 12px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+
 .task-view-container {
   max-width: 1400px;
   margin: 0 auto;

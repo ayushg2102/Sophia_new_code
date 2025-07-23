@@ -9,6 +9,7 @@ import {
   Divider,
   Row,
   Col,
+  Progress,
 } from "antd";
 import {
   ArrowLeftOutlined,
@@ -56,17 +57,17 @@ const TaskView: React.FC = () => {
     }
   };
 
-  const handleSubtaskClick = (subtaskId: string) => {
-    navigate(`/subtask/${subtaskId}`);
-  };
+  // const handleSubtaskClick = (subtaskId: string) => {
+  //   navigate(`/subtask/${subtaskId}`);
+  // };
 
   const handleBackClick = () => {
     navigate("/dashboard");
   };
 
-  const handleSubtaskCardClick = (subtaskId: string) => {
-    navigate(`/subtask/${subtaskId}`);
-  };
+  // const handleSubtaskCardClick = (subtaskId: string) => {
+  //   navigate(`/subtask/${subtaskId}`);
+  // };
 
   return (
     <Layout className="task-view-layout">
@@ -101,6 +102,20 @@ const TaskView: React.FC = () => {
               </div>
             </div>
 
+            <div className="task-progress">
+              <div className="progress-status">
+                {task.subtasks?.filter(subtask => subtask.status === 'completed').length || 0}/
+                {task.subtasks?.length || 0} subtasks completed
+              </div>
+              <Progress 
+                percent={Math.round(((task.subtasks?.filter(subtask => subtask.status === 'completed').length || 0) / (task.subtasks?.length || 1)) * 100)} 
+                showInfo={false}
+                strokeColor="#1890ff"
+                trailColor="#f0f0f0"
+                strokeWidth={8}
+              />
+            </div>
+
             {/* <Divider /> */}
             {task.description && (
               <>
@@ -112,19 +127,55 @@ const TaskView: React.FC = () => {
               </>
             )}
             <Row gutter={[24, 16]} className="task-details">
-              <Col xs={24} sm={12} md={8}>
+              <Col xs={24} sm={12} md={6}>
                 <div className="task-detail-item">
                   <CalendarOutlined className="detail-icon" />
                   <div>
                     <Text strong>Due Date</Text>
                     <br />
                     <Text>
-                      {dayjs(task.task_due_date).format("MMMM DD, YYYY")}
+                      {dayjs(task.task_due_date).format("YYYY-MM-DD")}
                     </Text>
                   </div>
                 </div>
               </Col>
-              <Col xs={24} sm={12} md={8}>
+              <Col xs={24} sm={12} md={6}>
+                <div className="task-detail-item">
+                  <CalendarOutlined className="detail-icon" />
+                  <div>
+                    <Text strong>Last Run</Text>
+                    <br />
+                    <Text>
+                      {task.last_run_date ? dayjs(task.last_run_date).format("YYYY-MM-DD") : 'N/A'}
+                    </Text>
+                  </div>
+                </div>
+              </Col>
+              <Col xs={24} sm={12} md={6}>
+                <div className="task-detail-item">
+                  <CalendarOutlined className="detail-icon" />
+                  <div>
+                    <Text strong>Next Run</Text>
+                    <br />
+                    <Text>
+                      {task.next_run_date ? dayjs(task.next_run_date).format("YYYY-MM-DD") : 'N/A'}
+                    </Text>
+                  </div>
+                </div>
+              </Col>
+              <Col xs={24} sm={12} md={6}>
+                <div className="task-detail-item">
+                  <CalendarOutlined className="detail-icon" />
+                  <div>
+                    <Text strong>Renewal Date</Text>
+                    <br />
+                    <Text>
+                      {task.renewal_date ? dayjs(task.renewal_date).format("YYYY-MM-DD") : 'N/A'}
+                    </Text>
+                  </div>
+                </div>
+              </Col>
+              <Col xs={24} sm={12} md={12}>
                 <div className="task-detail-item">
                   <SyncOutlined className="detail-icon" />
                   <div>
@@ -134,7 +185,7 @@ const TaskView: React.FC = () => {
                   </div>
                 </div>
               </Col>
-              <Col xs={24} sm={12} md={8}>
+              <Col xs={24} sm={12} md={12}>
                 <div className="task-detail-item">
                   <UserOutlined className="detail-icon" />
                   <div>
@@ -147,119 +198,143 @@ const TaskView: React.FC = () => {
             </Row>
           </Card>
 
-          <Card className="subtasks-card">
-            <Title level={3} className="subtasks-title">
-              Subtasks
-            </Title>
+          <Row gutter={24}>
+            <Col span={12}>
+              <Card className="subtasks-card">
+                <Title level={3} className="subtasks-title">
+                  Subtasks
+                </Title>
 
-            <div className="subtasks-list">
-              {task.subtasks?.map((subtask: Subtask) => (
-                <Card
-                  key={subtask.subtask_id}
-                  className="subtask-card"
-                  hoverable
-                  onClick={() => handleSubtaskCardClick(subtask.subtask_id)}
-                >
-                  <div className="subtask-header">
-                    <div className="subtask-info">
-                      <Title level={5} className="subtask-title">
-                        {subtask.subtask_short_description}
-                      </Title>
-                      <Tag
-                        color={getStatusColor(subtask.status)}
-                        className="subtask-status"
-                      >
-                        {subtask.status.charAt(0).toUpperCase() +
-                          subtask.status.slice(1)}
-                      </Tag>
-                    </div>
-                    <Button
-                      type="primary"
-                      size="small"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleSubtaskClick(subtask.subtask_id);
-                      }}
+                <div className="subtasks-list">
+                  {task.subtasks?.map((subtask: Subtask) => (
+                    <Card
+                      key={subtask.subtask_id}
+                      className="subtask-card"
+                      // hoverable
+                      // onClick={() => handleSubtaskCardClick(subtask.subtask_id)}
                     >
-                      View Details
-                    </Button>
-                  </div>
+                      <div className="subtask-header">
+                        <div className="subtask-info">
+                          <Title level={5} className="subtask-title">
+                            {subtask.subtask_short_description}
+                          </Title>
+                          <div className="subtask-tags">
+                            <Tag
+                              color={getStatusColor(subtask.status)}
+                              className="subtask-status"
+                            >
+                              {subtask.status.charAt(0).toUpperCase() +
+                                subtask.status.slice(1)}
+                            </Tag>
+                            <Tag color="blue">Auto-Generated</Tag>
+                          </div>
+                        </div>
+                      </div>
 
-                  <Space
-                    direction="vertical"
-                    size={4}
-                    className="subtask-details"
-                  >
-                    {subtask.period_considered && (
-                      <Text type="secondary">
-                        <CalendarOutlined /> Period: {subtask.period_considered}
-                      </Text>
-                    )}
-                    {subtask.employees_analyzed && (
-                      <Text type="secondary">
-                        <UserOutlined /> Employees: {subtask.employees_analyzed}
-                      </Text>
-                    )}
-                    {subtask.duration && (
-                      <Text type="secondary">Duration: {subtask.duration}</Text>
-                    )}
-                  </Space>
-                </Card>
-              ))}
-            </div>
-          </Card>
-          <Card className="subtasks-card mt-5">
-            <Title level={3} className="subtasks-title">
-              Actions
-            </Title>
+                      <Space
+                        direction="vertical"
+                        size={4}
+                        className="subtask-details"
+                      >
+                        {subtask.period_considered && (
+                          <Text type="secondary">
+                            <CalendarOutlined /> Period: {subtask.period_considered}
+                          </Text>
+                        )}
+                        {subtask.employees_analyzed && (
+                          <Text type="secondary">
+                            <UserOutlined /> Employees: {subtask.employees_analyzed}
+                          </Text>
+                        )}
+                        {subtask.duration && (
+                          <Text type="secondary">Duration: {subtask.duration}</Text>
+                        )}
+                      </Space>
+                    </Card>
+                  ))}
+                </div>
+              </Card>
+            </Col>
+            <Col span={12}>
+              <Card className="subtasks-card">
+                <Title level={3} className="subtasks-title">
+                  Actions
+                </Title>
 
-            <div className="subtasks-list">
-              {task.actions?.map((action: Action) => (
-                <Card
-                  key={action.action_id}
-                  className="subtask-card" // Reusing 'subtask-card' for visual consistency
-                  hoverable
-                  // onClick={() => handleSubtaskCardClick(action.action_id)} // Optional: define this handler
-                >
-                  <div className="subtask-header">
-                    <div className="subtask-info">
-                    <Title level={5} className="subtask-title">
-                      Instructions
-                    </Title>
-
-                      <Title level={5} className="subtask-title">
-                        <ul>
-                          {action.instructions
-                            .split(/\n?\d+\.\s/) // splits by numbers like "1. ", "2. ", etc.
-                            .filter(Boolean) // removes any empty strings from split
-                            .map((point, index) => (
-                              <li key={index}>{point.trim()}</li>
-                            ))}
-                        </ul>
-                      </Title>
-                      <div className="subtask-status">
+                <div className="subtasks-list">
+                  {task.actions?.map((action: Action) => (
+                    <Card
+                      key={action.action_id}
+                      className="action-card"
+                      style={{ marginBottom: 16 }}
+                    >
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
+                        <div>
+                          <Title level={5} style={{ marginBottom: 8 }}>
+                            {action.instructions.split('\n')[0]}
+                          </Title>
+                          <Text type="secondary" style={{ display: 'block', marginBottom: 16 }}>
+                            {action.frequency || "Quarterly on 15th"}
+                          </Text>
+                          <Text style={{ display: 'block', color: '#666', marginBottom: 16 }}>
+                            {action.instructions.split('\n').slice(1).join('\n')}
+                          </Text>
+                        </div>
+                        <Tag color="#1890ff" style={{ borderRadius: 16, padding: '0 12px', height: '24px', lineHeight: '24px' }}>
+                          Configured
+                        </Tag>
+                      </div>
+                      
+                      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
                         {action.tools_used.map((tool: string) => (
-                          <Tag key={tool} color="blue">
+                          <Tag key={tool} style={{ margin: 0, borderRadius: 4 }}>
                             {tool}
                           </Tag>
                         ))}
                       </div>
-                    </div>
-                    {/* <Button
-                      type="primary"
-                      size="small"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleSubtaskCardClick(action.action_id); // Optional: define this handler
-                      }}
-                    >
-                      View Details
-                    </Button> */}
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </Card>
+
+                      <div style={{ display: 'flex', justifyContent: 'flex-start', gap: 8,marginTop:'100px' }}>
+                        <Button
+                          type="primary"
+                          size="middle"
+                          icon={<i className="fas fa-cog" />}
+                          style={{ 
+                            borderRadius: 4,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 8
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            // Handle configure click
+                          }}
+                        >
+                          Re - Configure
+                        </Button>
+                        <Button
+                          type="primary"
+                          size="middle"
+                          style={{ 
+                            borderRadius: 4,
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 8,
+                            marginLeft: 18
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            // Handle view runs click
+                          }}
+                        >
+                          View Runs
+                        </Button>
+                      </div>
+                    </Card>
+                  ))}
+                </div>
+              </Card>
+            </Col>
+          </Row>
         </div>
       </Content>
     </Layout>

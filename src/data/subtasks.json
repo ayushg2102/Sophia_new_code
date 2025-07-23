@@ -1,0 +1,1872 @@
+[
+{
+  "subtask_id": "subtask-ERISAclientsNoticeasperDOLRegulation-2025",
+  "subtask_short_description": "ERISA clients - Notice as per DOL Regulation - 2025",
+  "subtask_description": "ERISA clients - Notice as per DOL Regulation for 2025",
+  "due_date": {
+    "$date": "2025-04-15T00:00:00.000Z"
+  },
+  "task_id": "task-004",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-MassPRIMDisclosureregarding3rdpartyindividualswhoreceivefees-2025",
+  "subtask_short_description": "Mass PRIM - Disclosure regarding 3rd party individuals who receive fees - 2025",
+  "subtask_description": "Mass PRIM - Disclosure regarding 3rd party individuals who receive fees for 2025",
+  "due_date": {
+    "$date": "2025-09-15T00:00:00.000Z"
+  },
+  "task_id": "task-006",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-NYCSYSComplianceLetter-Quarter1",
+  "subtask_short_description": "NYC SYS - Compliance Letter - Quarter1",
+  "subtask_description": "NYC SYS - Compliance Letter for Quarter1",
+  "due_date": {
+    "$date": "2025-01-31T00:00:00.000Z"
+  },
+  "task_id": "task-007",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to end of mth"
+},
+{
+  "subtask_id": "subtask-NYCSYSComplianceLetter-Quarter2",
+  "subtask_short_description": "NYC SYS - Compliance Letter - Quarter2",
+  "subtask_description": "NYC SYS - Compliance Letter for Quarter2",
+  "due_date": {
+    "$date": "2025-04-30T00:00:00.000Z"
+  },
+  "task_id": "task-007",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to end of mth"
+},
+{
+  "subtask_id": "subtask-NYCSYSComplianceLetter-Quarter3",
+  "subtask_short_description": "NYC SYS - Compliance Letter - Quarter3",
+  "subtask_description": "NYC SYS - Compliance Letter for Quarter3",
+  "due_date": {
+    "$date": "2025-07-31T00:00:00.000Z"
+  },
+  "task_id": "task-007",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to end of mth"
+},
+{
+  "subtask_id": "subtask-NYCSYSComplianceLetter-Quarter4",
+  "subtask_short_description": "NYC SYS - Compliance Letter - Quarter4",
+  "subtask_description": "NYC SYS - Compliance Letter for Quarter4",
+  "due_date": {
+    "$date": "2025-10-31T00:00:00.000Z"
+  },
+  "task_id": "task-007",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to end of mth"
+},
+{
+  "subtask_id": "subtask-NYCSystemsEthicsandComplianceQuestionnaire-2025",
+  "subtask_short_description": "NYC Systems - Ethics and Compliance Questionnaire - 2025",
+  "subtask_description": "NYC Systems - Ethics and Compliance Questionnaire for 2025",
+  "due_date": {
+    "$date": "2025-04-30T00:00:00.000Z"
+  },
+  "task_id": "task-008",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-NYSCommonComplianceManual-2025",
+  "subtask_short_description": "NYS Common - Compliance Manual - 2025",
+  "subtask_description": "NYS Common - Compliance Manual for 2025",
+  "due_date": {
+    "$date": "2025-06-30T00:00:00.000Z"
+  },
+  "task_id": "task-009",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-NYSCRFComplianceQuestionnaire-2025",
+  "subtask_short_description": "NYSCRF - Compliance Questionnaire - 2025",
+  "subtask_description": "NYSCRF - Compliance Questionnaire for 2025",
+  "due_date": {
+    "$date": "2025-01-31T00:00:00.000Z"
+  },
+  "task_id": "task-010",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-NYSTRESGQuestionnaire-2025",
+  "subtask_short_description": "NYSTR - ESG Questionnaire - 2025",
+  "subtask_description": "NYSTR - ESG Questionnaire for 2025",
+  "due_date": {
+    "$date": "2025-08-14T00:00:00.000Z"
+  },
+  "task_id": "task-011",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-ComplianceTraining-2025",
+  "subtask_short_description": "Compliance Training - 2025",
+  "subtask_description": "Compliance Training for 2025",
+  "due_date": {
+    "$date": "2025-11-01T00:00:00.000Z"
+  },
+  "task_id": "task-012",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-Annualdeskaudit-2025",
+  "subtask_short_description": "Annual desk audit - 2025",
+  "subtask_description": "Annual desk audit for 2025",
+  "due_date": {
+    "$date": "2025-06-15T00:00:00.000Z"
+  },
+  "task_id": "task-016",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-BoardShareholderMeetings-Quarter1",
+  "subtask_short_description": "Board/ Shareholder Meetings - Quarter1",
+  "subtask_description": "Board/ Shareholder Meetings for Quarter1",
+  "due_date": {
+    "$date": "2025-01-15T00:00:00.000Z"
+  },
+  "task_id": "task-017",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15th of mth"
+},
+{
+  "subtask_id": "subtask-BoardShareholderMeetings-Quarter2",
+  "subtask_short_description": "Board/ Shareholder Meetings - Quarter2",
+  "subtask_description": "Board/ Shareholder Meetings for Quarter2",
+  "due_date": {
+    "$date": "2025-04-15T00:00:00.000Z"
+  },
+  "task_id": "task-017",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15th of mth"
+},
+{
+  "subtask_id": "subtask-BoardShareholderMeetings-Quarter3",
+  "subtask_short_description": "Board/ Shareholder Meetings - Quarter3",
+  "subtask_description": "Board/ Shareholder Meetings for Quarter3",
+  "due_date": {
+    "$date": "2025-07-15T00:00:00.000Z"
+  },
+  "task_id": "task-017",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15th of mth"
+},
+{
+  "subtask_id": "subtask-BoardShareholderMeetings-Quarter4",
+  "subtask_short_description": "Board/ Shareholder Meetings - Quarter4",
+  "subtask_description": "Board/ Shareholder Meetings for Quarter4",
+  "due_date": {
+    "$date": "2025-10-15T00:00:00.000Z"
+  },
+  "task_id": "task-017",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15th of mth"
+},
+{
+  "subtask_id": "subtask-CFAGIPS-2025",
+  "subtask_short_description": "CFA - GIPS - 2025",
+  "subtask_description": "CFA - GIPS for 2025",
+  "due_date": {
+    "$date": "2025-05-01T00:00:00.000Z"
+  },
+  "task_id": "task-018",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-ComplianceManualdistribution-2025",
+  "subtask_short_description": "Compliance Manual distribution - 2025",
+  "subtask_description": "Compliance Manual distribution for 2025",
+  "due_date": {
+    "$date": "2025-12-31T00:00:00.000Z"
+  },
+  "task_id": "task-019",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-ComplianceProgramReviewReportTotheBoardofDirectors-2025",
+  "subtask_short_description": "Compliance Program Review Report - To the Board of Directors - 2025",
+  "subtask_description": "Compliance Program Review Report - To the Board of Directors for 2025",
+  "due_date": {
+    "$date": "2025-06-30T00:00:00.000Z"
+  },
+  "task_id": "task-020",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-CORMeeting-Quarter1",
+  "subtask_short_description": "COR Meeting - Quarter1",
+  "subtask_description": "COR Meeting for Quarter1",
+  "due_date": {
+    "$date": "2025-02-15T00:00:00.000Z"
+  },
+  "task_id": "task-021",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15 Feb, May, Aug and Nov"
+},
+{
+  "subtask_id": "subtask-CORMeeting-Quarter2",
+  "subtask_short_description": "COR Meeting - Quarter2",
+  "subtask_description": "COR Meeting for Quarter2",
+  "due_date": {
+    "$date": "2025-05-15T00:00:00.000Z"
+  },
+  "task_id": "task-021",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15 Feb, May, Aug and Nov"
+},
+{
+  "subtask_id": "subtask-CORMeeting-Quarter3",
+  "subtask_short_description": "COR Meeting - Quarter3",
+  "subtask_description": "COR Meeting for Quarter3",
+  "due_date": {
+    "$date": "2025-08-15T00:00:00.000Z"
+  },
+  "task_id": "task-021",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15 Feb, May, Aug and Nov"
+},
+{
+  "subtask_id": "subtask-CORMeeting-Quarter4",
+  "subtask_short_description": "COR Meeting - Quarter4",
+  "subtask_description": "COR Meeting for Quarter4",
+  "due_date": {
+    "$date": "2025-11-15T00:00:00.000Z"
+  },
+  "task_id": "task-021",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15 Feb, May, Aug and Nov"
+},
+{
+  "subtask_id": "subtask-DeliveryofAuditedFinancials-2025",
+  "subtask_short_description": "Delivery of Audited Financials - 2025",
+  "subtask_description": "Delivery of Audited Financials for 2025",
+  "due_date": {
+    "$date": "2025-05-01T00:00:00.000Z"
+  },
+  "task_id": "task-022",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-EmailAlertMonitoring-January",
+  "subtask_short_description": "Email Alert & Monitoring - January",
+  "subtask_description": "Email Alert & Monitoring for January",
+  "due_date": {
+    "$date": "2025-01-15T00:00:00.000Z"
+  },
+  "task_id": "task-023",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-EmailAlertMonitoring-February",
+  "subtask_short_description": "Email Alert & Monitoring - February",
+  "subtask_description": "Email Alert & Monitoring for February",
+  "due_date": {
+    "$date": "2025-02-15T00:00:00.000Z"
+  },
+  "task_id": "task-023",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-EmailAlertMonitoring-March",
+  "subtask_short_description": "Email Alert & Monitoring - March",
+  "subtask_description": "Email Alert & Monitoring for March",
+  "due_date": {
+    "$date": "2025-03-15T00:00:00.000Z"
+  },
+  "task_id": "task-023",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-EmailAlertMonitoring-April",
+  "subtask_short_description": "Email Alert & Monitoring - April",
+  "subtask_description": "Email Alert & Monitoring for April",
+  "due_date": {
+    "$date": "2025-04-15T00:00:00.000Z"
+  },
+  "task_id": "task-023",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-EmailAlertMonitoring-May",
+  "subtask_short_description": "Email Alert & Monitoring - May",
+  "subtask_description": "Email Alert & Monitoring for May",
+  "due_date": {
+    "$date": "2025-05-15T00:00:00.000Z"
+  },
+  "task_id": "task-023",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-EmailAlertMonitoring-June",
+  "subtask_short_description": "Email Alert & Monitoring - June",
+  "subtask_description": "Email Alert & Monitoring for June",
+  "due_date": {
+    "$date": "2025-06-15T00:00:00.000Z"
+  },
+  "task_id": "task-023",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-EmailAlertMonitoring-July",
+  "subtask_short_description": "Email Alert & Monitoring - July",
+  "subtask_description": "Email Alert & Monitoring for July",
+  "due_date": {
+    "$date": "2025-07-15T00:00:00.000Z"
+  },
+  "task_id": "task-023",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-EmailAlertMonitoring-August",
+  "subtask_short_description": "Email Alert & Monitoring - August",
+  "subtask_description": "Email Alert & Monitoring for August",
+  "due_date": {
+    "$date": "2025-08-15T00:00:00.000Z"
+  },
+  "task_id": "task-023",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-EmailAlertMonitoring-September",
+  "subtask_short_description": "Email Alert & Monitoring - September",
+  "subtask_description": "Email Alert & Monitoring for September",
+  "due_date": {
+    "$date": "2025-09-15T00:00:00.000Z"
+  },
+  "task_id": "task-023",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-EmailAlertMonitoring-October",
+  "subtask_short_description": "Email Alert & Monitoring - October",
+  "subtask_description": "Email Alert & Monitoring for October",
+  "due_date": {
+    "$date": "2025-10-15T00:00:00.000Z"
+  },
+  "task_id": "task-023",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-EmailAlertMonitoring-November",
+  "subtask_short_description": "Email Alert & Monitoring - November",
+  "subtask_description": "Email Alert & Monitoring for November",
+  "due_date": {
+    "$date": "2025-11-15T00:00:00.000Z"
+  },
+  "task_id": "task-023",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-EmailAlertMonitoring-December",
+  "subtask_short_description": "Email Alert & Monitoring - December",
+  "subtask_description": "Email Alert & Monitoring for December",
+  "due_date": {
+    "$date": "2025-12-15T00:00:00.000Z"
+  },
+  "task_id": "task-023",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-ExecutedcontractsClientandSubmanagers-2025",
+  "subtask_short_description": "Executed contracts - Client and Sub-managers - 2025",
+  "subtask_description": "Executed contracts - Client and Sub-managers for 2025",
+  "due_date": {
+    "$date": "2025-11-15T00:00:00.000Z"
+  },
+  "task_id": "task-024",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-FINRAregistrationfees-2025",
+  "subtask_short_description": "FINRA registration fees - 2025",
+  "subtask_description": "FINRA registration fees for 2025",
+  "due_date": {
+    "$date": "2025-12-31T00:00:00.000Z"
+  },
+  "task_id": "task-025",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-FixedIncomeFactsheetsReview-Quarter1",
+  "subtask_short_description": "Fixed Income Factsheets Review - Quarter1",
+  "subtask_description": "Fixed Income Factsheets Review for Quarter1",
+  "due_date": {
+    "$date": "2025-01-15T00:00:00.000Z"
+  },
+  "task_id": "task-026",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15th Apr, Jul, Oct, Jan"
+},
+{
+  "subtask_id": "subtask-FixedIncomeFactsheetsReview-Quarter2",
+  "subtask_short_description": "Fixed Income Factsheets Review - Quarter2",
+  "subtask_description": "Fixed Income Factsheets Review for Quarter2",
+  "due_date": {
+    "$date": "2025-04-15T00:00:00.000Z"
+  },
+  "task_id": "task-026",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15th Apr, Jul, Oct, Jan"
+},
+{
+  "subtask_id": "subtask-FixedIncomeFactsheetsReview-Quarter3",
+  "subtask_short_description": "Fixed Income Factsheets Review - Quarter3",
+  "subtask_description": "Fixed Income Factsheets Review for Quarter3",
+  "due_date": {
+    "$date": "2025-07-15T00:00:00.000Z"
+  },
+  "task_id": "task-026",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15th Apr, Jul, Oct, Jan"
+},
+{
+  "subtask_id": "subtask-FixedIncomeFactsheetsReview-Quarter4",
+  "subtask_short_description": "Fixed Income Factsheets Review - Quarter4",
+  "subtask_description": "Fixed Income Factsheets Review for Quarter4",
+  "due_date": {
+    "$date": "2025-10-15T00:00:00.000Z"
+  },
+  "task_id": "task-026",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15th Apr, Jul, Oct, Jan"
+},
+{
+  "subtask_id": "subtask-GlobalEquitiesFactsheetsReview-Quarter1",
+  "subtask_short_description": "Global Equities Factsheets Review - Quarter1",
+  "subtask_description": "Global Equities Factsheets Review for Quarter1",
+  "due_date": {
+    "$date": "2025-01-30T00:00:00.000Z"
+  },
+  "task_id": "task-027",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 30th Apr, Jul, Oct, Jan"
+},
+{
+  "subtask_id": "subtask-GlobalEquitiesFactsheetsReview-Quarter2",
+  "subtask_short_description": "Global Equities Factsheets Review - Quarter2",
+  "subtask_description": "Global Equities Factsheets Review for Quarter2",
+  "due_date": {
+    "$date": "2025-04-30T00:00:00.000Z"
+  },
+  "task_id": "task-027",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 30th Apr, Jul, Oct, Jan"
+},
+{
+  "subtask_id": "subtask-GlobalEquitiesFactsheetsReview-Quarter3",
+  "subtask_short_description": "Global Equities Factsheets Review - Quarter3",
+  "subtask_description": "Global Equities Factsheets Review for Quarter3",
+  "due_date": {
+    "$date": "2025-07-30T00:00:00.000Z"
+  },
+  "task_id": "task-027",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 30th Apr, Jul, Oct, Jan"
+},
+{
+  "subtask_id": "subtask-GlobalEquitiesFactsheetsReview-Quarter4",
+  "subtask_short_description": "Global Equities Factsheets Review - Quarter4",
+  "subtask_description": "Global Equities Factsheets Review for Quarter4",
+  "due_date": {
+    "$date": "2025-10-30T00:00:00.000Z"
+  },
+  "task_id": "task-027",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 30th Apr, Jul, Oct, Jan"
+},
+{
+  "subtask_id": "subtask-MassPrim3rdPartyDisclosure-2025",
+  "subtask_short_description": "Mass Prim - 3rd Party Disclosure - 2025",
+  "subtask_description": "Mass Prim - 3rd Party Disclosure for 2025",
+  "due_date": {
+    "$date": "2025-04-08T00:00:00.000Z"
+  },
+  "task_id": "task-028",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-NYSTeachersContractrenewalletter-2025",
+  "subtask_short_description": "NYS Teachers Contract renewal letter - 2025",
+  "subtask_description": "NYS Teachers Contract renewal letter for 2025",
+  "due_date": {
+    "$date": "2025-04-01T00:00:00.000Z"
+  },
+  "task_id": "task-029",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-OnsiteVisitReportReview-January",
+  "subtask_short_description": "On-site Visit Report Review - January",
+  "subtask_description": "On-site Visit Report Review for January",
+  "due_date": {
+    "$date": "2025-01-05T00:00:00.000Z"
+  },
+  "task_id": "task-030",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-OnsiteVisitReportReview-February",
+  "subtask_short_description": "On-site Visit Report Review - February",
+  "subtask_description": "On-site Visit Report Review for February",
+  "due_date": {
+    "$date": "2025-02-05T00:00:00.000Z"
+  },
+  "task_id": "task-030",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-OnsiteVisitReportReview-March",
+  "subtask_short_description": "On-site Visit Report Review - March",
+  "subtask_description": "On-site Visit Report Review for March",
+  "due_date": {
+    "$date": "2025-03-05T00:00:00.000Z"
+  },
+  "task_id": "task-030",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-OnsiteVisitReportReview-April",
+  "subtask_short_description": "On-site Visit Report Review - April",
+  "subtask_description": "On-site Visit Report Review for April",
+  "due_date": {
+    "$date": "2025-04-05T00:00:00.000Z"
+  },
+  "task_id": "task-030",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-OnsiteVisitReportReview-May",
+  "subtask_short_description": "On-site Visit Report Review - May",
+  "subtask_description": "On-site Visit Report Review for May",
+  "due_date": {
+    "$date": "2025-05-05T00:00:00.000Z"
+  },
+  "task_id": "task-030",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-OnsiteVisitReportReview-June",
+  "subtask_short_description": "On-site Visit Report Review - June",
+  "subtask_description": "On-site Visit Report Review for June",
+  "due_date": {
+    "$date": "2025-06-05T00:00:00.000Z"
+  },
+  "task_id": "task-030",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-OnsiteVisitReportReview-July",
+  "subtask_short_description": "On-site Visit Report Review - July",
+  "subtask_description": "On-site Visit Report Review for July",
+  "due_date": {
+    "$date": "2025-07-05T00:00:00.000Z"
+  },
+  "task_id": "task-030",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-OnsiteVisitReportReview-August",
+  "subtask_short_description": "On-site Visit Report Review - August",
+  "subtask_description": "On-site Visit Report Review for August",
+  "due_date": {
+    "$date": "2025-08-05T00:00:00.000Z"
+  },
+  "task_id": "task-030",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-OnsiteVisitReportReview-September",
+  "subtask_short_description": "On-site Visit Report Review - September",
+  "subtask_description": "On-site Visit Report Review for September",
+  "due_date": {
+    "$date": "2025-09-05T00:00:00.000Z"
+  },
+  "task_id": "task-030",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-OnsiteVisitReportReview-October",
+  "subtask_short_description": "On-site Visit Report Review - October",
+  "subtask_description": "On-site Visit Report Review for October",
+  "due_date": {
+    "$date": "2025-10-05T00:00:00.000Z"
+  },
+  "task_id": "task-030",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-OnsiteVisitReportReview-November",
+  "subtask_short_description": "On-site Visit Report Review - November",
+  "subtask_description": "On-site Visit Report Review for November",
+  "due_date": {
+    "$date": "2025-11-05T00:00:00.000Z"
+  },
+  "task_id": "task-030",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-OnsiteVisitReportReview-December",
+  "subtask_short_description": "On-site Visit Report Review - December",
+  "subtask_description": "On-site Visit Report Review for December",
+  "due_date": {
+    "$date": "2025-12-05T00:00:00.000Z"
+  },
+  "task_id": "task-030",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-PrivacyNoticeClients-2025",
+  "subtask_short_description": "Privacy Notice Clients - 2025",
+  "subtask_description": "Privacy Notice Clients for 2025",
+  "due_date": {
+    "$date": "2025-03-31T00:00:00.000Z"
+  },
+  "task_id": "task-031",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-RenewalFeesforInvestmentAdviserRep-2025",
+  "subtask_short_description": "Renewal Fees for Investment Adviser Rep - 2025",
+  "subtask_description": "Renewal Fees for Investment Adviser Rep for 2025",
+  "due_date": {
+    "$date": "2025-11-30T00:00:00.000Z"
+  },
+  "task_id": "task-032",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-SOCReports-2025",
+  "subtask_short_description": "SOC Reports - 2025",
+  "subtask_description": "SOC Reports for 2025",
+  "due_date": {
+    "$date": "2025-03-31T00:00:00.000Z"
+  },
+  "task_id": "task-033",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-StaffDeclarations-Quarter1",
+  "subtask_short_description": "Staff Declarations - Quarter1",
+  "subtask_description": "Staff Declarations for Quarter1",
+  "due_date": {
+    "$date": "2025-01-10T00:00:00.000Z"
+  },
+  "task_id": "task-034",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 10th Jan, Apr, Jul, Oct"
+},
+{
+  "subtask_id": "subtask-StaffDeclarations-Quarter2",
+  "subtask_short_description": "Staff Declarations - Quarter2",
+  "subtask_description": "Staff Declarations for Quarter2",
+  "due_date": {
+    "$date": "2025-04-10T00:00:00.000Z"
+  },
+  "task_id": "task-034",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 10th Jan, Apr, Jul, Oct"
+},
+{
+  "subtask_id": "subtask-StaffDeclarations-Quarter3",
+  "subtask_short_description": "Staff Declarations - Quarter3",
+  "subtask_description": "Staff Declarations for Quarter3",
+  "due_date": {
+    "$date": "2025-07-10T00:00:00.000Z"
+  },
+  "task_id": "task-034",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 10th Jan, Apr, Jul, Oct"
+},
+{
+  "subtask_id": "subtask-StaffDeclarations-Quarter4",
+  "subtask_short_description": "Staff Declarations - Quarter4",
+  "subtask_description": "Staff Declarations for Quarter4",
+  "due_date": {
+    "$date": "2025-10-10T00:00:00.000Z"
+  },
+  "task_id": "task-034",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 10th Jan, Apr, Jul, Oct"
+},
+{
+  "subtask_id": "subtask-StaffDeclarations-2025",
+  "subtask_short_description": "Staff Declarations - 2025",
+  "subtask_description": "Staff Declarations for 2025",
+  "due_date": {
+    "$date": "2025-12-31T00:00:00.000Z"
+  },
+  "task_id": "task-035",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-SubAdvisorsDeclarations-2025",
+  "subtask_short_description": "Sub-Advisors Declarations - 2025",
+  "subtask_description": "Sub-Advisors Declarations for 2025",
+  "due_date": {
+    "$date": "2025-05-16T00:00:00.000Z"
+  },
+  "task_id": "task-036",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c75b"
+  },
+  "subtask_id": "subtask-SubAdvisorsDeclarations-2025",
+  "subtask_short_description": "Sub-Advisors Declarations - 2025",
+  "subtask_description": "Sub-Advisors Declarations for 2025",
+  "due_date": {
+    "$date": "2025-06-30T00:00:00.000Z"
+  },
+  "task_id": "task-037",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c75c"
+  },
+  "subtask_id": "subtask-ILSURSComplianceCertificationSubAdvisors-2025",
+  "subtask_short_description": "IL SURS - Compliance Certification - Sub-Advisors - 2025",
+  "subtask_description": "IL SURS - Compliance Certification - Sub-Advisors for 2025",
+  "due_date": {
+    "$date": "2025-08-18T00:00:00.000Z"
+  },
+  "task_id": "task-038",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c75d"
+  },
+  "subtask_id": "subtask-MarylandStateComplianceQuestionnaireandCertificate-2025",
+  "subtask_short_description": "Maryland State - Compliance Questionnaire and Certificate - 2025",
+  "subtask_description": "Maryland State - Compliance Questionnaire and Certificate for 2025",
+  "due_date": {
+    "$date": "2025-07-30T00:00:00.000Z"
+  },
+  "task_id": "task-039",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c75e"
+  },
+  "subtask_id": "subtask-SubManagersProxyVotingPoliciestotheCITClient-2025",
+  "subtask_short_description": "Sub-Manager's Proxy Voting Policies to the CIT Client - 2025",
+  "subtask_description": "Sub-Manager's Proxy Voting Policies to the CIT Client for 2025",
+  "due_date": {
+    "$date": "2025-10-18T00:00:00.000Z"
+  },
+  "task_id": "task-040",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c75f"
+  },
+  "subtask_id": "subtask-SystematicEquitiesFactsheetsReview-Quarter1",
+  "subtask_short_description": "Systematic Equities Factsheets Review - Quarter1",
+  "subtask_description": "Systematic Equities Factsheets Review for Quarter1",
+  "due_date": {
+    "$date": "2025-01-15T00:00:00.000Z"
+  },
+  "task_id": "task-041",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15th Apr, Jul, Oct, Jan"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c760"
+  },
+  "subtask_id": "subtask-SystematicEquitiesFactsheetsReview-Quarter2",
+  "subtask_short_description": "Systematic Equities Factsheets Review - Quarter2",
+  "subtask_description": "Systematic Equities Factsheets Review for Quarter2",
+  "due_date": {
+    "$date": "2025-04-15T00:00:00.000Z"
+  },
+  "task_id": "task-041",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15th Apr, Jul, Oct, Jan"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c761"
+  },
+  "subtask_id": "subtask-SystematicEquitiesFactsheetsReview-Quarter3",
+  "subtask_short_description": "Systematic Equities Factsheets Review - Quarter3",
+  "subtask_description": "Systematic Equities Factsheets Review for Quarter3",
+  "due_date": {
+    "$date": "2025-07-15T00:00:00.000Z"
+  },
+  "task_id": "task-041",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15th Apr, Jul, Oct, Jan"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c762"
+  },
+  "subtask_id": "subtask-SystematicEquitiesFactsheetsReview-Quarter4",
+  "subtask_short_description": "Systematic Equities Factsheets Review - Quarter4",
+  "subtask_description": "Systematic Equities Factsheets Review for Quarter4",
+  "due_date": {
+    "$date": "2025-10-15T00:00:00.000Z"
+  },
+  "task_id": "task-041",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15th Apr, Jul, Oct, Jan"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c763"
+  },
+  "subtask_id": "subtask-VendorDeclarations-Quarter1",
+  "subtask_short_description": "Vendor Declarations - Quarter1",
+  "subtask_description": "Vendor Declarations for Quarter1",
+  "due_date": {
+    "$date": "2025-01-10T00:00:00.000Z"
+  },
+  "task_id": "task-043",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 10th Jan, Apr, Jul, Oct"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c764"
+  },
+  "subtask_id": "subtask-VendorDeclarations-Quarter2",
+  "subtask_short_description": "Vendor Declarations - Quarter2",
+  "subtask_description": "Vendor Declarations for Quarter2",
+  "due_date": {
+    "$date": "2025-04-19T00:00:00.000Z"
+  },
+  "task_id": "task-043",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 10th Jan, Apr, Jul, Oct"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c765"
+  },
+  "subtask_id": "subtask-VendorDeclarations-Quarter3",
+  "subtask_short_description": "Vendor Declarations - Quarter3",
+  "subtask_description": "Vendor Declarations for Quarter3",
+  "due_date": {
+    "$date": "2025-07-10T00:00:00.000Z"
+  },
+  "task_id": "task-043",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 10th Jan, Apr, Jul, Oct"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c766"
+  },
+  "subtask_id": "subtask-VendorDeclarations-Quarter4",
+  "subtask_short_description": "Vendor Declarations - Quarter4",
+  "subtask_description": "Vendor Declarations for Quarter4",
+  "due_date": {
+    "$date": "2025-10-10T00:00:00.000Z"
+  },
+  "task_id": "task-043",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 10th Jan, Apr, Jul, Oct"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c767"
+  },
+  "subtask_id": "subtask-ComplianceProgramReviewDistributetoClients-2025",
+  "subtask_short_description": "Compliance Program Review - Distribute to Clients - 30th Jun 2025",
+  "subtask_description": "Compliance Program Review - Distribute to Clients for 2025",
+  "due_date": {
+    "$date": "2025-06-30T00:00:00.000Z"
+  },
+  "task_id": "task-045",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed due date to Jun 30"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c768"
+  },
+  "subtask_short_description": "Compliance Program Review - Distribute to Clients - 31st Dec 2025",
+  "subtask_description": "Compliance Program Review - Distribute to Clients for 2025",
+  "due_date": {
+    "$date": "2025-12-31T00:00:00.000Z"
+  },
+  "task_id": "task-045",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Added line half yearly task"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c769"
+  },
+  "subtask_id": "subtask-MTReview-Quarter1",
+  "subtask_short_description": "M &T Review - Quarter1",
+  "subtask_description": "M &T Review for Quarter1",
+  "due_date": {
+    "$date": "2025-01-15T00:00:00.000Z"
+  },
+  "task_id": "task-046",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15th Jan, Apr, Jul, Oct"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c76a"
+  },
+  "subtask_id": "subtask-MTReview-Quarter2",
+  "subtask_short_description": "M &T Review - Quarter2",
+  "subtask_description": "M &T Review for Quarter2",
+  "due_date": {
+    "$date": "2025-04-15T00:00:00.000Z"
+  },
+  "task_id": "task-046",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15th Jan, Apr, Jul, Oct"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c76b"
+  },
+  "subtask_id": "subtask-MTReview-Quarter3",
+  "subtask_short_description": "M &T Review - Quarter3",
+  "subtask_description": "M &T Review for Quarter3",
+  "due_date": {
+    "$date": "2025-07-15T00:00:00.000Z"
+  },
+  "task_id": "task-046",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15th Jan, Apr, Jul, Oct"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c76c"
+  },
+  "subtask_id": "subtask-MTReview-Quarter4",
+  "subtask_short_description": "M &T Review - Quarter4",
+  "subtask_description": "M &T Review for Quarter4",
+  "due_date": {
+    "$date": "2025-10-15T00:00:00.000Z"
+  },
+  "task_id": "task-046",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 15th Jan, Apr, Jul, Oct"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c76d"
+  },
+  "subtask_id": "subtask-NYSTeachersMarketingPermissionLetter-2025",
+  "subtask_short_description": "NYS Teachers - Marketing Permission Letter - 2025",
+  "subtask_description": "NYS Teachers - Marketing Permission Letter for 2025",
+  "due_date": {
+    "$date": "2025-09-01T00:00:00.000Z"
+  },
+  "task_id": "task-047",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c76e"
+  },
+  "subtask_id": "subtask-PermissiontouseNYSTeachersNameinPitchBooks-2025",
+  "subtask_short_description": "Permission to use NYS Teachers Name in Pitch Books - 2025",
+  "subtask_description": "Permission to use NYS Teachers Name in Pitch Books for 2025",
+  "due_date": {
+    "$date": "2025-08-01T00:00:00.000Z"
+  },
+  "task_id": "task-048",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c76f"
+  },
+  "subtask_id": "subtask-PSERSComplianceReview-2025",
+  "subtask_short_description": "PSERS - Compliance Review - 2025",
+  "subtask_description": "PSERS - Compliance Review for 2025",
+  "due_date": {
+    "$date": "2025-05-16T00:00:00.000Z"
+  },
+  "task_id": "task-049",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c770"
+  },
+  "subtask_id": "subtask-Form13F-Quarter1",
+  "subtask_short_description": "Form 13 F - Quarter1",
+  "subtask_description": "Form 13 F for Quarter1",
+  "due_date": {
+    "$date": "2025-02-14T00:00:00.000Z"
+  },
+  "task_id": "task-052",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 14th Feb, May, Aug, Nov"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c771"
+  },
+  "subtask_id": "subtask-Form13F-Quarter2",
+  "subtask_short_description": "Form 13 F - Quarter2",
+  "subtask_description": "Form 13 F for Quarter2",
+  "due_date": {
+    "$date": "2025-05-14T00:00:00.000Z"
+  },
+  "task_id": "task-052",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 14th Feb, May, Aug, Nov"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c772"
+  },
+  "subtask_id": "subtask-Form13F-Quarter3",
+  "subtask_short_description": "Form 13 F - Quarter3",
+  "subtask_description": "Form 13 F for Quarter3",
+  "due_date": {
+    "$date": "2025-08-14T00:00:00.000Z"
+  },
+  "task_id": "task-052",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 14th Feb, May, Aug, Nov"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c773"
+  },
+  "subtask_id": "subtask-Form13F-Quarter4",
+  "subtask_short_description": "Form 13 F - Quarter4",
+  "subtask_description": "Form 13 F for Quarter4",
+  "due_date": {
+    "$date": "2025-11-14T00:00:00.000Z"
+  },
+  "task_id": "task-052",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Changed to 14th Feb, May, Aug, Nov"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c774"
+  },
+  "subtask_id": "subtask-Form13H-2025",
+  "subtask_short_description": "Form 13 H - 2025",
+  "subtask_description": "Form 13 H for 2025",
+  "due_date": {
+    "$date": "2025-02-14T00:00:00.000Z"
+  },
+  "task_id": "task-053",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c775"
+  },
+  "subtask_id": "subtask-Form600H-2025",
+  "subtask_short_description": "Form 600 H - 2025",
+  "subtask_description": "Form 600 H for 2025",
+  "due_date": {
+    "$date": "2025-04-01T00:00:00.000Z"
+  },
+  "task_id": "task-054",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c776"
+  },
+  "subtask_id": "subtask-Form600J-2025",
+  "subtask_short_description": "Form 600 J - 2025",
+  "subtask_description": "Form 600 J for 2025",
+  "due_date": {
+    "$date": "2025-04-01T00:00:00.000Z"
+  },
+  "task_id": "task-055",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "_id": {
+    "$oid": "687a777d054829c18134c777"
+  },
+  "subtask_id": "subtask-Form700DisclosureofContributionsandGifts-2025",
+  "subtask_short_description": "Form 700 & Disclosure of Contributions and Gifts - 2025",
+  "subtask_description": "Form 700 & Disclosure of Contributions and Gifts for 2025",
+  "due_date": {
+    "$date": "2025-04-01T00:00:00.000Z"
+  },
+  "task_id": "task-056",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-FormADV-2025",
+  "subtask_short_description": "Form ADV - 2025",
+  "subtask_description": "Form ADV for 2025",
+  "due_date": {
+    "$date": "2025-03-31T00:00:00.000Z"
+  },
+  "task_id": "task-057",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-FormCRS-2025",
+  "subtask_short_description": "Form CRS - 2025",
+  "subtask_description": "Form CRS for 2025",
+  "due_date": {
+    "$date": "2025-03-31T00:00:00.000Z"
+  },
+  "task_id": "task-058",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-FormLM10-2025",
+  "subtask_short_description": "Form LM-10 - 2025",
+  "subtask_description": "Form LM-10 for 2025",
+  "due_date": {
+    "$date": "2025-03-31T00:00:00.000Z"
+  },
+  "task_id": "task-060",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-FormPF-2025",
+  "subtask_short_description": "Form PF - 2025",
+  "subtask_description": "Form PF for 2025",
+  "due_date": {
+    "$date": "2025-04-30T00:00:00.000Z"
+  },
+  "task_id": "task-061",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-StateReportingRequirementCA-2025",
+  "subtask_short_description": "State Reporting Requirement - CA - 2025",
+  "subtask_description": "State Reporting Requirement - CA for 2025",
+  "due_date": {
+    "$date": "2025-02-07T00:00:00.000Z"
+  },
+  "task_id": "task-062",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-StateReportingRequirementCT-2025",
+  "subtask_short_description": "State Reporting Requirement - CT - 2025",
+  "subtask_description": "State Reporting Requirement - CT for 2025",
+  "due_date": {
+    "$date": "2025-05-31T00:00:00.000Z"
+  },
+  "task_id": "task-063",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+},
+{
+  "subtask_id": "subtask-StateReportingRequirementNC-2025",
+  "subtask_short_description": "State Reporting Requirement - NC - 2025",
+  "subtask_description": "State Reporting Requirement - NC for 2025",
+  "due_date": {
+    "$date": "2025-04-15T00:00:00.000Z"
+  },
+  "task_id": "task-064",
+  "status": "due",
+  "last_status_change_date": {
+    "$date": "2025-07-17T00:00:00.000Z"
+  },
+  "subtask_create_date": {
+    "$date": "2025-07-01T00:00:00.000Z"
+  },
+  "RPY Comment due dt chk": "Ok"
+}]
