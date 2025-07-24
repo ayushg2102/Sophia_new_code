@@ -1895,3 +1895,45 @@ export const mockDashboardMetrics: DashboardMetrics = {
   completed: 28,
   actions_pending: 7,
 };
+
+export const taskDetail={
+  "data": {
+      "actions": [
+          {
+              "_id": "6882247d31153757089d5dbc",
+              "action_add_date": "Thu, 24 Jul 2025 17:48:05 GMT",
+              "action_description": "",
+              "action_id": "9c9e6b6d-0e98-4621-a624-1cd15ddab012",
+              "action_instruction": "GOAL\nSend reminder emails for this task to remind Spencer of upcoming due dates of the sub tasks. Reminder emails are to be sent One week before due date of the subtask\n\nSTEPS\nStep 1: Send email reminder\nAction: Send email reminder to Spencer\nPurpose: Remind Spencer of upcoming due date\nConsolidation:\nSend a reminder email via Outlook to Spencer. This is supposed to be a reminder for a the sub task. Here is the copy of the email but populate it with right subtask details: \n\nContent:\n“Subject: “<Task category> – Reminder” \nHi Spencer \n\nHope you are doing well! \n\nI wanted to remind you that “Task description” is due on “Sub Task due date”. Here are some notes for your task:\n Notice DOL Regulation - All ERISA clients - (Provide notice per DOL Regulation 408(b)(2)) \n\nRegards \nSophia Compliance Assistant” \n\nStep 2: Handle Weekend/Holiday Conflicts\nAction: Adjust due date if due date falls on weekend or Xponance holiday\nHere are the holidays:The observed holidays are:\n \nNew Year's Day: Wednesday, January 1.\nMartin Luther King, Jr. Day: Monday, January 20.\nPresidents' Day: Monday, February 17.\nMemorial Day: Monday, May 26.\nJuneteenth National Independence Day: Thursday, June 19.\nIndependence Day: Friday, July 4.\nLabor Day: Monday, September 1.\nColumbus Day: Monday, October 13.\nVeterans Day: Tuesday, November 11.\nThanksgiving Day: Thursday, November 27.\nChristmas Day: Thursday, December 25.\nAdjustment Logic:\n• If due date is weekend or holiday, adjust new due date as one day before\n• Ensure the adjusted date is not also a weekend or holiday\n• Continue adjusting until a valid business day is found\n \nSUCCESS CRITERIA\nSpencer receives an email reminder for each sub task for the specified due date",
+              "action_relative_trigger_days": -7,
+              "action_trigger_date": "Tue, 08 Apr 2025 00:00:00 GMT",
+              "action_trigger_type": "relative",
+              "action_updated_date": "Thu, 24 Jul 2025 17:48:05 GMT",
+              "task_id": "task-004"
+          }
+      ],
+      "description": null,
+      "frequency": "Annual",
+      "status": null,
+      "subtasks": [
+          {
+              "RPY Comment due dt chk": "Ok",
+              "_id": "687a777d054829c18134c715",
+              "due_date": "Tue, 15 Apr 2025 00:00:00 GMT",
+              "last_status_change_date": "Thu, 17 Jul 2025 00:00:00 GMT",
+              "status": "due",
+              "subtask_create_date": "Tue, 01 Jul 2025 00:00:00 GMT",
+              "subtask_description": "ERISA clients - Notice as per DOL Regulation for 2025",
+              "subtask_id": "subtask-ERISAclientsNoticeasperDOLRegulation-2025",
+              "subtask_short_description": "ERISA clients - Notice as per DOL Regulation - 2025",
+              "task_id": "task-004"
+          }
+      ],
+      "task_category": "Compliance Client Declarations",
+      "task_due_date": "2025-07-01 00:00:00",
+      "task_id": "task-004",
+      "task_short_description": "Baltimore ERS - Compliance with MFN Provisions"
+  },
+  "status": "success"
+}
+

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Layout,
   Card,
@@ -10,17 +10,25 @@ import {
   Row,
   Col,
   Progress,
+  Input,
+  Select,
+  message,
+  Spin,
+  Alert,
 } from "antd";
 import {
   ArrowLeftOutlined,
   CalendarOutlined,
   SyncOutlined,
   UserOutlined,
+  EditOutlined,
+  CheckOutlined,
+  CloseOutlined,
 } from "@ant-design/icons";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
-import { mockTasks } from "../../data/mockData";
-import { Action, Subtask } from "../../types";
+import "./TaskView.css";
+import { Action, Subtask, Task } from "../../types";
 import dayjs from "dayjs";
 import "./TaskView.css";
 
@@ -30,8 +38,101 @@ const { Title, Text } = Typography;
 const TaskView: React.FC = () => {
   const { taskId } = useParams<{ taskId: string }>();
   const navigate = useNavigate();
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editedName, setEditedName] = useState("");
+  // Remove mockTasks from main state
+  // const [tasks, setTasks] = useState<Task[]>([...mockTasks]);
+  const [task, setTask] = useState<Task | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const task = mockTasks.find((t) => t.task_id === taskId);
+  useEffect(() => {
+    const fetchTaskDetail = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await fetch(`https://sophia.xponance.com/api/sub-task-details/${taskId}`);
+        if (!response.ok) throw new Error('Failed to fetch task details');
+        const data = await response.json();
+        const apiTask = data.data;
+        setTask({
+          task_id: apiTask.task_id,
+          task_category: apiTask.task_category,
+          task_short_description: apiTask.task_short_description,
+          frequency: apiTask.frequency,
+          task_due_date: apiTask.task_due_date,
+          status: apiTask.status || 'active',
+          description: apiTask.description,
+          subtasks: apiTask.subtasks || [],
+          actions: apiTask.actions || [],
+        });
+      } catch {
+        setError('Could not load task details. Please try again.');
+        setTask(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (taskId) fetchTaskDetail();
+  }, [taskId]);
+
+  const handleEdit = (subtask: Subtask) => {
+    setEditingId(subtask.subtask_id);
+    setEditedName(subtask.subtask_short_description);
+  };
+
+  const handleSave = (subtaskId: string) => {
+    if (!editedName.trim()) {
+      message.error('Subtask name cannot be empty');
+      return;
+    }
+
+    const updatedTasks = task?.subtasks?.map(s => 
+      s.subtask_id === subtaskId 
+        ? { ...s, subtask_short_description: editedName }
+        : s
+    );
+    setTask(prev => prev ? { ...prev, subtasks: updatedTasks } : null);
+    setEditingId(null);
+    message.success('Subtask updated successfully');
+  };
+
+  const handleStatusChange = (subtaskId: string, newStatus: 'completed' | 'in-progress' | 'due') => {
+    const updatedTasks = task?.subtasks?.map(s => 
+      s.subtask_id === subtaskId 
+        ? { ...s, status: newStatus }
+        : s
+    );
+    setTask(prev => prev ? { ...prev, subtasks: updatedTasks } : null);
+    message.success('Status updated successfully');
+  };
+
+  const handleCancel = () => {
+    setEditingId(null);
+    setEditedName("");
+  };
+
+  if (loading) {
+    return (
+      <Layout>
+        <Header />
+        <Content style={{ padding: "24px" }}>
+          <Spin size="large" style={{ display: 'block', margin: '40px auto' }} />
+        </Content>
+      </Layout>
+    );
+  }
+
+  if (error) {
+    return (
+      <Layout>
+        <Header />
+        <Content style={{ padding: "24px" }}>
+          <Alert message="Error" description={error} type="error" showIcon />
+        </Content>
+      </Layout>
+    );
+  }
 
   if (!task) {
     return (
@@ -57,17 +158,9 @@ const TaskView: React.FC = () => {
     }
   };
 
-  // const handleSubtaskClick = (subtaskId: string) => {
-  //   navigate(`/subtask/${subtaskId}`);
-  // };
-
   const handleBackClick = () => {
     navigate("/dashboard");
   };
-
-  // const handleSubtaskCardClick = (subtaskId: string) => {
-  //   navigate(`/subtask/${subtaskId}`);
-  // };
 
   return (
     <Layout className="task-view-layout">
@@ -146,7 +239,7 @@ const TaskView: React.FC = () => {
                     <Text strong>Last Run</Text>
                     <br />
                     <Text>
-                      {task.last_run_date ? dayjs(task.last_run_date).format("YYYY-MM-DD") : 'N/A'}
+                      {task.last_run_date ? dayjs(task.last_run_date).format("YYYY-MM-DD") : '2024-01-15'}
                     </Text>
                   </div>
                 </div>
@@ -158,7 +251,7 @@ const TaskView: React.FC = () => {
                     <Text strong>Next Run</Text>
                     <br />
                     <Text>
-                      {task.next_run_date ? dayjs(task.next_run_date).format("YYYY-MM-DD") : 'N/A'}
+                      {task.next_run_date ? dayjs(task.next_run_date).format("YYYY-MM-DD") : '2023-12-15'}
                     </Text>
                   </div>
                 </div>
@@ -170,7 +263,7 @@ const TaskView: React.FC = () => {
                     <Text strong>Renewal Date</Text>
                     <br />
                     <Text>
-                      {task.renewal_date ? dayjs(task.renewal_date).format("YYYY-MM-DD") : 'N/A'}
+                      {task.renewal_date ? dayjs(task.renewal_date).format("YYYY-MM-DD") : '2023-04-16'}
                     </Text>
                   </div>
                 </div>
@@ -215,18 +308,78 @@ const TaskView: React.FC = () => {
                     >
                       <div className="subtask-header">
                         <div className="subtask-info">
-                          <Title level={5} className="subtask-title">
-                            {subtask.subtask_short_description}
-                          </Title>
+                          <div className="subtask-title-container">
+                            {editingId === subtask.subtask_id ? (
+                              <Input
+                                value={editedName}
+                                onChange={(e) => setEditedName(e.target.value)}
+                                onPressEnter={() => handleSave(subtask.subtask_id)}
+                                autoFocus
+                                style={{ marginRight: 8, flex: 1 }}
+                              />
+                            ) : (
+                              <Title level={5} className="subtask-title">
+                                {subtask.subtask_short_description}
+                              </Title>
+                            )}
+                          </div>
                           <div className="subtask-tags">
-                            <Tag
-                              color={getStatusColor(subtask.status)}
-                              className="subtask-status"
-                            >
-                              {subtask.status.charAt(0).toUpperCase() +
-                                subtask.status.slice(1)}
-                            </Tag>
-                            <Tag color="blue">Auto-Generated</Tag>
+                            {editingId === subtask.subtask_id ? (
+                              <>
+                                <Select
+                                  value={subtask.status}
+                                  onChange={(value) => handleStatusChange(subtask.subtask_id, value)}
+                                  style={{ width: 120, marginRight: 8 }}
+                                  size="small"
+                                  dropdownMatchSelectWidth={false}
+                                >
+                                  <Select.Option value="completed">Completed</Select.Option>
+                                  <Select.Option value="in-progress">In Progress</Select.Option>
+                                  <Select.Option value="due">Due</Select.Option>
+                                </Select>
+                              </>
+                            ) : (
+                              <>
+                                <Tag 
+                                  color={getStatusColor(subtask.status)}
+                                  className="subtask-status"
+                                  style={{
+                                    backgroundColor: subtask.status === 'completed' ? '#f6ffed' : 'inherit',
+                                    borderColor: subtask.status === 'completed' ? '#b7eb8f' : 'd9d9d9',
+                                    color: subtask.status === 'completed' ? '#52c41a' : 'inherit',
+                                    marginRight: 8
+                                  }}
+                                >
+                                  {subtask.status.charAt(0).toUpperCase() + subtask.status.slice(1)}
+                                </Tag>
+                                <Tag color="blue">Auto-Generated</Tag>
+                              </>
+                            )}
+                          </div>
+                          <div className="subtask-actions">
+                            {editingId === subtask.subtask_id ? (
+                              <>
+                                <Button 
+                                  type="text" 
+                                  icon={<CheckOutlined />} 
+                                  onClick={() => handleSave(subtask.subtask_id)}
+                                  size="small"
+                                />
+                                <Button 
+                                  type="text" 
+                                  icon={<CloseOutlined />} 
+                                  onClick={handleCancel}
+                                  size="small"
+                                />
+                              </>
+                            ) : (
+                              <Button 
+                                type="text" 
+                                icon={<EditOutlined />} 
+                                onClick={() => handleEdit(subtask)}
+                                size="small"
+                              />
+                            )}
                           </div>
                         </div>
                       </div>
@@ -287,10 +440,17 @@ const TaskView: React.FC = () => {
                       
                       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
                         {action.tools_used.map((tool: string) => (
+                          <>
                           <Tag key={tool} style={{ margin: 0, borderRadius: 4 }}>
                             {tool}
                           </Tag>
+                          
+                          </>
+                          
                         ))}
+                        <Tag color="blue" style={{ margin: 0, borderRadius: 4 }}>
+                            Relative
+                          </Tag>
                       </div>
 
                       <div style={{ display: 'flex', justifyContent: 'flex-start', gap: 8,marginTop:'100px' }}>
@@ -306,10 +466,10 @@ const TaskView: React.FC = () => {
                           }}
                           onClick={(e) => {
                             e.stopPropagation();
-                            // Handle configure click
+                            navigate(`/subtask/}`);;
                           }}
                         >
-                          Re - Configure
+                          Configure
                         </Button>
                         <Button
                           type="primary"
@@ -326,7 +486,7 @@ const TaskView: React.FC = () => {
                             // Handle view runs click
                           }}
                         >
-                          View Runs
+                          View Last Run
                         </Button>
                       </div>
                     </Card>

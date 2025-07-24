@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Layout, Row, Col, Typography, Button, Card, Tag, Tabs } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { 
   CheckCircleOutlined, 
-  ClockCircleOutlined,
-  EmployeeOutlined, 
+  ClockCircleOutlined, 
   AlertOutlined, 
   PlayCircleOutlined,
   PlusOutlined
@@ -64,7 +63,42 @@ const Dashboard: React.FC = () => {
     setTasks([newTask, ...tasks]);
   };
 
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch('https://sophia.xponance.com/api/all-task-master');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        const dynamicTaskData:any=[];
+        data.data.forEach((item:any) => {
+          dynamicTaskData.push({
+            task_id: item.task_id,
+            task_category: item["Task Category"],
+            task_short_description: item.task_short_description,
+            frequency: item.Frequency,
+            task_due_date: item.task_due_date,
+            status: 'active',
+            description: item.RPY_Com,
+            subtasks: []
+          })
+        })
+        setTasks(dynamicTaskData);
+      } catch (err) {
+        console.error('Error fetching tasks:', err);
+        // setError('Failed to load tasks. Please try again later.');
+        setTasks([]);
+      } finally {
+        // setLoading(false);
+      }
+    };
+
+    fetchTasks();
+  }, []);
+
   const handleTaskClick = (taskId: string) => {
+    console.log(taskId,"TAKAKS")
     navigate(`/task/${taskId}`);
   };
 
@@ -96,7 +130,7 @@ const Dashboard: React.FC = () => {
           <Row gutter={[16, 16]} className="metrics-row">
             <Col xs={24} sm={12} md={6}>
               <MetricCard
-                title="Tasks Completed"
+                title="Sub-Tasks Completed"
                 value={mockDashboardMetrics.active_tasks}
                 icon={<PlayCircleOutlined />}
                 color="#1677ff"
@@ -105,7 +139,7 @@ const Dashboard: React.FC = () => {
             </Col>
             <Col xs={24} sm={12} md={6}>
               <MetricCard
-                title="Overdue Items"
+                title="Overdue Sub-Tasks"
                 value={mockDashboardMetrics.due_this_week}
                 icon={<ClockCircleOutlined />}
                 color="#faad14"
@@ -138,7 +172,7 @@ const Dashboard: React.FC = () => {
           <Row gutter={24} className="main-content">
             <Col xs={24} lg={24}>
               <div className="tasks-section">
-                <h2 className="category-heading">Categories</h2>
+                <h2 className="category-heading">Tasks</h2>
                 <Tabs
                   tabPosition="left"
                   style={{ 
@@ -155,7 +189,11 @@ const Dashboard: React.FC = () => {
                   items={CATEGORIES.map(category => {
                     const categoryTasks = tasks.filter((task) => task.task_category === category.key);
                     return {
-                      label: category.key,
+                      label: (
+                        <span>
+                          {category.key} <span style={{ color: '#8c8c8c' }}>({categoryTasks.length})</span>
+                        </span>
+                      ),
                       key: category.key,
                       children: (
                         <div>
@@ -171,7 +209,7 @@ const Dashboard: React.FC = () => {
                                 <Text type="secondary">No tasks in this category.</Text>
                               </Col>
                             ) : (
-                              categoryTasks.slice(0, 8).map((task) => (
+                              categoryTasks.map((task) => (
                                 <Col xs={24} sm={12} md={8} lg={6} key={task.task_id}>
                                   <Card
                                     className="task-square-card"
@@ -187,16 +225,16 @@ const Dashboard: React.FC = () => {
                                       cursor: 'pointer',
                                       textAlign: 'center',
                                     }}
-                                    onClick={() => handleTaskClick(task.task_id)}
+                                    onClick={() =>{
+                                      console.log(task,"123")
+                                      handleTaskClick(task.task_id)}
+                                    } 
                                   >
                                     <Title level={5} style={{ marginBottom: 8 }}>{task.task_short_description}</Title>
                                     <Text type="secondary" style={{ marginBottom: 8, display: 'block' }}>
-                                      {task.description?.substring(0, 60)}...
+                                      {task.task_short_description}
                                     </Text>
                                     <div style={{ marginTop: 8 }}>
-                                      <Tag color={task.status === 'active' ? 'blue' : task.status === 'completed' ? 'green' : 'orange'}>
-                                        {task.status.charAt(0).toUpperCase() + task.status.slice(1)}
-                                      </Tag>
                                       <Tag color={task.frequency === 'Daily' ? 'yellow' : 'default'}>{task.frequency}</Tag>
                                     </div>
                                   </Card>

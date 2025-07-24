@@ -147,7 +147,7 @@
 /* Custom styles for the category tabs */
 .category-tabs {
   /* Override Ant Design's default tab styles */
-  --tab-bar-width: 355px;
+  --tab-bar-width: 375px;
 }
 
 .category-heading {
