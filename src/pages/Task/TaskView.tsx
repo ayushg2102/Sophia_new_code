@@ -224,11 +224,31 @@ const TaskView: React.FC = () => {
                 <div className="task-detail-item">
                   <CalendarOutlined className="detail-icon" />
                   <div>
-                    <Text strong>Due Date</Text>
+                    <Text strong>Renewal Date</Text>
                     <br />
                     <Text>
-                      {dayjs(task.task_due_date).format("YYYY-MM-DD")}
+                      {task.renewal_date ? dayjs(task.renewal_date).format("YYYY-MM-DD") : '2025-01-21'}
                     </Text>
+                  </div>
+                </div>
+              </Col>
+              <Col xs={24} sm={12} md={6}>
+                <div className="task-detail-item">
+                  <SyncOutlined className="detail-icon" />
+                  <div>
+                    <Text strong>Frequency</Text>
+                    <br />
+                    <Text>{task.frequency || 'N/A'}</Text>
+                  </div>
+                </div>
+              </Col>
+              <Col xs={24} sm={12} md={6}>
+                <div className="task-detail-item">
+                  <UserOutlined className="detail-icon" />
+                  <div>
+                    <Text strong>Sub-tasks</Text>
+                    <br />
+                    <Text>{task.subtasks?.length || 0} tasks</Text>
                   </div>
                 </div>
               </Col>
@@ -239,52 +259,8 @@ const TaskView: React.FC = () => {
                     <Text strong>Last Run</Text>
                     <br />
                     <Text>
-                      {task.last_run_date ? dayjs(task.last_run_date).format("YYYY-MM-DD") : '2024-01-15'}
+                      {task.last_run_date ? dayjs(task.last_run_date).format("YYYY-MM-DD") : '2025-01-21'}
                     </Text>
-                  </div>
-                </div>
-              </Col>
-              <Col xs={24} sm={12} md={6}>
-                <div className="task-detail-item">
-                  <CalendarOutlined className="detail-icon" />
-                  <div>
-                    <Text strong>Next Run</Text>
-                    <br />
-                    <Text>
-                      {task.next_run_date ? dayjs(task.next_run_date).format("YYYY-MM-DD") : '2023-12-15'}
-                    </Text>
-                  </div>
-                </div>
-              </Col>
-              <Col xs={24} sm={12} md={6}>
-                <div className="task-detail-item">
-                  <CalendarOutlined className="detail-icon" />
-                  <div>
-                    <Text strong>Renewal Date</Text>
-                    <br />
-                    <Text>
-                      {task.renewal_date ? dayjs(task.renewal_date).format("YYYY-MM-DD") : '2023-04-16'}
-                    </Text>
-                  </div>
-                </div>
-              </Col>
-              <Col xs={24} sm={12} md={12}>
-                <div className="task-detail-item">
-                  <SyncOutlined className="detail-icon" />
-                  <div>
-                    <Text strong>Frequency</Text>
-                    <br />
-                    <Text>{task.frequency}</Text>
-                  </div>
-                </div>
-              </Col>
-              <Col xs={24} sm={12} md={12}>
-                <div className="task-detail-item">
-                  <UserOutlined className="detail-icon" />
-                  <div>
-                    <Text strong>Subtasks</Text>
-                    <br />
-                    <Text>{task.subtasks?.length || 0} tasks</Text>
                   </div>
                 </div>
               </Col>
@@ -389,6 +365,9 @@ const TaskView: React.FC = () => {
                         size={4}
                         className="subtask-details"
                       >
+                        <Text type="secondary">
+                          <CalendarOutlined /> Due: {subtask.due_date ? dayjs(subtask.due_date).format("YYYY-MM-DD") : 'N/A'}
+                        </Text>
                         {subtask.period_considered && (
                           <Text type="secondary">
                             <CalendarOutlined /> Period: {subtask.period_considered}
