@@ -66,7 +66,7 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await fetch('http://74.225.189.243:4001/api/tasks');
+        const response = await fetch('/api/tasks');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

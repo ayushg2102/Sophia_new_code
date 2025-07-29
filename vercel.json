@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/tasks",
+      "destination": "http://74.225.189.243:4001/api/tasks"
+    },
+    {
+      "source": "/api/sub-task-details/:taskId",
+      "destination": "http://74.225.189.243:4001/api/sub-task-details/:taskId"
+    }
+  ]
+}
