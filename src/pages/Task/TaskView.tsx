@@ -229,7 +229,7 @@ const TaskView: React.FC = () => {
                     <Text strong>Renewal Date</Text>
                     <br />
                     <Text>
-                      {task.renewal_date ? dayjs(task.renewal_date).format("YYYY-MM-DD") : '2025-01-21'}
+                      {task.renewal_date ? dayjs(task.renewal_date).format("MM-DD-YYYY") : '01-21-2025'}
                     </Text>
                   </div>
                 </div>
@@ -368,7 +368,7 @@ const TaskView: React.FC = () => {
                         className="subtask-details"
                       >
                         <Text type="secondary">
-                          <CalendarOutlined /> Due: {subtask.due_date ? dayjs(subtask.due_date).format("YYYY-MM-DD") : 'N/A'}
+                          <CalendarOutlined /> Due: {subtask.due_date ? dayjs(subtask.due_date).format("MM-DD-YYYY") : 'N/A'}
                         </Text>
                         {subtask.period_considered && (
                           <Text type="secondary">
