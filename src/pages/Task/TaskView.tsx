@@ -254,18 +254,18 @@ const TaskView: React.FC = () => {
                   </div>
                 </div>
               </Col>
-              <Col xs={24} sm={12} md={6}>
+              {/* <Col xs={24} sm={12} md={6}>
                 <div className="task-detail-item">
                   <CalendarOutlined className="detail-icon" />
                   <div>
                     <Text strong>Last Run</Text>
                     <br />
                     <Text>
-                      {task.last_run_date ? dayjs(task.last_run_date).format("YYYY-MM-DD") : '2025-01-21'}
+                      {task.last_run_date ? dayjs(task.last_run_date).format("MM/DD/YYYY") : '01/21/2025'}
                     </Text>
                   </div>
                 </div>
-              </Col>
+              </Col> */}
             </Row>
           </Card>
 
@@ -447,7 +447,7 @@ const TaskView: React.FC = () => {
                           }}
                           onClick={(e) => {
                             e.stopPropagation();
-                            navigate(`/action/${action.action_id}`, { state: { taskName: task.task_short_description } });
+                            navigate(`/action/${action.action_id}`, { state: { taskName: task.task_short_description, actionId: action.action_id, instructions: action.action_instructions } });
                           }}
                         >
                           Configure

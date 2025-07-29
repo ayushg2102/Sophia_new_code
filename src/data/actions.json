@@ -1,0 +1,116 @@
+{
+    "data": {
+        "actions": [
+            {
+                "_id": "6883347ec705272c61ff5e58",
+                "action_add_date": "Fri, 25 Jul 2025 13:08:38 GMT",
+                "action_description": "",
+                "action_id": "adc13b73-d52e-4e15-90cf-d0c11f861da1",
+                "action_instruction": "Send a reminder email 1 week before the due date for the Sub task.\n\nUse the following email format:\n\nSubject: “Reminder – Sub task”\n\nHi Spencer,\n\nHope you are doing well!\n\nI wanted to remind you that “Sub task” is due on <Sub Task Due Date>.  \nHere are some notes for your task:  \nWebsite Review Alert & Monitoring\n\nRegards,  \nSophia  \nCompliance Assistant\n\nBefore sending the reminder, check if the due date is on a weekend or Xponance holiday. If it is, move the reminder date to the previous working day. Repeat if needed until you find a business day.\n\nXponance Holidays:\n- Jan 1: New Year's Day\n- Jan 20: Martin Luther King Jr. Day\n- Feb 17: Presidents' Day\n- May 26: Memorial Day\n- Jun 19: Juneteenth\n- Jul 4: Independence Day\n- Sep 1: Labor Day\n- Oct 13: Columbus Day\n- Nov 11: Veterans Day\n- Nov 27: Thanksgiving\n- Dec 25: Christmas Day\n",
+                "action_relative_trigger_days": -7,
+                "action_trigger_date": "Tue, 21 Jan 2025 00:00:00 GMT",
+                "action_trigger_type": "relative",
+                "action_updated_date": "Fri, 25 Jul 2025 13:08:38 GMT",
+                "adjusted_relative_trigger_date": "Tue, 14 Jan 2025 00:00:00 GMT",
+                "task_id": "task-001"
+            },
+            {
+                "_id": "6883347ec705272c61ff5e59",
+                "action_add_date": "Fri, 25 Jul 2025 13:08:38 GMT",
+                "action_description": "",
+                "action_id": "4e055477-d13d-413c-9e67-e7d82d71b196",
+                "action_instruction": "Send a reminder email 1 week before the due date for the Sub task.\n\nUse the following email format:\n\nSubject: “Reminder – Sub task”\n\nHi Spencer,\n\nHope you are doing well!\n\nI wanted to remind you that “Sub task” is due on <Sub Task Due Date>.  \nHere are some notes for your task:  \nWebsite Review Alert & Monitoring\n\nRegards,  \nSophia  \nCompliance Assistant\n\nBefore sending the reminder, check if the due date is on a weekend or Xponance holiday. If it is, move the reminder date to the previous working day. Repeat if needed until you find a business day.\n\nXponance Holidays:\n- Jan 1: New Year's Day\n- Jan 20: Martin Luther King Jr. Day\n- Feb 17: Presidents' Day\n- May 26: Memorial Day\n- Jun 19: Juneteenth\n- Jul 4: Independence Day\n- Sep 1: Labor Day\n- Oct 13: Columbus Day\n- Nov 11: Veterans Day\n- Nov 27: Thanksgiving\n- Dec 25: Christmas Day\n",
+                "action_relative_trigger_days": -7,
+                "action_trigger_date": "Mon, 21 Apr 2025 00:00:00 GMT",
+                "action_trigger_type": "relative",
+                "action_updated_date": "Fri, 25 Jul 2025 13:08:38 GMT",
+                "adjusted_relative_trigger_date": "Mon, 14 Apr 2025 00:00:00 GMT",
+                "task_id": "task-001"
+            },
+            {
+                "_id": "6883347ec705272c61ff5e5a",
+                "action_add_date": "Fri, 25 Jul 2025 13:08:38 GMT",
+                "action_description": "",
+                "action_id": "13395a3b-559c-4827-8653-b7d5281203fe",
+                "action_instruction": "Send a reminder email 1 week before the due date for the Sub task.\n\nUse the following email format:\n\nSubject: “Reminder – Sub task”\n\nHi Spencer,\n\nHope you are doing well!\n\nI wanted to remind you that “Sub task” is due on <Sub Task Due Date>.  \nHere are some notes for your task:  \nWebsite Review Alert & Monitoring\n\nRegards,  \nSophia  \nCompliance Assistant\n\nBefore sending the reminder, check if the due date is on a weekend or Xponance holiday. If it is, move the reminder date to the previous working day. Repeat if needed until you find a business day.\n\nXponance Holidays:\n- Jan 1: New Year's Day\n- Jan 20: Martin Luther King Jr. Day\n- Feb 17: Presidents' Day\n- May 26: Memorial Day\n- Jun 19: Juneteenth\n- Jul 4: Independence Day\n- Sep 1: Labor Day\n- Oct 13: Columbus Day\n- Nov 11: Veterans Day\n- Nov 27: Thanksgiving\n- Dec 25: Christmas Day\n",
+                "action_relative_trigger_days": -7,
+                "action_trigger_date": "Mon, 21 Jul 2025 00:00:00 GMT",
+                "action_trigger_type": "relative",
+                "action_updated_date": "Fri, 25 Jul 2025 13:08:38 GMT",
+                "adjusted_relative_trigger_date": "Mon, 14 Jul 2025 00:00:00 GMT",
+                "task_id": "task-001"
+            },
+            {
+                "_id": "6883347ec705272c61ff5e5b",
+                "action_add_date": "Fri, 25 Jul 2025 13:08:38 GMT",
+                "action_description": "",
+                "action_id": "4a6f708d-2254-4246-8a80-c4336b006df3",
+                "action_instruction": "Send a reminder email 1 week before the due date for the Sub task.\n\nUse the following email format:\n\nSubject: “Reminder – Sub task”\n\nHi Spencer,\n\nHope you are doing well!\n\nI wanted to remind you that “Sub task” is due on <Sub Task Due Date>.  \nHere are some notes for your task:  \nWebsite Review Alert & Monitoring\n\nRegards,  \nSophia  \nCompliance Assistant\n\nBefore sending the reminder, check if the due date is on a weekend or Xponance holiday. If it is, move the reminder date to the previous working day. Repeat if needed until you find a business day.\n\nXponance Holidays:\n- Jan 1: New Year's Day\n- Jan 20: Martin Luther King Jr. Day\n- Feb 17: Presidents' Day\n- May 26: Memorial Day\n- Jun 19: Juneteenth\n- Jul 4: Independence Day\n- Sep 1: Labor Day\n- Oct 13: Columbus Day\n- Nov 11: Veterans Day\n- Nov 27: Thanksgiving\n- Dec 25: Christmas Day\n",
+                "action_relative_trigger_days": -7,
+                "action_trigger_date": "Tue, 21 Oct 2025 00:00:00 GMT",
+                "action_trigger_type": "relative",
+                "action_updated_date": "Fri, 25 Jul 2025 13:08:38 GMT",
+                "adjusted_relative_trigger_date": "Tue, 14 Oct 2025 00:00:00 GMT",
+                "task_id": "task-001"
+            }
+        ],
+        "description": null,
+        "frequency": "Quarterly",
+        "status": null,
+        "subtasks": [
+            {
+                "RPY Comment due dt chk": "Ok",
+                "_id": "687a777d054829c18134c70f",
+                "due_date": "Tue, 21 Jan 2025 00:00:00 GMT",
+                "last_status_change_date": "Thu, 17 Jul 2025 00:00:00 GMT",
+                "status": "due",
+                "subtask_create_date": "Tue, 01 Jul 2025 00:00:00 GMT",
+                "subtask_description": "Website Review Alert for Quarter1",
+                "subtask_id": "subtask-WebsiteReviewAlert-Quarter1",
+                "subtask_short_description": "Website Review Alert - Quarter1",
+                "task_id": "task-001"
+            },
+            {
+                "RPY Comment due dt chk": "Ok",
+                "_id": "687a777d054829c18134c710",
+                "due_date": "Mon, 21 Apr 2025 00:00:00 GMT",
+                "last_status_change_date": "Thu, 17 Jul 2025 00:00:00 GMT",
+                "status": "due",
+                "subtask_create_date": "Tue, 01 Jul 2025 00:00:00 GMT",
+                "subtask_description": "Website Review Alert for Quarter2",
+                "subtask_id": "subtask-WebsiteReviewAlert-Quarter2",
+                "subtask_short_description": "Website Review Alert - Quarter2",
+                "task_id": "task-001"
+            },
+            {
+                "RPY Comment due dt chk": "Ok",
+                "_id": "687a777d054829c18134c711",
+                "due_date": "Mon, 21 Jul 2025 00:00:00 GMT",
+                "last_status_change_date": "Thu, 17 Jul 2025 00:00:00 GMT",
+                "status": "due",
+                "subtask_create_date": "Tue, 01 Jul 2025 00:00:00 GMT",
+                "subtask_description": "Website Review Alert for Quarter3",
+                "subtask_id": "subtask-WebsiteReviewAlert-Quarter3",
+                "subtask_short_description": "Website Review Alert - Quarter3",
+                "task_id": "task-001"
+            },
+            {
+                "RPY Comment due dt chk": "Ok",
+                "_id": "687a777d054829c18134c712",
+                "due_date": "Tue, 21 Oct 2025 00:00:00 GMT",
+                "last_status_change_date": "Thu, 17 Jul 2025 00:00:00 GMT",
+                "status": "due",
+                "subtask_create_date": "Tue, 01 Jul 2025 00:00:00 GMT",
+                "subtask_description": "Website Review Alert for Quarter4",
+                "subtask_id": "subtask-WebsiteReviewAlert-Quarter4",
+                "subtask_short_description": "Website Review Alert - Quarter4",
+                "task_id": "task-001"
+            }
+        ],
+        "task_category": "Alerts & Monitoring - Compliance",
+        "task_due_date": "21 Jan, Apr, Jul, Oct",
+        "task_id": "task-001",
+        "task_short_description": "Website Review"
+    },
+    "status": "success"
+}
