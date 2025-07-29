@@ -51,10 +51,12 @@ const TaskView: React.FC = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(`https://sophia.xponance.com/api/sub-task-details/${taskId}`);
+        const response = await fetch(`http://74.225.189.243:4001/api/sub-task-details/${taskId}`);
         if (!response.ok) throw new Error('Failed to fetch task details');
         const data = await response.json();
+        console.log(data,"response123")
         const apiTask = data.data;
+        console.log(apiTask,"apiTask")
         setTask({
           task_id: apiTask.task_id,
           task_category: apiTask.task_category,
@@ -403,13 +405,13 @@ const TaskView: React.FC = () => {
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
                         <div>
                           <Title level={5} style={{ marginBottom: 8 }}>
-                            {action.instructions.split('\n')[0]}
+                            {action.action_instructions ? action.action_instructions.split('\n')[0] : ''}
                           </Title>
                           <Text type="secondary" style={{ display: 'block', marginBottom: 16 }}>
                             {action.frequency || "Quarterly on 15th"}
                           </Text>
                           <Text style={{ display: 'block', color: '#666', marginBottom: 16 }}>
-                            {action.instructions.split('\n').slice(1).join('\n')}
+                            {action.action_instructions ? action.action_instructions.split('\n').slice(1).join('\n') : ''}
                           </Text>
                         </div>
                         <Tag color="#1890ff" style={{ borderRadius: 16, padding: '0 12px', height: '24px', lineHeight: '24px' }}>
@@ -418,7 +420,7 @@ const TaskView: React.FC = () => {
                       </div>
                       
                       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
-                        {action.tools_used.map((tool: string) => (
+                        {(action.tools_used || []).map((tool: string) => (
                           <>
                           <Tag key={tool} style={{ margin: 0, borderRadius: 4 }}>
                             {tool}

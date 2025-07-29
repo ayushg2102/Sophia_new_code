@@ -16,7 +16,7 @@ export interface Task {
 
 export interface Action {
   action_id: string;
-  instructions: string;
+  action_instructions: string;
   tools_used: string[];
   frequency?: string;
   status?: 'configured' | 'not-configured';

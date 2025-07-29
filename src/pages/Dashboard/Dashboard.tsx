@@ -66,13 +66,14 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await fetch('https://sophia.xponance.com/api/all-task-master');
+        const response = await fetch('http://74.225.189.243:4001/api/tasks');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+        console.log(data.data,"response123")
         const dynamicTaskData:any=[];
-        data.data.forEach((item:any) => {
+        data.data.tasks.forEach((item:any) => {
           dynamicTaskData.push({
             task_id: item.task_id,
             task_category: item["Task Category"],
