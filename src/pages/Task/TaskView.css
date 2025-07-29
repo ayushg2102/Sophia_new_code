@@ -73,6 +73,17 @@
 }
 
 
+.actions-list-scroll {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-bottom: 8px;
+}
+
+.subtasks-list-scroll {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-bottom: 8px;
+}
 .task-view-container {
   max-width: 1400px;
   margin: 0 auto;

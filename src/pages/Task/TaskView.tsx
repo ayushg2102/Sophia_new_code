@@ -276,7 +276,7 @@ const TaskView: React.FC = () => {
                   Subtasks
                 </Title>
 
-                <div className="subtasks-list">
+                <div className="subtasks-list subtasks-list-scroll">
                   {task.subtasks?.map((subtask: Subtask) => (
                     <Card
                       key={subtask.subtask_id}
@@ -395,7 +395,7 @@ const TaskView: React.FC = () => {
                   Actions
                 </Title>
 
-                <div className="subtasks-list">
+                <div className="subtasks-list actions-list-scroll">
                   {task.actions?.map((action: Action) => (
                     <Card
                       key={action.action_id}
