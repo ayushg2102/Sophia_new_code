@@ -7,6 +7,7 @@ import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
 import TaskView from './pages/Task/TaskView';
 import SubtaskDetail from './pages/SubtaskDetail/SubtaskDetail';
+import ActionDetail from './pages/ActionDetail/ActionDetail';
 import AllTasks from './pages/Dashboard/AllTasks';
 
 const theme = {
@@ -40,6 +41,11 @@ function App() {
             <Route path="/subtask/:subtaskId" element={
               <ProtectedRoute>
                 <SubtaskDetail />
+              </ProtectedRoute>
+            } />
+            <Route path="/action/:actionId" element={
+              <ProtectedRoute>
+                <ActionDetail />
               </ProtectedRoute>
             } />
             <Route path="/all-tasks" element={

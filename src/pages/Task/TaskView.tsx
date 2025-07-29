@@ -447,7 +447,7 @@ const TaskView: React.FC = () => {
                           }}
                           onClick={(e) => {
                             e.stopPropagation();
-                            navigate(`/subtask/}`);;
+                            navigate(`/action/${action.action_id}`, { state: { taskName: task.task_short_description } });
                           }}
                         >
                           Configure
