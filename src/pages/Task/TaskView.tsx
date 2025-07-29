@@ -51,7 +51,7 @@ const TaskView: React.FC = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(`http://74.225.189.243:4001/api/sub-task-details/${taskId}`);
+        const response = await fetch(`/api/sub-task-details/${taskId}`);
         if (!response.ok) throw new Error('Failed to fetch task details');
         const data = await response.json();
         console.log(data,"response123")
