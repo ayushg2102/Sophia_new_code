@@ -68,6 +68,8 @@ const TaskView: React.FC = () => {
           subtasks: apiTask.subtasks || [],
           actions: apiTask.actions || [],
         });
+        console.log(task?.actions,"task1231")
+        console.log(task?.actions?.map((action_instruction) => action_instruction.action_instruction),"action123")
       } catch {
         setError('Could not load task details. Please try again.');
         setTask(null);
@@ -405,13 +407,29 @@ const TaskView: React.FC = () => {
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
                         <div>
                           <Title level={5} style={{ marginBottom: 8 }}>
-                            {action.action_instructions ? action.action_instructions.split('\n')[0] : ''}
+                            {action.action_instruction ? action.action_instruction.split('\n')[0] : ''}
                           </Title>
                           <Text type="secondary" style={{ display: 'block', marginBottom: 16 }}>
                             {action.frequency || "Quarterly on 15th"}
                           </Text>
-                          <Text style={{ display: 'block', color: '#666', marginBottom: 16 }}>
-                            {action.action_instructions ? action.action_instructions.split('\n').slice(1).join('\n') : ''}
+                          
+                          <Text 
+                            style={{ 
+                              display: '-webkit-box',
+                              color: '#666', 
+                              marginBottom: 16,
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              WebkitLineClamp: 3,
+                              WebkitBoxOrient: 'vertical'
+                            }}
+
+                            title={action.action_instruction ? action.action_instruction.split('\n').slice(1).join('\n') : ''}
+                          >
+                            {action.action_instruction 
+                              ? action.action_instruction.split('\n').slice(1).join(' ').split(' ').slice(0, 50).join(' ')
+                              : ''}
+                            {action.action_instruction && action.action_instruction.split('\n').slice(1).join(' ').split(' ').length > 50 ? '...' : ''}
                           </Text>
                         </div>
                         <Tag color="#1890ff" style={{ borderRadius: 16, padding: '0 12px', height: '24px', lineHeight: '24px' }}>
@@ -434,7 +452,7 @@ const TaskView: React.FC = () => {
                           </Tag>
                       </div>
 
-                      <div style={{ display: 'flex', justifyContent: 'flex-start', gap: 8,marginTop:'100px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'flex-start', gap: 8,marginTop:'20px',float:'right' }}>
                         <Button
                           type="primary"
                           size="middle"
@@ -447,10 +465,10 @@ const TaskView: React.FC = () => {
                           }}
                           onClick={(e) => {
                             e.stopPropagation();
-                            navigate(`/action/${action.action_id}`, { state: { taskName: task.task_short_description, actionId: action.action_id, instructions: action.action_instructions } });
+                            navigate(`/action/${action.action_id}`, { state: { taskName: task.task_short_description, actionId: action.action_id, instructions: action.action_instruction } });
                           }}
                         >
-                          Configure
+                          View Details
                         </Button>
                         <Button
                           type="primary"
