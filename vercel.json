@@ -7,6 +7,10 @@
     {
       "source": "/api/sub-task-details/:taskId",
       "destination": "http://74.225.189.243:4001/api/sub-task-details/:taskId"
-    }
+    },
+    {
+      "source": "/api/action-details/:actionId",
+      "destination": "http://74.225.189.243:4001/api/action-details/:actionId"
+    }      
   ]
 }
