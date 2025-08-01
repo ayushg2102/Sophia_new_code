@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Card, Tag, Button, Typography, Divider, List, Spin, Alert, Row, Col, Collapse } from 'antd';
+import { Layout, Card, Tag, Button, Typography, Divider, Spin, Alert, Row, Col, Collapse } from 'antd';
 import dayjs from 'dayjs';
 import { ArrowLeftOutlined, CalendarOutlined, ToolOutlined, ClockCircleOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
@@ -126,18 +126,14 @@ const ActionDetail: React.FC = () => {
             <Title level={3} className="action-detail-title">{action.action_name}</Title>
             <div className="action-detail-meta">
               <span className="action-detail-label">Task:</span> <span>{action.task_name}</span>
-              {/* <span className="action-detail-label">Sub Task:</span> <span>{action.subtask_name}</span> */}
             </div>
           </div>
+          
           <div className="action-detail-section">
             <Title level={5} className="action-detail-section-title">Instructions</Title>
-            
-            {/* Render instructions as a list of steps if possible */}
             <div className="action-detail-instructions">
               {(() => {
-                console.log(action,"action1123")
                 const lines = action.instructions.split(/\r?\n/).filter(l => l.trim() !== '');
-                // Find step/bullet lines
                 const stepLines = lines.filter(l => /^\s*(-|\d+\.|Step|•)/i.test(l.trim()));
                 const beforeList = [];
                 for (let i = 0; i < lines.length; i++) {
@@ -152,24 +148,28 @@ const ActionDetail: React.FC = () => {
                   )}
                   {stepLines.length > 0 && (
                     <ol style={{ marginLeft: 20, marginBottom: 8 }}>
-                      {stepLines.map((l, i) => <li key={i}>{l.replace(/^\s*(-|\d+\.|Step|•)\s*/, '')}</li>)}
+                      {stepLines.map((l, i) => 
+                        <li key={i} style={{ marginBottom: 4 }}>
+                          {l.replace(/^\s*(-|\d+\.|Step|•)\s*/, '')}
+                        </li>
+                      )}
                     </ol>
                   )}
                   {stepLines.length === 0 && (
-                    <div>{lines.map((l, i) => <div key={i}>{l}</div>)}</div>
+                    <div>{lines.map((l, i) => <div key={i} style={{ marginBottom: 4 }}>{l}</div>)}</div>
                   )}
                 </>;
               })()}
             </div>
           </div>
+          
           <div className="action-detail-section">
             <Title level={5} className="action-detail-section-title">Capabilities</Title>
-            <div className="action-tools">
-              <ToolOutlined />
-              <Text strong>Tools: </Text>
-              {action.tools_used && action.tools_used.length > 0 ? (
+            <div className="action-tools" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <ToolOutlined style={{ color: '#8c8c8c' }} />
+              {action.tools_used?.length > 0 ? (
                 action.tools_used.map((tool, index) => (
-                  <Tag key={index} color="blue">
+                  <Tag key={index} color="blue" style={{ margin: 0 }}>
                     {tool}
                   </Tag>
                 ))
@@ -178,50 +178,168 @@ const ActionDetail: React.FC = () => {
               )}
             </div>
           </div>
-          <div className="action-detail-trigger-row">
-            <div>
-              <span className="action-detail-label">Trigger Date:</span>
-              <Tag icon={<CalendarOutlined />} color="blue">
-                {dayjs(action.trigger_date).isValid() ? dayjs(action.trigger_date).format('MM/DD/YYYY') : action.trigger_date}
+          
+          <div className="action-detail-trigger-row" style={{ 
+            display: 'flex', 
+            gap: 24, 
+            margin: '16px 0',
+            padding: '12px 0',
+            borderTop: '1px solid #f0f0f0',
+            borderBottom: '1px solid #f0f0f0'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span className="action-detail-label" style={{ color: '#8c8c8c' }}>Trigger Date:</span>
+              <Tag icon={<CalendarOutlined />} color="blue" style={{ margin: 0 }}>
+                {dayjs(action.trigger_date).isValid() 
+                  ? dayjs(action.trigger_date).format('MMM D, YYYY') 
+                  : action.trigger_date}
               </Tag>
             </div>
-            <div>
-              <span className="action-detail-label">Trigger Type:</span>
-              <Tag icon={<ClockCircleOutlined />} color="magenta">{action.trigger_type}</Tag>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span className="action-detail-label" style={{ color: '#8c8c8c' }}>Trigger Type:</span>
+              <Tag icon={<ClockCircleOutlined />} color="magenta" style={{ margin: 0 }}>
+                {action.trigger_type}
+              </Tag>
             </div>
           </div>
+          
           <div className="action-detail-section">
             <Title level={5} className="action-detail-section-title">Action Runs</Title>
-            <List
-              dataSource={action.action_runs}
-              renderItem={(run, index) => (
-                <List.Item key={index}>
-                  <List.Item.Meta
-                    title={
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                        <Tag color={getStatusColor(run.run_status)}>
-                          {run.run_status === 'success' ? 'completed' : run.run_status}
+            <Collapse
+              bordered={false}
+              className="action-runs-collapse"
+              expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+              style={{ background: 'none' }}
+            >
+              {action.action_runs.map((run, index) => (
+                <Collapse.Panel
+                  key={index}
+                  header={
+                    <div style={{ 
+                      display: 'flex', 
+                      justifyContent: 'space-between', 
+                      alignItems: 'center',
+                      width: '100%',
+                      padding: '8px 0'
+                    }}>
+                      <Text strong style={{ fontSize: '15px' }}>{run.subtask_name}</Text>
+                      <Tag 
+                        color={getStatusColor(run.run_status)} 
+                        style={{ 
+                          marginLeft: 8,
+                          textTransform: 'capitalize',
+                          fontWeight: 500
+                        }}
+                      >
+                        {run.run_status === 'success' ? 'Completed' : run.run_status.toLowerCase()}
+                      </Tag>
+                    </div>
+                  }
+                  className="action-run-panel"
+                  style={{
+                    marginBottom: 12,
+                    background: '#fff',
+                    borderRadius: 8,
+                    border: '1px solid #f0f0f0',
+                    overflow: 'hidden'
+                  }}
+                >
+                  <div className="action-run-details" style={{ padding: '12px 0' }}>
+                    <div className="detail-row" style={{ 
+                      display: 'flex', 
+                      marginBottom: 12,
+                      lineHeight: 1.5 
+                    }}>
+                      <span className="detail-label" style={{
+                        flex: '0 0 120px',
+                        color: '#8c8c8c',
+                        fontWeight: 500
+                      }}>When</span>
+                      <span className="detail-value" style={{ flex: 1 }}>
+                        {dayjs(run.run_timestamp).format('MMM D, YYYY [at] h:mm A')}
+                      </span>
+                    </div>
+                    
+                    {run.human_msg && (
+                      <div className="detail-row" style={{
+                        display: 'flex',
+                        marginBottom: 12,
+                        lineHeight: 1.5
+                      }}>
+                        <span className="detail-label" style={{
+                          flex: '0 0 120px',
+                          color: '#8c8c8c',
+                          fontWeight: 500
+                        }}>Message</span>
+                        <span className="detail-value" style={{ flex: 1 }}>
+                          {run.human_msg}
+                        </span>
+                      </div>
+                    )}
+                    
+                    {run.description && (
+                      <div className="detail-row" style={{
+                        display: 'flex',
+                        marginBottom: 12,
+                        lineHeight: 1.5
+                      }}>
+                        <span className="detail-label" style={{
+                          flex: '0 0 120px',
+                          color: '#8c8c8c',
+                          fontWeight: 500
+                        }}>Details</span>
+                        <span className="detail-value" style={{ flex: 1 }}>
+                          {run.description}
+                        </span>
+                      </div>
+                    )}
+                    
+                    <div className="detail-row" style={{
+                      display: 'flex',
+                      marginBottom: 12,
+                      alignItems: 'center',
+                      lineHeight: 1.5
+                    }}>
+                      <span className="detail-label" style={{
+                        flex: '0 0 120px',
+                        color: '#8c8c8c',
+                        fontWeight: 500
+                      }}>Status</span>
+                      <span className="detail-value" style={{ flex: 1 }}>
+                        <Tag 
+                          color={getStatusColor(run.run_status)}
+                          style={{
+                            textTransform: 'capitalize',
+                            margin: 0
+                          }}
+                        >
+                          {run.run_status === 'success' ? 'Completed' : run.run_status.toLowerCase()}
                         </Tag>
-                        <Text>{run.subtask_name}</Text>
+                      </span>
+                    </div>
+                    
+                    {run.resume_at && (
+                      <div className="detail-row" style={{
+                        display: 'flex',
+                        marginBottom: 0,
+                        lineHeight: 1.5
+                      }}>
+                        <span className="detail-label" style={{
+                          flex: '0 0 120px',
+                          color: '#8c8c8c',
+                          fontWeight: 500
+                        }}>Next Action</span>
+                        <span className="detail-value" style={{ flex: 1 }}>
+                          {dayjs(run.resume_at).isValid()
+                            ? `Scheduled for ${dayjs(run.resume_at).format('MMM D, YYYY [at] h:mm A')}`
+                            : `Will resume ${run.resume_at}`}
+                        </span>
                       </div>
-                    }
-                    description={
-                      <div>
-                        <Text type="secondary">
-                          {dayjs(run.run_timestamp).format('MMM D, YYYY h:mm A')}
-                        </Text>
-                        <div style={{ marginTop: 8 }}>
-                          <div style={{ marginBottom: 4 }}>{run.human_msg}</div>
-                          <div style={{ marginBottom: 4 }}>{run.description}</div>
-                          <div style={{ marginBottom: 4 }}>Status: {run.run_status}</div>
-                          <div>Scheduled: {run.resume_at || 'N/A'}</div>
-                        </div>
-                      </div>
-                    }
-                  />
-                </List.Item>
-              )}
-            />
+                    )}
+                  </div>
+                </Collapse.Panel>
+              ))}
+            </Collapse>
           </div>
         </Card>
       </Content>
