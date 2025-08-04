@@ -398,7 +398,7 @@ const TaskView: React.FC = () => {
                 </Title>
 
                 <div className="subtasks-list actions-list-scroll">
-                  {task.actions?.map((action: Action) => (
+                  {task.actions?.map((action: any) => (
                     <Card
                       key={action.action_id}
                       className="action-card"
@@ -410,7 +410,7 @@ const TaskView: React.FC = () => {
                             {action.action_instruction ? action.action_instruction.split('\n')[0] : ''}
                           </Title>
                           <Text type="secondary" style={{ display: 'block', marginBottom: 16 }}>
-                            {action.frequency || "Quarterly on 15th"}
+                            {task.frequency || "Quarterly on 15th"}
                           </Text>
                           
                           <Text 
