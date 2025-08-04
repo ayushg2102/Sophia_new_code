@@ -470,23 +470,7 @@ const TaskView: React.FC = () => {
                         >
                           View Details
                         </Button>
-                        <Button
-                          type="primary"
-                          size="middle"
-                          style={{ 
-                            borderRadius: 4,
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 8,
-                            marginLeft: 18
-                          }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            // Handle view runs click
-                          }}
-                        >
-                          View Last Run
-                        </Button>
+                        
                       </div>
                     </Card>
                   ))}

@@ -71,27 +71,24 @@ const Dashboard: React.FC = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log(data.data,"response123")
-        const dynamicTaskData:any=[];
-        data.data.tasks.forEach((item:any) => {
-          dynamicTaskData.push({
-            task_id: item.task_id,
-            task_category: item["Task Category"],
-            task_short_description: item.task_short_description,
-            frequency: item.Frequency,
-            task_due_date: item.task_due_date,
-            status: 'active',
-            description: item.RPY_Com,
-            subtasks: []
-          })
-        })
+        console.log("Fetched tasks:", data.data.tasks);
+        
+        // Transform the tasks (without sorting here)
+        const dynamicTaskData = data.data.tasks.map((item: any) => ({
+          task_id: item.task_id,
+          task_category: item["Task Category"],
+          task_short_description: (item.task_short_description || '').trim(),
+          frequency: item.Frequency || '',
+          task_due_date: item.task_due_date || '',
+          status: 'active',
+          description: item.RPY_Com || '',
+          subtasks: []
+        }));
+
         setTasks(dynamicTaskData);
       } catch (err) {
         console.error('Error fetching tasks:', err);
-        // setError('Failed to load tasks. Please try again later.');
         setTasks([]);
-      } finally {
-        // setLoading(false);
       }
     };
 
@@ -117,7 +114,7 @@ const Dashboard: React.FC = () => {
                 Manage your compliance tasks, automate workflows, and track progress across all business units
               </Text> */}
             </div>
-            <Button 
+            {/* <Button 
               type="primary" 
               icon={<PlusOutlined />} 
               size="large"
@@ -125,10 +122,10 @@ const Dashboard: React.FC = () => {
               onClick={() => setCreateModalVisible(true)}
             >
               Create New Task
-            </Button>
+            </Button> */}
           </div>
 
-          <Row gutter={[16, 16]} className="metrics-row">
+          {/* <Row gutter={[16, 16]} className="metrics-row">
             <Col xs={24} sm={12} md={6}>
               <MetricCard
                 title="Sub-Tasks Completed"
@@ -165,7 +162,7 @@ const Dashboard: React.FC = () => {
                 suffix="Automated Workflows"
               />
             </Col>
-          </Row>
+          </Row> */}
 
           {/* Category Overview Section */}
           {/* Removed the All Categories square card section as per new requirements */}
@@ -188,7 +185,13 @@ const Dashboard: React.FC = () => {
                     padding: '8px 0'
                   }}
                   items={CATEGORIES.map(category => {
-                    const categoryTasks = tasks.filter((task) => task.task_category === category.key);
+                    // Filter and sort tasks for this category
+                    const categoryTasks = tasks
+                      .filter((task) => task.task_category === category.key)
+                      .sort((a, b) => 
+                        (a.task_short_description || '').trim().localeCompare((b.task_short_description || '').trim())
+                      );
+
                     return {
                       label: (
                         <span>
@@ -198,13 +201,8 @@ const Dashboard: React.FC = () => {
                       key: category.key,
                       children: (
                         <div>
-                          {/* <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-                            <Title level={4} style={{ margin: 0 }}>{category.key}</Title>
-                            <Button type="link" onClick={() => navigate(`/all-tasks?category=${encodeURIComponent(category.key)}`)} style={{ fontWeight: 500 }}>
-                              View All
-                            </Button>
-                          </div> */}
-                          <Row gutter={[24, 24]}>
+                          <div style={{ maxHeight: 'calc(100vh - 90px)', overflowY: 'auto', overflowX: 'hidden', width: '100%' }}>
+                            <Row gutter={[16, 16]} style={{ margin: 0, width: '100%' }}>
                             {categoryTasks.length === 0 ? (
                               <Col span={24} style={{ textAlign: 'left', color: '#aaa' }}>
                                 <Text type="secondary">No tasks in this category.</Text>
@@ -243,6 +241,7 @@ const Dashboard: React.FC = () => {
                               ))
                             )}
                           </Row>
+                          </div>
                         </div>
                       ),
                     };

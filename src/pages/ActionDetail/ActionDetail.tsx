@@ -62,7 +62,7 @@ const ActionDetail: React.FC = () => {
         // Map API response to match our interface
         const mappedAction: ActionDetailType = {
           action_id: responseData.action_id,
-          action_name: 'Reminder Email',
+          action_name: 'Action',
           task_name: taskNameFromState || responseData.task_name || 'Task',
           subtask_name: responseData.subtask_name || '',
           instructions: instructionsFromState || responseData.action_instructions,
