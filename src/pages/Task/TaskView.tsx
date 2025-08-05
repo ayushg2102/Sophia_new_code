@@ -224,7 +224,7 @@ const TaskView: React.FC = () => {
               </>
             )}
             <Row gutter={[24, 16]} className="task-details">
-              <Col xs={24} sm={12} md={6}>
+              {/* <Col xs={24} sm={12} md={6}>
                 <div className="task-detail-item">
                   <CalendarOutlined className="detail-icon" />
                   <div>
@@ -235,7 +235,7 @@ const TaskView: React.FC = () => {
                     </Text>
                   </div>
                 </div>
-              </Col>
+              </Col> */}
               <Col xs={24} sm={12} md={6}>
                 <div className="task-detail-item">
                   <SyncOutlined className="detail-icon" />

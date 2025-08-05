@@ -1,590 +1,608 @@
 {
-  "data": {
-      "filters": {
-          "category_id": null,
-          "priority": null,
-          "status": null
-      },
-      "limit": null,
-      "skip": null,
-      "tasks": [
-          {
-              "Frequency": "Quarterly",
-              "RPY Com": "OK",
-              "Task Category": "Alerts & Monitoring - Compliance",
-              "_id": "687a776a054829c18134c6cb",
-              "task_due_date": "21 Jan, Apr, Jul, Oct",
-              "task_id": "task-001",
-              "task_short_description": "Website Review"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "All calender invite send at 11 am",
-              "Task Category": "Compliance Client Declarations",
-              "_id": "687a776a054829c18134c6cc",
-              "task_due_date": "2025-07-01 00:00:00",
-              "task_id": "task-004",
-              "task_short_description": "Baltimore ERS - Compliance with MFN Provisions"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "Send for now #Chk Spencer",
-              "Task Category": "Compliance Client Declarations",
-              "_id": "687a776a054829c18134c6cd",
-              "task_due_date": "2025-07-01 00:00:00",
-              "task_id": "task-007",
-              "task_short_description": "ERISA clients - Notice as per DOL Regulation"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "Send for now #Chk Spencer",
-              "Task Category": "Compliance Client Declarations",
-              "_id": "687a776a054829c18134c6ce",
-              "task_due_date": "2025-04-15 00:00:00",
-              "task_id": "task-007",
-              "task_short_description": "ERISA clients - Notice as per DOL Regulation"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Client Declarations",
-              "_id": "687a776a054829c18134c6cf",
-              "task_due_date": "2025-05-12 00:00:00",
-              "task_id": "task-013",
-              "task_short_description": "IMRF Compliance Questionnaire"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Client Declarations",
-              "_id": "687a776a054829c18134c6d0",
-              "task_due_date": "2025-09-15 00:00:00",
-              "task_id": "task-016",
-              "task_short_description": "Mass PRIM - Disclosure regarding 3rd party individuals who receive fees"
-          },
-          {
-              "Frequency": "Quarterly",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Client Declarations",
-              "_id": "687a776a054829c18134c6d1",
-              "task_due_date": "End of Month  Jan, Apr, Jul, Oct",
-              "task_id": "task-007",
-              "task_short_description": "NYC SYS - Compliance Letter"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Client Declarations",
-              "_id": "687a776a054829c18134c6d2",
-              "task_due_date": "2025-04-30 00:00:00",
-              "task_id": "task-022",
-              "task_short_description": "NYC Systems - Ethics and Compliance Questionnaire"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Client Declarations",
-              "_id": "687a776a054829c18134c6d3",
-              "task_due_date": "2025-06-30 00:00:00",
-              "task_id": "task-025",
-              "task_short_description": "NYS Common - Compliance Manual"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Client Declarations",
-              "_id": "687a776a054829c18134c6d4",
-              "task_due_date": "2025-01-31 00:00:00",
-              "task_id": "task-028",
-              "task_short_description": "NYSCRF - Compliance Questionnaire"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Client Declarations",
-              "_id": "687a776a054829c18134c6d5",
-              "task_due_date": "2025-08-14 00:00:00",
-              "task_id": "task-031",
-              "task_short_description": "NYSTR - ESG Questionnaire"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6d6",
-              "task_due_date": "2025-11-01 00:00:00",
-              "task_id": "task-012",
-              "task_short_description": " Compliance Training"
-          },
-          {
-              "Frequency": "Once in six years",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6d7",
-              "task_due_date": "2026-06-23 00:00:00",
-              "task_id": "task-013",
-              "task_short_description": "Affidavit of Use for - #UNKNOWN!"
-          },
-          {
-              "Frequency": "Once in six years",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6d8",
-              "task_due_date": "2026-06-23 00:00:00",
-              "task_id": "task-014",
-              "task_short_description": "Affidavit of Use for - XPONANCE (name)"
-          },
-          {
-              "Frequency": "Once in six years",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6d9",
-              "task_due_date": "2026-06-23 00:00:00",
-              "task_id": "task-015",
-              "task_short_description": "Affidavit of Use for - YOUR SUCCESS OUR PASSION"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6da",
-              "task_due_date": "2025-06-15 00:00:00",
-              "task_id": "task-016",
-              "task_short_description": "Annual desk audit"
-          },
-          {
-              "Frequency": "Quarterly",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6db",
-              "task_due_date": "15th Jan / Apr/ Jul/ Oct",
-              "task_id": "task-017",
-              "task_short_description": "Board/ Shareholder Meetings"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6dc",
-              "task_due_date": "2025-05-01 00:00:00",
-              "task_id": "task-018",
-              "task_short_description": "CFA - GIPS"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6dd",
-              "task_due_date": "2025-12-31 00:00:00",
-              "task_id": "task-055",
-              "task_short_description": "Compliance Manual distribution"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6de",
-              "task_due_date": "2025-06-30 00:00:00",
-              "task_id": "task-058",
-              "task_short_description": "Compliance Program Review Report - To the Board of Directors"
-          },
-          {
-              "Frequency": "Quarterly",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6df",
-              "task_due_date": "15 Feb, May, Aug and Nov",
-              "task_id": "task-021",
-              "task_short_description": "COR Meeting"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6e0",
-              "task_due_date": "2025-05-01 00:00:00",
-              "task_id": "task-064",
-              "task_short_description": "Delivery of Audited Financials"
-          },
-          {
-              "Frequency": "Monthly",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6e1",
-              "task_due_date": "15th of each month",
-              "task_id": "task-067",
-              "task_short_description": "Email Alert & Monitoring"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6e2",
-              "task_due_date": "2025-11-15 00:00:00",
-              "task_id": "task-070",
-              "task_short_description": "Executed contracts - Client and Sub-managers"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6e3",
-              "task_due_date": "2025-12-31 00:00:00",
-              "task_id": "task-073",
-              "task_short_description": "FINRA registration fees"
-          },
-          {
-              "Frequency": "Quarterly",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6e4",
-              "task_due_date": "15th Apr, Jul, Oct, Jan",
-              "task_id": "task-026",
-              "task_short_description": "Fixed Income Factsheets Review"
-          },
-          {
-              "Frequency": "Quarterly",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6e5",
-              "task_due_date": "30th  Apr, Jul, Oct, Jan",
-              "task_id": "task-027",
-              "task_short_description": "Global Equities Factsheets Review"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6e6",
-              "task_due_date": "2025-04-08 00:00:00",
-              "task_id": "task-082",
-              "task_short_description": "Mass Prim - 3rd Party Disclosure"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6e7",
-              "task_due_date": "2025-04-01 00:00:00",
-              "task_id": "task-085",
-              "task_short_description": "NYS Teachers Contract renewal letter"
-          },
-          {
-              "Frequency": "Monthly",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6e8",
-              "task_due_date": "5th of each month",
-              "task_id": "task-088",
-              "task_short_description": "On-site Visit Report Review"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6e9",
-              "task_due_date": "2025-03-31 00:00:00",
-              "task_id": "task-031",
-              "task_short_description": "Privacy Notice Clients"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6ea",
-              "task_due_date": "2025-11-30 00:00:00",
-              "task_id": "task-094",
-              "task_short_description": "Renewal Fees for Investment Adviser Rep"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6eb",
-              "task_due_date": "2025-03-31 00:00:00",
-              "task_id": "task-033",
-              "task_short_description": "SOC Reports"
-          },
-          {
-              "Frequency": "Quarterly",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6ec",
-              "task_due_date": "10th Jan, Apr, Jul, Oct",
-              "task_id": "task-034",
-              "task_short_description": "Staff Declarations"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6ed",
-              "task_due_date": "2025-12-31 00:00:00",
-              "task_id": "task-035",
-              "task_short_description": "Staff Declarations"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6ee",
-              "task_due_date": "2025-05-16 00:00:00",
-              "task_id": "task-106",
-              "task_short_description": "Sub-Advisors Declarations"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6ef",
-              "task_due_date": "2025-06-30 00:00:00",
-              "task_id": "task-106",
-              "task_short_description": "Sub-Advisors Declarations"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6f0",
-              "task_due_date": "2025-08-18 00:00:00",
-              "task_id": "task-112",
-              "task_short_description": "IL SURS - Compliance Certification - Sub-Advisors"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6f1",
-              "task_due_date": "2025-07-30 00:00:00",
-              "task_id": "task-115",
-              "task_short_description": "Maryland State - Compliance Questionnaire and Certificate"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6f2",
-              "task_due_date": "2025-10-18 00:00:00",
-              "task_id": "task-118",
-              "task_short_description": "Sub-Manager's Proxy Voting Policies to the CIT Client"
-          },
-          {
-              "Frequency": "Quarterly",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6f3",
-              "task_due_date": "15th Apr, Jul, Oct, Jan",
-              "task_id": "task-041",
-              "task_short_description": "Systematic Equities Factsheets Review"
-          },
-          {
-              "Frequency": "Once in ten years",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6f4",
-              "task_due_date": "2029-03-31 00:00:00",
-              "task_id": "task-042",
-              "task_short_description": "Trademark Registration - FIS Globe Logo"
-          },
-          {
-              "Frequency": "Quarterly",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reminders Management",
-              "_id": "687a776a054829c18134c6f5",
-              "task_due_date": "10th Jan, Apr, Jul, Oct",
-              "task_id": "task-043",
-              "task_short_description": "Vendor Declarations"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reviews",
-              "_id": "687a776a054829c18134c6f6",
-              "task_due_date": "2025-12-31 00:00:00",
-              "task_id": "task-044",
-              "task_short_description": "Compliance Program Review - Distribute to Clients"
-          },
-          {
-              "Frequency": "Semi Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reviews",
-              "_id": "687a776a054829c18134c6f7",
-              "task_due_date": "6/ 30 and 12/31",
-              "task_id": "task-045",
-              "task_short_description": "Compliance Review - Share with Clients"
-          },
-          {
-              "Frequency": "Quarterly",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reviews",
-              "_id": "687a776a054829c18134c6f8",
-              "task_due_date": "15 Jan, Apr, Jul, Oct",
-              "task_id": "task-046",
-              "task_short_description": "M &T Review"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reviews",
-              "_id": "687a776a054829c18134c6f9",
-              "task_due_date": "2025-09-01 00:00:00",
-              "task_id": "task-139",
-              "task_short_description": "NYS Teachers - Marketing Permission Letter"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reviews",
-              "_id": "687a776a054829c18134c6fa",
-              "task_due_date": "2025-08-01 00:00:00",
-              "task_id": "task-142",
-              "task_short_description": "Permission to use NYS Teachers Name in Pitch Books"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Compliance Reviews",
-              "_id": "687a776a054829c18134c6fb",
-              "task_due_date": "2025-05-16 00:00:00",
-              "task_id": "task-145",
-              "task_short_description": "PSERS - Compliance Review"
-          },
-          {
-              "Task Category": "Document Analysis and Information Gathering",
-              "_id": "687a776a054829c18134c6fc",
-              "task_id": "task-050",
-              "task_short_description": "Multiple Standard Documents Reviewed by Compliance"
-          },
-          {
-              "Task Category": "Industry Trend Analysis & Updates",
-              "_id": "687a776a054829c18134c6fd",
-              "task_id": "task-051",
-              "task_short_description": "Industry Trend Analysis & Updates"
-          },
-          {
-              "Frequency": "Quarterly",
-              "RPY Com": "OK",
-              "Task Category": "Regulatory Form Filing",
-              "_id": "687a776a054829c18134c6fe",
-              "task_due_date": "14th Feb, May, Aug, Nov",
-              "task_id": "task-052",
-              "task_short_description": "Form 13 F"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Regulatory Form Filing",
-              "_id": "687a776a054829c18134c6ff",
-              "task_due_date": "2025-02-14 00:00:00",
-              "task_id": "task-053",
-              "task_short_description": "Form 13 H"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Regulatory Form Filing",
-              "_id": "687a776a054829c18134c700",
-              "task_due_date": "2025-04-01 00:00:00",
-              "task_id": "task-054",
-              "task_short_description": "Form 600 H"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Regulatory Form Filing",
-              "_id": "687a776a054829c18134c701",
-              "task_due_date": "2025-04-01 00:00:00",
-              "task_id": "task-055",
-              "task_short_description": "Form 600 J"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Regulatory Form Filing",
-              "_id": "687a776a054829c18134c702",
-              "task_due_date": "2025-04-01 00:00:00",
-              "task_id": "task-166",
-              "task_short_description": "Form 700 & Disclosure of Contributions and Gifts"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Regulatory Form Filing",
-              "_id": "687a776a054829c18134c703",
-              "task_due_date": "2025-03-31 00:00:00",
-              "task_id": "task-057",
-              "task_short_description": "Form ADV"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Regulatory Form Filing",
-              "_id": "687a776a054829c18134c704",
-              "task_due_date": "2025-03-31 00:00:00",
-              "task_id": "task-058",
-              "task_short_description": "Form CRS"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "Final due date from Spencer, Pause this for now",
-              "Task Category": "Regulatory Form Filing",
-              "_id": "687a776a054829c18134c705",
-              "task_id": "task-059",
-              "task_short_description": "Form D"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Regulatory Form Filing",
-              "_id": "687a776a054829c18134c706",
-              "task_due_date": "2025-03-31 00:00:00",
-              "task_id": "task-060",
-              "task_short_description": "Form LM-10"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Regulatory Form Filing",
-              "_id": "687a776a054829c18134c707",
-              "task_due_date": "2025-04-30 00:00:00",
-              "task_id": "task-061",
-              "task_short_description": "Form PF"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Regulatory Form Filing",
-              "_id": "687a776a054829c18134c708",
-              "task_due_date": "2025-02-07 00:00:00",
-              "task_id": "task-184",
-              "task_short_description": "State Reporting Requirement - CA"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Regulatory Form Filing",
-              "_id": "687a776a054829c18134c709",
-              "task_due_date": "2025-05-31 00:00:00",
-              "task_id": "task-187",
-              "task_short_description": "State Reporting Requirement - CT"
-          },
-          {
-              "Frequency": "Annual",
-              "RPY Com": "OK",
-              "Task Category": "Regulatory Form Filing",
-              "_id": "687a776a054829c18134c70a",
-              "task_due_date": "2025-04-15 00:00:00",
-              "task_id": "task-190",
-              "task_short_description": "State Reporting Requirement - NC"
-          },
-          {
-              "Task Category": "Regulatory Monitoring & Updates",
-              "_id": "687a776a054829c18134c70b",
-              "task_id": "task-065",
-              "task_short_description": "Regulatory Monitoring & Updates"
-          }
-      ],
-      "total_count": 65
-  },
-  "status": "success"
+    "data": {
+        "filters": {
+            "category_id": null,
+            "priority": null,
+            "status": null
+        },
+        "limit": null,
+        "skip": null,
+        "tasks": [
+            {
+                "Frequency": "Quarterly",
+                "RPY Com": "OK",
+                "Task Category": "Alerts & Monitoring - Compliance",
+                "_id": "687a776a054829c18134c6cb",
+                "task_due_date": "21 Jan, Apr, Jul, Oct",
+                "task_id": "task-001",
+                "task_short_description": "Website Review"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "All calender invite send at 11 am",
+                "Task Category": "Compliance Client Declarations",
+                "_id": "687a776a054829c18134c6cc",
+                "task_due_date": "2025-07-01 00:00:00",
+                "task_id": "task-004",
+                "task_short_description": "Baltimore ERS - Compliance with MFN Provisions"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "Send for now #Chk Spencer",
+                "Task Category": "Compliance Client Declarations",
+                "_id": "687a776a054829c18134c6cd",
+                "task_due_date": "2025-07-01 00:00:00",
+                "task_id": "task-007",
+                "task_short_description": "ERISA clients - Notice as per DOL Regulation"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "Send for now #Chk Spencer",
+                "Task Category": "Compliance Client Declarations",
+                "_id": "687a776a054829c18134c6ce",
+                "task_due_date": "2025-04-15 00:00:00",
+                "task_id": "task-007",
+                "task_short_description": "ERISA clients - Notice as per DOL Regulation"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Client Declarations",
+                "_id": "687a776a054829c18134c6cf",
+                "task_due_date": "2025-05-12 00:00:00",
+                "task_id": "task-013",
+                "task_short_description": "IMRF Compliance Questionnaire"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Client Declarations",
+                "_id": "687a776a054829c18134c6d0",
+                "task_due_date": "2025-09-15 00:00:00",
+                "task_id": "task-016",
+                "task_short_description": "Mass PRIM - Disclosure regarding 3rd party individuals who receive fees"
+            },
+            {
+                "Frequency": "Quarterly",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Client Declarations",
+                "_id": "687a776a054829c18134c6d1",
+                "task_due_date": "End of Month  Jan, Apr, Jul, Oct",
+                "task_id": "task-007",
+                "task_short_description": "NYC SYS - Compliance Letter"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Client Declarations",
+                "_id": "687a776a054829c18134c6d2",
+                "task_due_date": "2025-04-30 00:00:00",
+                "task_id": "task-022",
+                "task_short_description": "NYC Systems - Ethics and Compliance Questionnaire"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Client Declarations",
+                "_id": "687a776a054829c18134c6d3",
+                "task_due_date": "2025-06-30 00:00:00",
+                "task_id": "task-025",
+                "task_short_description": "NYS Common - Compliance Manual"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Client Declarations",
+                "_id": "687a776a054829c18134c6d4",
+                "task_due_date": "2025-01-31 00:00:00",
+                "task_id": "task-028",
+                "task_short_description": "NYSCRF - Compliance Questionnaire"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Client Declarations",
+                "_id": "687a776a054829c18134c6d5",
+                "task_due_date": "2025-08-14 00:00:00",
+                "task_id": "task-031",
+                "task_short_description": "NYSTR - ESG Questionnaire"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6d6",
+                "task_due_date": "2025-11-01 00:00:00",
+                "task_id": "task-012",
+                "task_short_description": " Compliance Training"
+            },
+            {
+                "Frequency": "Once in six years",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6d7",
+                "task_due_date": "2026-06-23 00:00:00",
+                "task_id": "task-013",
+                "task_short_description": "Affidavit of Use for - #UNKNOWN!"
+            },
+            {
+                "Frequency": "Once in six years",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6d8",
+                "task_due_date": "2026-06-23 00:00:00",
+                "task_id": "task-014",
+                "task_short_description": "Affidavit of Use for - XPONANCE (name)"
+            },
+            {
+                "Frequency": "Once in six years",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6d9",
+                "task_due_date": "2026-06-23 00:00:00",
+                "task_id": "task-015",
+                "task_short_description": "Affidavit of Use for - YOUR SUCCESS OUR PASSION"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6da",
+                "task_due_date": "2025-06-15 00:00:00",
+                "task_id": "task-016",
+                "task_short_description": "Annual desk audit"
+            },
+            {
+                "Frequency": "Quarterly",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6db",
+                "task_due_date": "15th Jan / Apr/ Jul/ Oct",
+                "task_id": "task-017",
+                "task_short_description": "Board/ Shareholder Meetings"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6dc",
+                "task_due_date": "2025-05-01 00:00:00",
+                "task_id": "task-018",
+                "task_short_description": "CFA - GIPS"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6dd",
+                "task_due_date": "2025-12-31 00:00:00",
+                "task_id": "task-055",
+                "task_short_description": "Compliance Manual distribution"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6de",
+                "task_due_date": "2025-06-30 00:00:00",
+                "task_id": "task-058",
+                "task_short_description": "Compliance Program Review Report - To the Board of Directors"
+            },
+            {
+                "Frequency": "Quarterly",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6df",
+                "task_due_date": "15 Feb, May, Aug and Nov",
+                "task_id": "task-021",
+                "task_short_description": "COR Meeting"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6e0",
+                "task_due_date": "2025-05-01 00:00:00",
+                "task_id": "task-064",
+                "task_short_description": "Delivery of Audited Financials"
+            },
+            {
+                "Frequency": "Monthly",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6e1",
+                "task_due_date": "15th of each month",
+                "task_id": "task-067",
+                "task_short_description": "Email Alert & Monitoring"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6e2",
+                "task_due_date": "2025-11-15 00:00:00",
+                "task_id": "task-070",
+                "task_short_description": "Executed contracts - Client and Sub-managers"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6e3",
+                "task_due_date": "2025-12-31 00:00:00",
+                "task_id": "task-073",
+                "task_short_description": "FINRA registration fees"
+            },
+            {
+                "Frequency": "Quarterly",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6e4",
+                "task_due_date": "15th Apr, Jul, Oct, Jan",
+                "task_id": "task-026",
+                "task_short_description": "Fixed Income Factsheets Review"
+            },
+            {
+                "Frequency": "Quarterly",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6e5",
+                "task_due_date": "30th  Apr, Jul, Oct, Jan",
+                "task_id": "task-027",
+                "task_short_description": "Global Equities Factsheets Review"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6e6",
+                "task_due_date": "2025-04-08 00:00:00",
+                "task_id": "task-082",
+                "task_short_description": "Mass Prim - 3rd Party Disclosure"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6e7",
+                "task_due_date": "2025-04-01 00:00:00",
+                "task_id": "task-085",
+                "task_short_description": "NYS Teachers Contract renewal letter"
+            },
+            {
+                "Frequency": "Monthly",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6e8",
+                "task_due_date": "5th of each month",
+                "task_id": "task-088",
+                "task_short_description": "On-site Visit Report Review"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6e9",
+                "task_due_date": "2025-03-31 00:00:00",
+                "task_id": "task-031",
+                "task_short_description": "Privacy Notice Clients"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6ea",
+                "task_due_date": "2025-11-30 00:00:00",
+                "task_id": "task-094",
+                "task_short_description": "Renewal Fees for Investment Adviser Rep"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6eb",
+                "task_due_date": "2025-03-31 00:00:00",
+                "task_id": "task-033",
+                "task_short_description": "SOC Reports"
+            },
+            {
+                "Frequency": "Quarterly",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6ec",
+                "task_due_date": "10th Jan, Apr, Jul, Oct",
+                "task_id": "task-034",
+                "task_short_description": "Staff Declarations"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6ed",
+                "task_due_date": "2025-12-31 00:00:00",
+                "task_id": "task-035",
+                "task_short_description": "Staff Declarations"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6ee",
+                "task_due_date": "2025-05-16 00:00:00",
+                "task_id": "task-106",
+                "task_short_description": "Sub-Advisors Declarations"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6ef",
+                "task_due_date": "2025-06-30 00:00:00",
+                "task_id": "task-106",
+                "task_short_description": "Sub-Advisors Declarations"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6f0",
+                "task_due_date": "2025-08-18 00:00:00",
+                "task_id": "task-112",
+                "task_short_description": "IL SURS - Compliance Certification - Sub-Advisors"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6f1",
+                "task_due_date": "2025-07-30 00:00:00",
+                "task_id": "task-115",
+                "task_short_description": "Maryland State - Compliance Questionnaire and Certificate"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6f2",
+                "task_due_date": "2025-10-18 00:00:00",
+                "task_id": "task-118",
+                "task_short_description": "Sub-Manager's Proxy Voting Policies to the CIT Client"
+            },
+            {
+                "Frequency": "Quarterly",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6f3",
+                "task_due_date": "15th Apr, Jul, Oct, Jan",
+                "task_id": "task-041",
+                "task_short_description": "Systematic Equities Factsheets Review"
+            },
+            {
+                "Frequency": "Once in ten years",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6f4",
+                "task_due_date": "2029-03-31 00:00:00",
+                "task_id": "task-042",
+                "task_short_description": "Trademark Registration - FIS Globe Logo"
+            },
+            {
+                "Frequency": "Quarterly",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reminders Management",
+                "_id": "687a776a054829c18134c6f5",
+                "task_due_date": "10th Jan, Apr, Jul, Oct",
+                "task_id": "task-043",
+                "task_short_description": "Vendor Declarations"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reviews",
+                "_id": "687a776a054829c18134c6f6",
+                "task_due_date": "2025-12-31 00:00:00",
+                "task_id": "task-044",
+                "task_short_description": "Compliance Program Review - Distribute to Clients"
+            },
+            {
+                "Frequency": "Semi Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reviews",
+                "_id": "687a776a054829c18134c6f7",
+                "task_due_date": "6/ 30 and 12/31",
+                "task_id": "task-045",
+                "task_short_description": "Compliance Review - Share with Clients"
+            },
+            {
+                "Frequency": "Quarterly",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reviews",
+                "_id": "687a776a054829c18134c6f8",
+                "task_due_date": "15 Jan, Apr, Jul, Oct",
+                "task_id": "task-046",
+                "task_short_description": "M &T Review"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reviews",
+                "_id": "687a776a054829c18134c6f9",
+                "task_due_date": "2025-09-01 00:00:00",
+                "task_id": "task-139",
+                "task_short_description": "NYS Teachers - Marketing Permission Letter"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reviews",
+                "_id": "687a776a054829c18134c6fa",
+                "task_due_date": "2025-08-01 00:00:00",
+                "task_id": "task-142",
+                "task_short_description": "Permission to use NYS Teachers Name in Pitch Books"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Compliance Reviews",
+                "_id": "687a776a054829c18134c6fb",
+                "task_due_date": "2025-05-16 00:00:00",
+                "task_id": "task-145",
+                "task_short_description": "PSERS - Compliance Review"
+            },
+            {
+                "Task Category": "Document Analysis and Information Gathering",
+                "_id": "687a776a054829c18134c6fc",
+                "task_id": "task-050",
+                "task_short_description": "Multiple Standard Documents Reviewed by Compliance"
+            },
+            {
+                "Task Category": "Industry Trend Analysis & Updates",
+                "_id": "687a776a054829c18134c6fd",
+                "task_id": "task-051",
+                "task_short_description": "Industry Trend Analysis & Updates"
+            },
+            {
+                "Frequency": "Quarterly",
+                "RPY Com": "OK",
+                "Task Category": "Regulatory Form Filing",
+                "_id": "687a776a054829c18134c6fe",
+                "task_due_date": "14th Feb, May, Aug, Nov",
+                "task_id": "task-052",
+                "task_short_description": "Form 13 F"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Regulatory Form Filing",
+                "_id": "687a776a054829c18134c6ff",
+                "task_due_date": "2025-02-14 00:00:00",
+                "task_id": "task-053",
+                "task_short_description": "Form 13 H"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Regulatory Form Filing",
+                "_id": "687a776a054829c18134c700",
+                "task_due_date": "2025-04-01 00:00:00",
+                "task_id": "task-054",
+                "task_short_description": "Form 600 H"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Regulatory Form Filing",
+                "_id": "687a776a054829c18134c701",
+                "task_due_date": "2025-04-01 00:00:00",
+                "task_id": "task-055",
+                "task_short_description": "Form 600 J"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Regulatory Form Filing",
+                "_id": "687a776a054829c18134c702",
+                "task_due_date": "2025-04-01 00:00:00",
+                "task_id": "task-166",
+                "task_short_description": "Form 700 & Disclosure of Contributions and Gifts"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Regulatory Form Filing",
+                "_id": "687a776a054829c18134c703",
+                "task_due_date": "2025-03-31 00:00:00",
+                "task_id": "task-057",
+                "task_short_description": "Form ADV"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Regulatory Form Filing",
+                "_id": "687a776a054829c18134c704",
+                "task_due_date": "2025-03-31 00:00:00",
+                "task_id": "task-058",
+                "task_short_description": "Form CRS"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "Final due date from Spencer, Pause this for now",
+                "Task Category": "Regulatory Form Filing",
+                "_id": "687a776a054829c18134c705",
+                "task_id": "task-059",
+                "task_short_description": "Form D"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Regulatory Form Filing",
+                "_id": "687a776a054829c18134c706",
+                "task_due_date": "2025-03-31 00:00:00",
+                "task_id": "task-060",
+                "task_short_description": "Form LM-10"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Regulatory Form Filing",
+                "_id": "687a776a054829c18134c707",
+                "task_due_date": "2025-04-30 00:00:00",
+                "task_id": "task-061",
+                "task_short_description": "Form PF"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Regulatory Form Filing",
+                "_id": "687a776a054829c18134c708",
+                "task_due_date": "2025-02-07 00:00:00",
+                "task_id": "task-184",
+                "task_short_description": "State Reporting Requirement - CA"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Regulatory Form Filing",
+                "_id": "687a776a054829c18134c709",
+                "task_due_date": "2025-05-31 00:00:00",
+                "task_id": "task-187",
+                "task_short_description": "State Reporting Requirement - CT"
+            },
+            {
+                "Frequency": "Annual",
+                "RPY Com": "OK",
+                "Task Category": "Regulatory Form Filing",
+                "_id": "687a776a054829c18134c70a",
+                "task_due_date": "2025-04-15 00:00:00",
+                "task_id": "task-190",
+                "task_short_description": "State Reporting Requirement - NC"
+            },
+            {
+                "Task Category": "Regulatory Monitoring & Updates",
+                "_id": "687a776a054829c18134c70b",
+                "task_id": "task-065",
+                "task_short_description": "Regulatory Monitoring & Updates"
+            },
+            {
+                "Frequency": "Monthly",
+                "RPY Com": "Done",
+                "Task Category": "Alerts & Monitoring - Compliance",
+                "_id": "689090e246ecebc9531b0295",
+                "task_due_date": "3rd of every month",
+                "task_id": "task-200",
+                "task_short_description": "Political Contributions"
+            },
+            {
+                "RPY Comment due dt chk": "",
+                "Task Category": "Alerts & Monitoring - Compliance",
+                "_id": "68909b2246ecebc9531b02c4",
+                "Frequency": "Weekly",
+                "task_due_date": "Every Tuesday of week",
+                "task_id": "task-201",
+                "task_short_description": "Social Media"
+            }
+        ],
+        "total_count": 67
+    },
+    "status": "success"
 }

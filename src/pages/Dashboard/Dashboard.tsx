@@ -34,6 +34,9 @@ const CATEGORIES = [
     key: 'Industry Trend Analysis & Updates'  },
   {
     key: 'Regulatory Form Filing'  },
+    {
+      key:'Regulatory Monitoring & Updates'
+    }
 ];
 
 const Dashboard: React.FC = () => {

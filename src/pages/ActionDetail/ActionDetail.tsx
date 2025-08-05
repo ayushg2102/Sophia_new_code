@@ -5,6 +5,8 @@ import { ArrowLeftOutlined, CalendarOutlined, ToolOutlined, ClockCircleOutlined,
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import './ActionDetail.css';
+import PoliticalContributionsDashboard from '../../components/PoliticalContributionsDashboard';
+// import SocialMediaContributions from '../../components/SocialMediaContributions';
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
@@ -113,14 +115,21 @@ const ActionDetail: React.FC = () => {
   }
 
   return (
+    
     <Layout className="action-detail-layout">
       <Header />
+    
+
       <Content className="action-detail-content">
         <div className="action-detail-back">
+      
+      {taskNameFromState === 'Political Contributions' && <PoliticalContributionsDashboard />}
+      {/* {taskNameFromState ==="Social Media Contributions" && <SocialMediaContributions />} */}
+      {taskNameFromState != 'Political Contributions' && <>
           <Button type="link" icon={<ArrowLeftOutlined />} onClick={handleBackClick}>
             Back
           </Button>
-        </div>
+      
         <Card className="action-detail-card">
           <div className="action-detail-header">
             <Title level={3} className="action-detail-title">{action.action_name}</Title>
@@ -342,6 +351,9 @@ const ActionDetail: React.FC = () => {
             </Collapse>
           </div>
         </Card>
+      </>}
+        </div>
+        
       </Content>
     </Layout>
   );
