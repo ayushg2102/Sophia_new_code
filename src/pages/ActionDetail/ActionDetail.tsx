@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Card, Tag, Button, Typography, Divider, Spin, Alert, Row, Col, Collapse } from 'antd';
+import { Layout, Card, Tag, Button, Typography, Spin, Alert, Collapse } from 'antd';
 import dayjs from 'dayjs';
 import { ArrowLeftOutlined, CalendarOutlined, ToolOutlined, ClockCircleOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import './ActionDetail.css';
 import PoliticalContributionsDashboard from '../../components/PoliticalContributionsDashboard';
-// import SocialMediaContributions from '../../components/SocialMediaContributions';
+import SocialMediaMonitoringDashboard from '../../components/SocialMediaContributions/SocialMediaMonitoringDashboard';
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
@@ -42,12 +42,9 @@ const ActionDetail: React.FC = () => {
   const [action, setAction] = useState<ActionDetailType | null>(null);
   const [loading, setLoading] = useState(true);
 
-
   // Get task name from navigation state if available
-  const { state } = useLocation() as { state?: { taskName?: string, actionId?: string, instructions?: string } };
-  const taskNameFromState = state && state.taskName;
-  const actionIdFromState = state && state.actionId;
-  const instructionsFromState = state && state.instructions;
+  const { state } = useLocation() as { state?: { taskName?: string, instructions?: string } };
+  const { taskName: taskNameFromState, instructions: instructionsFromState } = state || {};
 
   useEffect(() => {
     setLoading(true);
@@ -114,22 +111,41 @@ const ActionDetail: React.FC = () => {
     return <Alert message={'Action not found'} type="error" showIcon style={{ marginTop: 60 }} />;
   }
 
+  // Special handling for full-width components
+  if (taskNameFromState === 'Political Contributions') {
+    return (
+      <div style={{ width: '100%', padding: '20px' }}>
+        <Header />
+        <Button type="link" icon={<ArrowLeftOutlined />} onClick={handleBackClick}>
+            Back
+          </Button>
+        <PoliticalContributionsDashboard />
+      </div>
+    );
+  }
+  
+  if (taskNameFromState === 'Social Media') {
+    return (
+      <div style={{ width: '100%', padding: '20px' }}>
+        <Header />
+        <Button type="link" icon={<ArrowLeftOutlined />} onClick={handleBackClick}>
+            Back
+          </Button>
+        <SocialMediaMonitoringDashboard />
+      </div>
+    );
+  }
+
+  // Default layout for other actions
   return (
-    
     <Layout className="action-detail-layout">
       <Header />
-    
-
       <Content className="action-detail-content">
         <div className="action-detail-back">
-      
-      {taskNameFromState === 'Political Contributions' && <PoliticalContributionsDashboard />}
-      {/* {taskNameFromState ==="Social Media Contributions" && <SocialMediaContributions />} */}
-      {taskNameFromState != 'Political Contributions' && <>
           <Button type="link" icon={<ArrowLeftOutlined />} onClick={handleBackClick}>
             Back
           </Button>
-      
+        </div>
         <Card className="action-detail-card">
           <div className="action-detail-header">
             <Title level={3} className="action-detail-title">{action.action_name}</Title>
@@ -351,9 +367,6 @@ const ActionDetail: React.FC = () => {
             </Collapse>
           </div>
         </Card>
-      </>}
-        </div>
-        
       </Content>
     </Layout>
   );

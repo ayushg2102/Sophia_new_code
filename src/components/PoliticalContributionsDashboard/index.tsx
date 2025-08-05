@@ -1,127 +1,287 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
   Row, 
   Col, 
-  Typography, 
-  Badge, 
+  Typography,
   Card, 
   Select, 
   Input, 
   Button, 
   Table, 
   Spin,
+  message,
 } from 'antd';
 import { SearchOutlined, ReloadOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
+import politicalContributions from '../../data/politicalContribution.json';
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 const { Option } = Select;
 const { Search } = Input;
 
-// Mock data for the table
-const mockData = [
-  {
-    key: '1',
-    name: 'John Doe',
-    latestContribution: 1500,
-    latestContributionDate: '2025-07-15',
-    ytdContribution: 4500,
-    category: 'Federal'
-  },
-  {
-    key: '2',
-    name: 'Jane Smith',
-    latestContribution: 1000,
-    latestContributionDate: '2025-07-20',
-    ytdContribution: 3500,
-    category: 'State'
-  },
-  // Add more mock data as needed
-];
+interface Contribution {
+  key: string;
+  employeeName: string;
+  employeeId: string;
+  latestContribution: number;
+  latestContributionDate: string;
+  ytdContribution: number;
+  status: 'Red' | 'Amber' | 'Green';
+  runDate: string;
+}
+
+// Helper function to transform API data to table format
+const transformContributions = (data: any[]): Contribution[] => {
+  if (!Array.isArray(data)) return [];
+  
+  const contributionsByEmployee: Record<string, Contribution> = {};
+  
+  data.forEach(doc => {
+    if (!doc || !Array.isArray(doc.output)) return;
+    
+    doc.output.forEach((contribution: any) => {
+      if (!contribution?.employee_id) return;
+      
+      const amount = Number(contribution.contribution_receipt_amount) || 0;
+      const date = contribution.contribution_receipt_date || '';
+      const employeeId = String(contribution.employee_id);
+      const employeeName = String(contribution.employee_name || 'Unknown');
+      
+      // Determine status based on amount (example thresholds)
+      let status: 'Red' | 'Amber' | 'Green' = 'Green';
+      if (amount > 2000) status = 'Red';
+      else if (amount > 1000) status = 'Amber';
+      
+      const employeeHasNoRecord = !contributionsByEmployee[employeeId];
+      const hasNewerDate = date && (
+        !contributionsByEmployee[employeeId]?.latestContributionDate || 
+        dayjs(date).isAfter(contributionsByEmployee[employeeId].latestContributionDate)
+      );
+      
+      if (employeeHasNoRecord || hasNewerDate) {
+        contributionsByEmployee[employeeId] = {
+          key: employeeId,
+          employeeName,
+          employeeId,
+          latestContribution: amount,
+          latestContributionDate: date,
+          ytdContribution: (contributionsByEmployee[employeeId]?.ytdContribution || 0) + amount,
+          status,
+          runDate: doc.period || 'Unknown'
+        };
+      } else if (contributionsByEmployee[employeeId]) {
+        // Update YTD if this is not the latest contribution
+        contributionsByEmployee[employeeId].ytdContribution = 
+          (contributionsByEmployee[employeeId].ytdContribution || 0) + amount;
+      }
+    });
+  });
+  
+  return Object.values(contributionsByEmployee);
+};
 
 const PoliticalContributionsDashboard: React.FC = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState('All');
+  const [statusFilter, setStatusFilter] = useState<string>('All');
+  const [runDateFilter, setRunDateFilter] = useState<string>('All');
+  const [contributions, setContributions] = useState<Contribution[]>([]);
+  const [runDates, setRunDates] = useState<{label: string, value: string}[]>([]);
+  
+  // Load and transform data on component mount
+  useEffect(() => {
+    try {
+      setLoading(true);
+      const data = politicalContributions?.data?.documents || [];
+      const transformed = transformContributions(data);
+      setContributions(transformed);
+      
+      // Extract unique run dates
+      const dates = Array.from(new Set(transformed.map(c => c.runDate)))
+        .filter(Boolean)
+        .map(date => ({
+          label: date as string,
+          value: date as string
+        }));
+      
+      setRunDates([{ label: 'All Runs', value: 'All' }, ...dates]);
+    } catch (error) {
+      console.error('Error loading political contributions:', error);
+      message.error('Failed to load political contributions data');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   const filteredData = useMemo(() => {
-    return mockData.filter(item => {
-      const matchesSearch = item.name.toLowerCase().includes(searchText.toLowerCase());
-      const matchesCategory = categoryFilter === 'All' || item.category === categoryFilter;
-      return matchesSearch && matchesCategory;
+    return contributions.filter(item => {
+      const matchesSearch = item.employeeName.toLowerCase().includes(searchText.toLowerCase());
+      const matchesStatus = statusFilter === 'All' || item.status === statusFilter;
+      const matchesRunDate = runDateFilter === 'All' || item.runDate === runDateFilter;
+      
+      return matchesSearch && matchesStatus && matchesRunDate;
     });
-  }, [searchText, categoryFilter]);
+  }, [contributions, searchText, statusFilter, runDateFilter]);
 
   const columns = [
     {
       title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      sorter: (a: any, b: any) => a.name.localeCompare(b.name),
+      dataIndex: 'employeeName',
+      key: 'employeeName',
+      sorter: (a: Contribution, b: Contribution) => a.employeeName.localeCompare(b.employeeName),
+      width: '35%',
+      ellipsis: true
     },
     {
-      title: 'Latest Contribution ($)',
+      title: 'Latest Contribution',
       dataIndex: 'latestContribution',
       key: 'latestContribution',
-      sorter: (a: any, b: any) => a.latestContribution - b.latestContribution,
-      render: (amount: number) => amount?.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 }) || 'N/A',
+      sorter: (a: Contribution, b: Contribution) => a.latestContribution - b.latestContribution,
+      width: '20%',
+      align: 'right' as const,
+      render: (amount: number) => amount.toLocaleString('en-US', { 
+        style: 'currency', 
+        currency: 'USD',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0 
+      }),
     },
     {
-      title: 'Latest Contribution Date',
+      title: 'Contribution Date',
       dataIndex: 'latestContributionDate',
       key: 'latestContributionDate',
-      sorter: (a: any, b: any) => new Date(a.latestContributionDate).getTime() - new Date(b.latestContributionDate).getTime(),
+      sorter: (a: Contribution, b: Contribution) => 
+        new Date(a.latestContributionDate).getTime() - new Date(b.latestContributionDate).getTime(),
+      width: '20%',
       render: (date: string) => date ? dayjs(date).format('MMM D, YYYY') : 'N/A',
     },
     {
-      title: 'YTD Contribution ($)',
+      title: 'YTD Contribution',
       dataIndex: 'ytdContribution',
       key: 'ytdContribution',
-      sorter: (a: any, b: any) => a.ytdContribution - b.ytdContribution,
-      render: (amount: number) => amount?.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 }) || 'N/A',
+      sorter: (a: Contribution, b: Contribution) => a.ytdContribution - b.ytdContribution,
+      width: '20%',
+      align: 'right' as const,
+      render: (amount: number) => amount.toLocaleString('en-US', { 
+        style: 'currency', 
+        currency: 'USD',
+        minimumFractionDigits: 0, 
+        maximumFractionDigits: 0 
+      }),
     },
   ];
 
-  const handleSearch = (value: string) => {
+    const handleSearch = (value: string) => {
     setSearchText(value);
   };
 
-  const handleCategoryChange = (value: string) => {
-    setCategoryFilter(value);
+  const handleStatusChange = (value: string) => {
+    setStatusFilter(value);
+  };
+
+  const handleRunDateChange = (value: string) => {
+    setRunDateFilter(value);
   };
 
   const handleFreshRun = () => {
     setLoading(true);
-    // Simulate API call
+    // In a real app, this would trigger an API call to refresh the data
     setTimeout(() => {
+      message.success('Political contributions data refreshed successfully');
       setLoading(false);
     }, 1500);
   };
 
+  // Calculate summary statistics
+  const summaryStats = useMemo(() => {
+    const totalEmployees = contributions.length;
+    const totalContributions = contributions.reduce((sum, curr) => sum + curr.ytdContribution, 0);
+    const redAlerts = contributions.filter(c => c.status === 'Red').length;
+    const amberAlerts = contributions.filter(c => c.status === 'Amber').length;
+    const greenAlerts = contributions.filter(c => c.status === 'Green').length;
+    
+    // Find most recent run date and period
+    let latestRun = 'No data';
+    let periodConsidered = 'N/A';
+    
+    if (contributions.length > 0) {
+      // Get the latest run date
+      const latestRunData = contributions.reduce((latest, curr) => {
+        const currDate = curr.runDate ? new Date(curr.runDate.split(' to ')[0]).getTime() : 0;
+        const latestDate = latest?.runDate ? new Date(latest.runDate.split(' to ')[0]).getTime() : 0;
+        return currDate > latestDate ? curr : latest;
+      }, null as Contribution | null);
+      
+      if (latestRunData) {
+        latestRun = latestRunData.runDate || 'N/A';
+        // Set period considered (assuming 1 month period ending on the run date)
+        const runDate = latestRunData.runDate ? new Date(latestRunData.runDate.split(' to ')[0]) : new Date();
+        const periodEnd = new Date(runDate);
+        const periodStart = new Date(runDate);
+        periodStart.setMonth(periodStart.getMonth() - 1);
+        periodConsidered = `${periodStart.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} - ${periodEnd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
+      }
+    }
+    
+    // Calculate duration (assuming 20 minutes for the run)
+    const startedAt = new Date();
+    const completedAt = new Date(startedAt.getTime() + 20 * 60 * 1000); // 20 minutes later
+    
+    return {
+      totalEmployees,
+      totalContributions,
+      redAlerts,
+      amberAlerts,
+      greenAlerts,
+      latestRun,
+      periodConsidered,
+      startedAt: startedAt.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+      completedAt: completedAt.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+      duration: '19 min 58 sec',
+      contributionCategory: ['Green', 'Amber', 'Red'] // Default category
+    };
+  }, [contributions]);
+
   return (
-    <div className="political-contributions-dashboard">
+    <div style={{ 
+      width: '100%', 
+      maxWidth: '100%',
+      padding: '0 24px',
+      margin: 0,
+      boxSizing: 'border-box'
+    }}>
       <Spin spinning={loading}>
         {/* Header Section */}
-
-        <Row gutter={[16, 16]} style={{ marginBottom: 24 }} align="middle">
-          <Col xs={24} md={8}>
+        <Row gutter={[16, 16]} style={{ 
+          marginBottom: 24, 
+          width: '100%',
+          maxWidth: '100%',
+          marginLeft: 0,
+          marginRight: 0
+        }}>
+          <Col xs={24} md={6}>
             <Select
-              defaultValue="All"
+              value={runDateFilter}
               style={{ width: '100%' }}
-              onChange={handleCategoryChange}
+              onChange={handleRunDateChange}
+              loading={loading}
+              placeholder="Filter by run date"
             >
-              <Option value="All">Run Date – {dayjs().format('MMM D, YYYY')}</Option>
-              <Option value="All">Run Date – {dayjs().subtract(1, 'month').format('MMM D, YYYY')}</Option>
-              <Option value="All">Run Date – {dayjs().subtract(2, 'month').format('MMM D, YYYY')}</Option>
+              {runDates.map(date => (
+                <Option key={date.value} value={date.value}>
+                  {date.label === 'All Runs' ? 'All Runs' : `Run Date: ${date.label}`}
+                </Option>
+              ))}
             </Select>
           </Col>
-          <Col xs={24} md={10}>
+          <Col xs={24} md={12}>
             <Search
-              placeholder="Search employees..."
+              placeholder="Search by employee name..."
               allowClear
               enterButton={<SearchOutlined />}
               onSearch={handleSearch}
               style={{ width: '100%' }}
+              loading={loading}
             />
           </Col>
           <Col xs={24} md={6} style={{ textAlign: 'right' }}>
@@ -129,78 +289,118 @@ const PoliticalContributionsDashboard: React.FC = () => {
               type="primary" 
               icon={<ReloadOutlined />}
               onClick={handleFreshRun}
+              loading={loading}
             >
-              Execute Fresh Run
+              Refresh Data
             </Button>
-          </Col>
-        </Row>
-        {/* Title Section */}
-        <Row justify="space-between" align="middle" style={{ marginBottom: 24 }}>
-          <Col>
-            <Title level={3} style={{ margin: 0 }}>Political Contributions - Alerts & Monitoring Analysis Run</Title>
-          </Col>
-          <Col>
-            <Badge status="success" text="Completed" />
           </Col>
         </Row>
 
         {/* Summary Cards */}
-        <Row gutter={[16, 16]} style={{ marginBottom: 24 }} justify="space-between">
-          <Col flex="1" style={{ minWidth: '160px', padding: '0 8px' }}>
-            <Card title="Started At" size="small" style={{ height: '100%', margin: 0 }}>
-              <div style={{ fontSize: '0.9rem' }}>{dayjs().format('MM/DD/YYYY HH:mm')}</div>
+        <Row gutter={[16, 16]} style={{ 
+          marginBottom: 24, 
+          width: '100%',
+          maxWidth: '100%',
+          marginLeft: 0,
+          marginRight: 0
+        }}>
+          <Col xs={24} sm={12} md={4}>
+            <Card size="small" style={{ height: '100%' }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <Text type="secondary">Started At</Text>
+                <Text strong style={{ marginTop: 4, fontSize: '0.9rem' }}>
+                  {summaryStats.startedAt}
+                </Text>
+              </div>
             </Card>
           </Col>
-          <Col flex="1" style={{ minWidth: '160px', padding: '0 8px' }}>
-            <Card title="Completed At" size="small" style={{ height: '100%', margin: 0 }}>
-              <div style={{ fontSize: '0.9rem' }}>{dayjs().add(20, 'minute').format('MM/DD/YYYY HH:mm')}</div>
+          <Col xs={24} sm={12} md={4}>
+            <Card size="small" style={{ height: '100%' }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <Text type="secondary">Completed At</Text>
+                <Text strong style={{ marginTop: 4, fontSize: '0.9rem' }}>
+                  {summaryStats.completedAt}
+                </Text>
+              </div>
             </Card>
           </Col>
-          <Col flex="1" style={{ minWidth: '140px', padding: '0 8px' }}>
-            <Card title="Duration" size="small" style={{ height: '100%', margin: 0 }}>
-              <div style={{ fontSize: '0.9rem' }}>19 min 58 sec</div>
+          <Col xs={24} sm={12} md={4}>
+            <Card size="small" style={{ height: '100%' }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <Text type="secondary">Duration</Text>
+                <Text strong style={{ marginTop: 4, fontSize: '0.9rem' }}>
+                  {summaryStats.duration}
+                </Text>
+              </div>
             </Card>
           </Col>
-          <Col flex="1" style={{ minWidth: '140px', padding: '0 8px' }}>
-            <Card title="Employees Analyzed" size="small" style={{ height: '100%', margin: 0 }}>
-              <div style={{ fontSize: '1.1rem', fontWeight: 500 }}>43</div>
+          <Col xs={24} sm={12} md={4}>
+            <Card size="small" style={{ height: '100%' }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <Text type="secondary">Period Considered</Text>
+                <Text strong style={{ marginTop: 4, fontSize: '0.9rem' }}>
+                  {summaryStats.periodConsidered}
+                </Text>
+              </div>
             </Card>
           </Col>
-          <Col flex="1 1 250px" style={{ padding: '0 8px' }}>
-            <Card title="Contribution Category" size="small" style={{ height: '100%', margin: 0 }}>
-              <Select 
-                defaultValue="All" 
-                style={{ width: '100%' }}
-                size="small"
-                onChange={handleCategoryChange}
-              >
-                <Option value="All">All Categories</Option>
-                <Option value="Federal">Green</Option>
-                <Option value="State">Amber</Option>
-                <Option value="Local">Red</Option>
-              </Select>
+          <Col xs={24} sm={12} md={4}>
+            <Card size="small" style={{ height: '100%' }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <Text type="secondary">Employees Analyzed</Text>
+                <Text strong style={{ marginTop: 4, fontSize: '1.1rem' }}>
+                  {summaryStats.totalEmployees}
+                </Text>
+              </div>
+            </Card>
+          </Col>
+          <Col xs={24} sm={12} md={4}>
+            <Card size="small" style={{ height: '100%' }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <Text type="secondary">Contribution Category</Text>
+                <Select 
+                  defaultValue="Green" 
+                  style={{ width: '100%', marginTop: 4 }}
+                  onChange={handleStatusChange}
+                >
+                  <Option value="All">All</Option>
+                  <Option value="Green">Green</Option>
+                  <Option value="Amber">Amber</Option>
+                  <Option value="Red">Red</Option>
+                </Select>
+              </div>
             </Card>
           </Col>
         </Row>
 
-        {/* Action Controls */}
-        
-
         {/* Table Section */}
-        <div className="table-container">
-          <Table
-            columns={columns}
-            dataSource={filteredData}
-            pagination={{
-              pageSize: 10,
+        <div style={{ 
+          width: '100%', 
+          maxWidth: '100%',
+          overflowX: 'auto',
+          margin: 0,
+          padding: 0
+        }}>
+          <Table 
+            columns={columns} 
+            dataSource={filteredData} 
+            loading={loading}
+            pagination={{ 
+              pageSize: 10, 
+              position: ['bottomCenter'],
               showSizeChanger: true,
-              pageSizeOptions: ['10', '25', '50'],
-              showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} employees`,
+              showTotal: (total) => `Total ${total} employees`
             }}
-            rowKey="key"
             scroll={{ x: 'max-content' }}
-            size="middle"
+            style={{ width: '100%' }}
             bordered
+            locale={{
+              emptyText:
+                searchText || statusFilter !== 'All' || runDateFilter !== 'All'
+                  ? 'No matching records found'
+                  : 'No data available',
+            }}
+            className="contributions-table"
           />
         </div>
       </Spin>

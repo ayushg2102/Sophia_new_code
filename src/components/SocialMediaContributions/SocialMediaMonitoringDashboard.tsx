@@ -5,8 +5,9 @@ import {
 } from 'antd';
 import { 
   LinkedinOutlined, TwitterOutlined, FacebookOutlined, 
-  SearchOutlined, SyncOutlined, UserOutlined, DownOutlined 
+  SearchOutlined, SyncOutlined, ReloadOutlined 
 } from '@ant-design/icons';
+import Search from 'antd/es/input/Search';
 import dayjs from 'dayjs';
 
 const { Title, Text } = Typography;
@@ -101,6 +102,27 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
     setPageSize(pagination.pageSize);
   };
 
+  // Handler for search
+  const handleSearch = (value: string) => {
+    setSearchText(value);
+    setCurrentPage(1);
+  };
+
+  // Handler for fresh run
+  const handleFreshRun = () => {
+    setLoading(true);
+    // Simulate API call
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  };
+
+  // Handler for category change
+  const handleCategoryChange = (value: string) => {
+    // Handle category change if needed
+    console.log('Selected category:', value);
+  };
+
   // Handle refresh data
   const handleRefresh = () => {
     setLoading(true);
@@ -113,7 +135,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
   // Table columns
   const columns = [
     {
-      title: 'Employee Name',
+      title: 'Name',
       dataIndex: 'name',
       key: 'name',
       sorter: (a: any, b: any) => a.name.localeCompare(b.name),
@@ -145,13 +167,13 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
       width: 150,
     },
     {
-      title: 'Trigger Phrase',
+      title: 'Findings',
       dataIndex: ['findings', 'triggerPhrase'],
       key: 'triggerPhrase',
       ellipsis: true,
     },
     {
-      title: 'Category',
+      title: 'Key Words Found',
       dataIndex: ['findings', 'category'],
       key: 'category',
       filters: [
@@ -163,7 +185,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
       width: 180,
     },
     {
-      title: 'Keywords',
+      title: 'Category',
       dataIndex: ['findings', 'keywords'],
       key: 'keywords',
       render: (text: string) => text === 'N/A' ? <span style={{ color: '#999' }}>None</span> : text,
@@ -194,20 +216,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
       ],
       onFilter: (value: any, record: any) => record.findings.bias === value,
       width: 120,
-    },
-    {
-      title: 'Actions',
-      key: 'actions',
-      render: (_: any, record: any) => (
-        <Space size="middle">
-          <a href={record.findings.url} target="_blank" rel="noopener noreferrer">
-            View Profile
-          </a>
-          <a onClick={() => console.log('Flag for review:', record.key)}>Flag</a>
-        </Space>
-      ),
-      width: 150,
-    },
+    }
   ];
 
   // User menu dropdown
@@ -223,132 +232,162 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
   return (
     <div className="social-media-dashboard" style={{ padding: '24px' }}>
       <Spin spinning={loading}>
-        {/* Header Section */}
+      <Row gutter={[16, 16]} style={{ marginBottom: 24 }} align="middle">
+          <Col xs={24} md={8}>
+            <Select
+              defaultValue="All"
+              style={{ width: '100%' }}
+              onChange={handleCategoryChange}
+            >
+              <Option value="All">Run Date – {dayjs().format('MMM D, YYYY')}</Option>
+              <Option value="All">Run Date – {dayjs().subtract(1, 'month').format('MMM D, YYYY')}</Option>
+              <Option value="All">Run Date – {dayjs().subtract(2, 'month').format('MMM D, YYYY')}</Option>
+            </Select>
+          </Col>
+          <Col xs={24} md={10}>
+            <Search
+              placeholder="Search employees..."
+              allowClear
+              enterButton={<SearchOutlined />}
+              onSearch={handleSearch}
+              style={{ width: '100%' }}
+            />
+          </Col>
+          <Col xs={24} md={6} style={{ textAlign: 'right' }}>
+            <Button 
+              type="primary" 
+              icon={<ReloadOutlined />}
+              onClick={handleFreshRun}
+            >
+              Execute Fresh Run
+            </Button>
+          </Col>
+        </Row>
+        {/* Title Section */}
         <Row justify="space-between" align="middle" style={{ marginBottom: 24 }}>
           <Col>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <div style={{
-                width: 32,
-                height: 32,
-                backgroundColor: '#1890ff',
-                borderRadius: 4,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginRight: 12,
-                color: 'white',
-                fontWeight: 'bold'
-              }}>
-                S
-              </div>
-              <Title level={4} style={{ margin: 0 }}>Sophia - Social Media Monitoring</Title>
-            </div>
+            <Title level={3} style={{ margin: 0 }}>Social Media Monitoring - Analysis Run</Title>
           </Col>
           <Col>
-            <Dropdown overlay={userMenu} trigger={['click']}>
-              <div style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                <Avatar 
-                  icon={<UserOutlined />} 
-                  style={{ marginRight: 8, backgroundColor: '#1890ff' }}
-                />
-                <span>Admin User</span>
-                <DownOutlined style={{ marginLeft: 8, fontSize: 12 }} />
-              </div>
-            </Dropdown>
+            <Badge status="success" text="Completed" />
           </Col>
         </Row>
 
         {/* Summary Cards */}
+        <Row gutter={[16, 16]} style={{ marginBottom: 24 }} justify="space-between">
+                  <Col flex="1" style={{ minWidth: '160px', padding: '0 8px' }}>
+                    <Card title="Started At" size="small" style={{ height: '100%', margin: 0 }}>
+                      <div style={{ fontSize: '0.9rem' }}>{dayjs().format('MM/DD/YYYY HH:mm')}</div>
+                    </Card>
+                  </Col>
+                  <Col flex="1" style={{ minWidth: '160px', padding: '0 8px' }}>
+                    <Card title="Completed At" size="small" style={{ height: '100%', margin: 0 }}>
+                      <div style={{ fontSize: '0.9rem' }}>{dayjs().add(20, 'minute').format('MM/DD/YYYY HH:mm')}</div>
+                    </Card>
+                  </Col>
+                  <Col flex="1" style={{ minWidth: '140px', padding: '0 8px' }}>
+                    <Card title="Duration" size="small" style={{ height: '100%', margin: 0 }}>
+                      <div style={{ fontSize: '0.9rem' }}>19 min 58 sec</div>
+                    </Card>
+                  </Col>
+                  <Col flex="1" style={{ minWidth: '140px', padding: '0 8px' }}>
+                    <Card title="Employees Analyzed" size="small" style={{ height: '100%', margin: 0 }}>
+                      <div style={{ fontSize: '1.1rem', fontWeight: 500 }}>43</div>
+                    </Card>
+                  </Col>
+                </Row>
+
+        {/* Dropdown Filters */}
         <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
           <Col xs={24} md={6}>
-            <Card size="small" title="Total Employees" style={{ height: '100%' }}>
-              <Title level={3} style={{ margin: 0 }}>{summaryMetrics.totalEmployees}</Title>
-              <span style={{ color: '#8c8c8c' }}>Monitored accounts</span>
-            </Card>
-          </Col>
-          <Col xs={24} md={6}>
-            <Card size="small" title="Total Findings" style={{ height: '100%' }}>
-              <Title level={3} style={{ margin: 0, color: '#ff4d4f' }}>
-                {summaryMetrics.totalFindings}
-              </Title>
-              <span style={{ color: '#8c8c8c' }}>Potential policy violations</span>
-            </Card>
-          </Col>
-          <Col xs={24} md={6}>
-            <Card size="small" title="High Risk" style={{ height: '100%' }}>
-              <Title level={3} style={{ margin: 0, color: '#ff4d4f' }}>
-                {summaryMetrics.highBias}
-              </Title>
-              <span style={{ color: '#8c8c8c' }}>Requires immediate review</span>
-            </Card>
-          </Col>
-          <Col xs={24} md={6}>
-            <Card size="small" title="Last Run" style={{ height: '100%' }}>
-              <Title level={4} style={{ margin: 0 }}>
-                {dayjs().format('MMM D, YYYY')}
-              </Title>
-              <span style={{ color: '#8c8c8c' }}>{dayjs().format('h:mm A')}</span>
-            </Card>
-          </Col>
-        </Row>
-
-        {/* Action Controls */}
-        <Row gutter={[16, 16]} style={{ marginBottom: 24 }} align="middle">
-          <Col xs={24} md={8}>
-            <Card size="small" title="Key Words Found" style={{ height: '100%' }}>
+            <div className="filter-group">
+              <label>Monitoring Type</label>
               <Select
-                value={keywordsFilter}
-                onChange={setKeywordsFilter}
                 style={{ width: '100%' }}
-                placeholder="Filter by keywords"
+                defaultValue="all"
+                onChange={(value) => console.log('Monitoring Type:', value)}
               >
-                <Option value="All">All</Option>
-                <Option value="With Keywords">With Keywords</Option>
-                <Option value="Without Keywords">Without Keywords</Option>
+                <Option value="scheduled">Post Monitoring</Option>
+                <Option value="manual">Title Monitoring</Option>
               </Select>
-            </Card>
+            </div>
           </Col>
-          <Col xs={24} md={8}>
-            <Card size="small" title="Bias Level" style={{ height: '100%' }}>
+          <Col xs={24} md={6}>
+            <div className="filter-group">
+              <label>Key Words Found</label>
               <Select
-                value={biasFilter}
-                onChange={setBiasFilter}
+                mode="multiple"
                 style={{ width: '100%' }}
-                placeholder="Filter by bias level"
-              >
-                <Option value="All">All</Option>
-                <Option value="High">High</Option>
-                <Option value="Medium">Medium</Option>
-                <Option value="Low">Low</Option>
-                <Option value="None">None</Option>
-              </Select>
-            </Card>
-          </Col>
-          <Col xs={24} md={8}>
-            <Card size="small" title="Search & Actions" style={{ height: '100%' }}>
-              <Input.Search
-                placeholder="Search employees or trigger phrases"
+                placeholder="Select keywords..."
+                onChange={(value) => {
+                  console.log('Selected Keywords:', value);
+                  // Prevent default behavior and stop event propagation
+                  if (event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+                  }
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                onDropdownVisibleChange={(open) => {
+                  if (open) {
+                    // Reset any default selections when dropdown opens
+                    const select = document.querySelector('.ant-select-selector');
+                    if (select) {
+                      select.dispatchEvent(new Event('mousedown', { bubbles: true }));
+                    }
+                  }
+                }}
+                maxTagCount="responsive"
                 allowClear
-                enterButton={
-                  <Button type="primary">
-                    <SearchOutlined /> Search
-                  </Button>
-                }
-                value={searchText}
-                onChange={(e) => setSearchText(e.target.value)}
-                onSearch={(value) => setSearchText(value)}
-              />
-              <div style={{ marginTop: 8, textAlign: 'right' }}>
-                <Button 
-                  type="link" 
-                  icon={<SyncOutlined spin={loading} />} 
-                  onClick={handleRefresh}
-                >
-                  Refresh Data
-                </Button>
-              </div>
-            </Card>
+                showSearch
+                optionFilterProp="children"
+              >
+                <Option value="Investment">Investment</Option>
+                <Option value="Risk">Risk</Option>
+                <Option value="Portfolio">Portfolio</Option>
+                <Option value="Retirement">Retirement</Option>
+                <Option value="Tax">Tax</Option>
+                <Option value="Fee">Fee</Option>
+                <Option value="Return">Return</Option>
+                <Option value="Diversification">Diversification</Option>
+                <Option value="Securities">Securities</Option>
+                <Option value="Market">Market</Option>
+                <Option value="Asset">Asset</Option>
+                <Option value="Bonds">Bonds</Option>
+                <Option value="Stock">Stock</Option>
+                <Option value="Regulation">Regulation</Option>
+                <Option value="Compliance">Compliance</Option>
+                <Option value="Advice">Advice</Option>
+                <Option value="Guarantee">Guarantee</Option>
+                <Option value="Performance">Performance</Option>
+                <Option value="Financial Planning">Financial Planning</Option>
+                <Option value="Fiduciary">Fiduciary</Option>
+                <Option value="Elite">Elite</Option>
+                <Option value="Perfect">Perfect</Option>
+                <Option value="Best">Best</Option>
+                <Option value="Free">Free</Option>
+                <Option value="No risk">No risk</Option>
+                <Option value="Insider information">Insider information</Option>
+              </Select>
+            </div>
           </Col>
+          <Col xs={24} md={6}>
+            <div className="filter-group">
+              <label>Bias</label>
+              <Select
+                style={{ width: '100%' }}
+                defaultValue="all"
+                onChange={(value) => console.log('Bias:', value)}
+              >
+                <Option value="all">All</Option>
+                <Option value="high">Detected</Option>
+                <Option value="low">Not Detected</Option>
+              </Select>
+            </div>
+          </Col>
+          
         </Row>
 
         {/* Main Table */}
