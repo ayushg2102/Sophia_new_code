@@ -9,6 +9,7 @@ import {
 } from '@ant-design/icons';
 import Search from 'antd/es/input/Search';
 import dayjs from 'dayjs';
+import TitleMonitoringDashboard from '../TitleMonitoringDashboard';
 
 const { Title, Text } = Typography;
 const { Option } = Select;
@@ -60,6 +61,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
   const [biasFilter, setBiasFilter] = useState('All');
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
+  const [monitoringType, setMonitoringType] = useState('Post Monitoring');
 
   // Calculate summary metrics
   const summaryMetrics = useMemo(() => ({
@@ -131,6 +133,15 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
       setLoading(false);
     }, 1000);
   };
+
+  const changeMonitoringType = (value: string) => {
+    setMonitoringType(value);
+  };
+
+  // If monitoring type is 'Title Monitoring', render the TitleMonitoringDashboard
+  if (monitoringType === 'Title Monitoring') {
+    return <TitleMonitoringDashboard />;
+  }
 
   // Table columns
   const columns = [
@@ -305,10 +316,12 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
               <Select
                 style={{ width: '100%' }}
                 defaultValue="all"
-                onChange={(value) => console.log('Monitoring Type:', value)}
+                onChange={(value) => {
+                  changeMonitoringType(value);
+                  }}
               >
-                <Option value="scheduled">Post Monitoring</Option>
-                <Option value="manual">Title Monitoring</Option>
+                <Option value="Post Monitoring">Post Monitoring</Option>
+                <Option value="Title Monitoring">Title Monitoring</Option>
               </Select>
             </div>
           </Col>
