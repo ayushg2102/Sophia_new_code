@@ -248,6 +248,18 @@ const TitleMonitoringDashboard: React.FC = () => {
       dataIndex: 'titleHr',
       key: 'titleHr',
       sorter: (a: TitleRecord, b: TitleRecord) => a.titleHr.localeCompare(b.titleHr),
+      width: 300,
+      render: (text: string) => (
+        <div style={{ 
+          wordWrap: 'break-word',
+          wordBreak: 'break-word',
+          whiteSpace: text && text.length > 50 ? 'normal' : 'nowrap',
+          lineHeight: '1.4',
+          maxWidth: '280px'
+        }}>
+          {text || 'N/A'}
+        </div>
+      ),
     },
     {
       title: 'Title as per LinkedIn',
@@ -435,6 +447,31 @@ const TitleMonitoringDashboard: React.FC = () => {
           }}
           scroll={{ x: 'max-content' }}
           rowKey="key"
+          size="middle"
+          components={{
+            body: {
+              row: (props: any) => (
+                <tr 
+                  {...props} 
+                  style={{ 
+                    ...props.style,
+                    minHeight: '60px'
+                  }} 
+                />
+              ),
+              cell: (props: any) => (
+                <td 
+                  {...props} 
+                  style={{ 
+                    ...props.style,
+                    padding: '12px 16px',
+                    verticalAlign: 'top',
+                    lineHeight: '1.4'
+                  }} 
+                />
+              )
+            }
+          }}
         />
       </Card>
     </div>
