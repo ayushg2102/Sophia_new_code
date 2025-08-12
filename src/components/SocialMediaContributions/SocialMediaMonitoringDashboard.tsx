@@ -276,11 +276,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
     });
   }, [socialMediaData, debouncedSearchText, keywordsFilter, biasFilter]);
 
-  // Handle table change (pagination, sorting)
-  const handleTableChange = (pagination: any) => {
-    setCurrentPage(pagination.current);
-    setPageSize(pagination.pageSize);
-  };
+
 
   // Handler for search change
   const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -407,13 +403,18 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
       dataIndex: 'keywords_hit',
       key: 'keywords_hit',
       render: (keywordsHit: string) => {
-        if (!keywordsHit || keywordsHit === '[]') return <span style={{ color: '#999' }}>None</span>;
+        console.log('Keywords Hit:', keywordsHit); // Debug log
+        if (!keywordsHit || keywordsHit === '[]' || keywordsHit === '') return <span style={{ color: '#999' }}>None</span>;
         try {
           const keywords = JSON.parse(keywordsHit);
+          if (!Array.isArray(keywords) || keywords.length === 0) {
+            return <span style={{ color: '#999' }}>None</span>;
+          }
           return keywords.map((keyword: string, index: number) => (
             <Tag key={index} color="blue" style={{ marginBottom: '2px' }}>{keyword}</Tag>
           ));
-        } catch {
+        } catch (error) {
+          console.error('Error parsing keywords:', error, keywordsHit);
           return <span style={{ color: '#999' }}>Invalid format</span>;
         }
       },
@@ -421,23 +422,29 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
     },
     {
       title: 'Category',
-      dataIndex: 'category_name',
-      key: 'category_name',
-      render: (category: string) => {
-        if (!category || category === 'No posts available') {
+      dataIndex: 'Keywords Category',
+      key: 'keywords_category',
+      render: (category: string, record: any) => {
+        // Use 'Keywords Category' field from the API data
+        const keywordsCategory = record['Keywords Category'] || category;
+        console.log('Category data:', keywordsCategory, record); // Debug log
+        
+        if (!keywordsCategory || keywordsCategory === 'No posts available') {
           return <span style={{ color: '#999' }}>No posts available</span>;
         }
-        const color = category.includes('Violation') || category.includes('Advice') ? 'red' : 
-                     category.includes('No Restricted') ? 'green' : 'orange';
-        return <Tag color={color}>{category}</Tag>;
+        
+        const color = keywordsCategory.includes('Key word found') ? 'green' : 
+                     keywordsCategory.includes('No key word found') ? 'orange' : 
+                     keywordsCategory.includes('Violation') || keywordsCategory.includes('Advice') ? 'red' : 'blue';
+        return <Tag color={color}>{keywordsCategory}</Tag>;
       },
       filters: [
+        { text: 'Key word found', value: 'Key word found' },
+        { text: 'No key word found', value: 'No key word found' },
         { text: 'Advertising Any Service', value: 'Advertising Any Service' },
         { text: 'Giving Investment Advice', value: 'Giving Investment Advice' },
-        { text: 'No Restricted Post Found', value: 'No Restricted Post Found' },
-        { text: 'No posts available', value: 'No posts available' },
       ],
-      onFilter: (value: any, record: any) => record.category_name === value,
+      onFilter: (value: any, record: any) => record['Keywords Category'] === value,
       width: 180,
     },
     {
@@ -445,22 +452,21 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
       dataIndex: 'violation',
       key: 'violation',
       render: (violation: string) => {
-        if (!violation) return <Badge color="default" text="Unknown" />;
-        const color = violation === 'Yes' ? 'red' : 
-                     violation === 'No' ? 'green' : 
+        const itemBiasStatus = violation === "Yes" ? 'Detected' : violation === "No" ? 'Not Detected' : 'N/A';
+        const color = itemBiasStatus === 'Detected' ? 'red' : 
+                     itemBiasStatus === 'Not Detected' ? 'green' : 
                      'orange';
-        const text = violation === 'Yes' ? 'Violation Found' :
-                    violation === 'No' ? 'No Violation' :
-                    violation === 'No posts available' ? 'No Posts' :
-                    violation;
-        return <Badge color={color} text={text} />;
+        return <Badge color={color} text={itemBiasStatus} />;
       },
       filters: [
-        { text: 'Violation Found', value: 'Yes' },
-        { text: 'No Violation', value: 'No' },
-        { text: 'No Posts', value: 'No posts available' },
+        { text: 'Detected', value: 'Detected' },
+        { text: 'Not Detected', value: 'Not Detected' },
+        { text: 'N/A', value: 'N/A' },
       ],
-      onFilter: (value: any, record: any) => record.violation === value,
+      onFilter: (value: any, record: any) => {
+        const itemBiasStatus = record.violation === "Yes" ? 'Detected' : record.violation === "No" ? 'Not Detected' : 'N/A';
+        return itemBiasStatus === value;
+      },
       width: 140,
     }
   ];
@@ -575,7 +581,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
               <label>Monitoring Type</label>
               <Select
                 style={{ width: '100%' }}
-                defaultValue="Post Monitoring"
+                value={monitoringType}
                 onChange={(value) => {
                   changeMonitoringType(value);
                   }}
