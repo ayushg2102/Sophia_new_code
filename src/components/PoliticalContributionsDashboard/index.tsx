@@ -119,7 +119,7 @@ const PoliticalContributionsDashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
   const [debouncedSearchText, setDebouncedSearchText] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('All');
+  const [statusFilter, setStatusFilter] = useState<string[]>([]);
   const [runDateFilter, setRunDateFilter] = useState<string>('All');
   const [contributions, setContributions] = useState<Contribution[]>([]);
   const [runDates, setRunDates] = useState<{label: string, value: string}[]>([]);
@@ -142,17 +142,29 @@ const PoliticalContributionsDashboard: React.FC = () => {
         
         setRunDates([{ label: 'All Runs', value: 'All' }, ...runDateOptions]);
         
-        // Load all contributions initially
-        const allContributions: Contribution[] = [];
-        documents.forEach(doc => {
-          const docContributions = transformContributionsFromDocument(doc);
-          allContributions.push(...docContributions);
-        });
-        
-        setContributions(allContributions);
+        // Auto-select the last document and load its data
+        if (documents.length > 0) {
+          const lastDocument = documents[documents.length - 1];
+          const lastDocContributions = transformContributionsFromDocument(lastDocument);
+          
+          setContributions(lastDocContributions);
+          setSelectedDocument(lastDocument);
+          setRunDateFilter(lastDocument._id);
+        } else {
+          // Fallback: Load all contributions if no documents
+          const allContributions: Contribution[] = [];
+          documents.forEach(doc => {
+            const docContributions = transformContributionsFromDocument(doc);
+            allContributions.push(...docContributions);
+          });
+          
+          setContributions(allContributions);
+        }
         
         if (documents.length > 0) {
-          message.success(`Loaded ${documents.length} document runs with ${allContributions.length} contribution records`);
+          const lastDocument = documents[documents.length - 1];
+          const lastDocContributions = transformContributionsFromDocument(lastDocument);
+          message.success(`Loaded ${documents.length} document runs, showing latest run with ${lastDocContributions.length} contribution records`);
         }
       } catch (error) {
         console.error('Error loading political contributions:', error);
@@ -197,12 +209,15 @@ const PoliticalContributionsDashboard: React.FC = () => {
   }, [searchText]);
 
   const filteredData = useMemo(() => {
-    return contributions.filter(item => {
+    const filtered = contributions.filter(item => {
       const matchesSearch = item.employeeName.toLowerCase().includes(debouncedSearchText.toLowerCase());
-      const matchesStatus = statusFilter === 'All' || item.status === statusFilter;
+      const matchesStatus = statusFilter.length === 0 || statusFilter.includes(item.status);
       
       return matchesSearch && matchesStatus;
     });
+    
+    // Sort by YTD contribution amount in descending order (highest first)
+    return filtered.sort((a, b) => b.ytdContribution - a.ytdContribution);
   }, [contributions, debouncedSearchText, statusFilter]);
 
   const columns = [
@@ -244,12 +259,28 @@ const PoliticalContributionsDashboard: React.FC = () => {
       sorter: (a: Contribution, b: Contribution) => a.ytdContribution - b.ytdContribution,
       width: '20%',
       align: 'right' as const,
-      render: (amount: number) => amount.toLocaleString('en-US', { 
-        style: 'currency', 
-        currency: 'USD',
-        minimumFractionDigits: 0, 
-        maximumFractionDigits: 0 
-      }),
+      render: (amount: number, record: Contribution) => {
+        const formattedAmount = amount.toLocaleString('en-US', { 
+          style: 'currency', 
+          currency: 'USD',
+          minimumFractionDigits: 0, 
+          maximumFractionDigits: 0 
+        });
+        
+        // Determine color based on status
+        let color = '#52c41a'; // Green (default)
+        if (record.status === 'Red') {
+          color = '#ff4d4f'; // Red
+        } else if (record.status === 'Amber') {
+          color = '#faad14'; // Orange/Amber
+        }
+        
+        return (
+          <span style={{ color, fontWeight: 'bold' }}>
+            {formattedAmount}
+          </span>
+        );
+      },
     },
   ];
 
@@ -257,8 +288,13 @@ const PoliticalContributionsDashboard: React.FC = () => {
     setSearchText(e.target.value);
   }, []);
 
-  const handleStatusChange = (value: string) => {
-    setStatusFilter(value);
+  const handleStatusChange = (value: string[]) => {
+    // If 'All' is selected, clear other selections and show all data
+    if (value.includes('All')) {
+      setStatusFilter([]);
+    } else {
+      setStatusFilter(value);
+    }
   };
 
   const handleRunDateChange = (value: string) => {
@@ -279,8 +315,18 @@ const PoliticalContributionsDashboard: React.FC = () => {
       
       setRunDates([{ label: 'All Runs', value: 'All' }, ...runDateOptions]);
       
-      // Reset to show all data
-      setRunDateFilter('All');
+      // Auto-select the last document after refresh
+      if (documents.length > 0) {
+        const lastDocument = documents[documents.length - 1];
+        const lastDocContributions = transformContributionsFromDocument(lastDocument);
+        
+        setContributions(lastDocContributions);
+        setSelectedDocument(lastDocument);
+        setRunDateFilter(lastDocument._id);
+      } else {
+        // Reset to show all data if no documents
+        setRunDateFilter('All');
+      }
       
       message.success('Political contributions data refreshed successfully');
     } catch (error) {
@@ -394,9 +440,10 @@ const PoliticalContributionsDashboard: React.FC = () => {
           width: '100%',
           maxWidth: '100%',
           marginLeft: 0,
-          marginRight: 0
+          marginRight: 0,
+          alignItems: 'center'
         }}>
-          <Col xs={24} md={6}>
+          <Col span={10}>
             <Select
               value={runDateFilter}
               style={{ width: '100%' }}
@@ -411,7 +458,7 @@ const PoliticalContributionsDashboard: React.FC = () => {
               ))}
             </Select>
           </Col>
-          <Col xs={24} md={12}>
+          <Col span={9}>
             <Input
               placeholder="Search by employee name"
               allowClear
@@ -421,14 +468,15 @@ const PoliticalContributionsDashboard: React.FC = () => {
               prefix={<SearchOutlined />}
             />
           </Col>
-          <Col xs={24} md={6} style={{ textAlign: 'right' }}>
+          <Col span={5} style={{ textAlign: 'center' }}>
             <Button 
               type="primary" 
               icon={<ReloadOutlined />}
               onClick={handleFreshRun}
               loading={loading}
+              style={{ width: '100%' }}
             >
-              Refresh Data
+              Execute fresh run
             </Button>
           </Col>
         </Row>
@@ -496,11 +544,14 @@ const PoliticalContributionsDashboard: React.FC = () => {
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <Text type="secondary">Contribution Category</Text>
                 <Select 
-                  defaultValue="Green" 
+                  mode="multiple"
+                  value={statusFilter}
                   style={{ width: '100%', marginTop: 4 }}
                   onChange={handleStatusChange}
+                  placeholder={statusFilter.length === 0 ? "All Categories" : "Select status"}
+                  allowClear
+                  maxTagCount="responsive"
                 >
-                  <Option value="All">All</Option>
                   <Option value="Green">Green</Option>
                   <Option value="Amber">Amber</Option>
                   <Option value="Red">Red</Option>
@@ -533,7 +584,7 @@ const PoliticalContributionsDashboard: React.FC = () => {
             bordered
             locale={{
               emptyText:
-                searchText || statusFilter !== 'All' || runDateFilter !== 'All'
+                searchText || statusFilter.length > 0 || runDateFilter !== 'All'
                   ? 'No matching records found'
                   : 'No data available',
             }}
