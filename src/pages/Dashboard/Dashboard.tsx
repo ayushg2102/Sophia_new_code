@@ -342,17 +342,17 @@ const Dashboard: React.FC = () => {
                                       </Tag>
                                     ),
                                   },
-                                  {
-                                    title: 'Status',
-                                    dataIndex: 'status',
-                                    key: 'status',
-                                    width: 100,
-                                    render: (status: string) => (
-                                      <Tag color={status === 'active' ? 'blue' : status === 'completed' ? 'green' : 'orange'}>
-                                        {status === 'active' ? 'Active' : status === 'completed' ? 'Done' : 'Pending'}
-                                      </Tag>
-                                    ),
-                                  },
+                                  // {
+                                  //   title: 'Status',
+                                  //   dataIndex: 'status',
+                                  //   key: 'status',
+                                  //   width: 100,
+                                  //   render: (status: string) => (
+                                  //     <Tag color={status === 'active' ? 'blue' : status === 'completed' ? 'green' : 'orange'}>
+                                  //       {status === 'active' ? 'Active' : status === 'completed' ? 'Done' : 'Pending'}
+                                  //     </Tag>
+                                  //   ),
+                                  // },
                                   {
                                     title: 'Actions',
                                     key: 'actions',
