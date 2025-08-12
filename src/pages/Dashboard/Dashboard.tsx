@@ -16,6 +16,9 @@ const { Title, Text } = Typography;
 // Define categories from tasks.json
 const CATEGORIES = [
   {
+    key: 'Categories'
+  },
+  {
     key: 'Alerts & Monitoring - Compliance'  },
   {
     key: 'Compliance Client Declarations'  },
@@ -198,6 +201,9 @@ const Dashboard: React.FC = () => {
                   }}
                   items={CATEGORIES
                     .filter(category => {
+                      // Always show "Categories" as it's a heading
+                      if (category.key === 'Categories') return true;
+                      
                       // Only show categories that have matching tasks when searching
                       if (!searchTerm.trim()) return true;
                       const categoryTasks = tasks.filter(task => task.task_category === category.key);
@@ -227,7 +233,15 @@ const Dashboard: React.FC = () => {
                     return {
                       label: (
                         <span>
-                          {category.key} <span style={{ color: '#8c8c8c' }}>({categoryTasks.length})</span>
+                          {category.key === 'Categories' ? (
+                            <span style={{ fontSize: '18px', color: '#000000', fontWeight: 'bold' }}>
+                              {category.key}
+                            </span>
+                          ) : (
+                            <>
+                              {category.key} <span style={{ color: '#8c8c8c' }}>({categoryTasks.length})</span>
+                            </>
+                          )}
                         </span>
                       ),
                       key: category.key,
