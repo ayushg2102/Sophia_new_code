@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Row, Col, Typography, Button, Card, Tag, Tabs } from 'antd';
+import { Layout, Row, Col, Typography, Card, Tag, Tabs, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { 
-  CheckCircleOutlined, 
-  ClockCircleOutlined, 
-  AlertOutlined, 
-  PlayCircleOutlined,
-  PlusOutlined
+  SearchOutlined
 } from '@ant-design/icons';
 import Header from '../../components/Header/Header';
-import MetricCard from '../../components/Dashboard/MetricCard';
 import CreateTaskModal from '../../components/CreateTaskModal/CreateTaskModal';
-import { mockDashboardMetrics, mockTasks } from '../../data/mockData';
+import { mockTasks } from '../../data/mockData';
 import { Task } from '../../types';
 import './Dashboard.css';
 
@@ -42,6 +37,7 @@ const CATEGORIES = [
 const Dashboard: React.FC = () => {
   const [createModalVisible, setCreateModalVisible] = useState(false);
   const [tasks, setTasks] = useState<Task[]>(mockTasks);
+  const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
   const handleCreateTask = (taskData: any) => {
@@ -110,9 +106,9 @@ const Dashboard: React.FC = () => {
         <div className="dashboard-container">
           <div className="dashboard-header">
             <div>
-              <Title level={2} className="dashboard-title">
+              {/* <Title level={2} className="dashboard-title">
                 Dashboard
-              </Title>
+              </Title> */}
               {/* <Text className="dashboard-subtitle">
                 Manage your compliance tasks, automate workflows, and track progress across all business units
               </Text> */}
@@ -173,7 +169,20 @@ const Dashboard: React.FC = () => {
           <Row gutter={24} className="main-content">
             <Col xs={24} lg={24}>
               <div className="tasks-section">
-                <h2 className="category-heading">Tasks</h2>
+                <div className="tasks-header">
+                  <h2 className="category-heading">Dashboard</h2>
+                  <Input
+                    placeholder="Search tasks..."
+                    prefix={<SearchOutlined />}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    style={{
+                      width: 300,
+                      borderRadius: 8
+                    }}
+                    allowClear
+                  />
+                </div>
                 <Tabs
                   tabPosition="left"
                   style={{ 
@@ -187,13 +196,33 @@ const Dashboard: React.FC = () => {
                     textAlign: 'left',
                     padding: '8px 0'
                   }}
-                  items={CATEGORIES.map(category => {
+                  items={CATEGORIES
+                    .filter(category => {
+                      // Only show categories that have matching tasks when searching
+                      if (!searchTerm.trim()) return true;
+                      const categoryTasks = tasks.filter(task => task.task_category === category.key);
+                      return categoryTasks.some(task =>
+                        task.task_short_description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        task.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        task.frequency?.toLowerCase().includes(searchTerm.toLowerCase())
+                      );
+                    })
+                    .map(category => {
                     // Filter and sort tasks for this category
-                    const categoryTasks = tasks
+                    let categoryTasks = tasks
                       .filter((task) => task.task_category === category.key)
                       .sort((a, b) => 
                         (a.task_short_description || '').trim().localeCompare((b.task_short_description || '').trim())
                       );
+
+                    // Apply search filter if search term exists
+                    if (searchTerm.trim()) {
+                      categoryTasks = categoryTasks.filter((task) =>
+                        task.task_short_description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        task.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                        task.frequency?.toLowerCase().includes(searchTerm.toLowerCase())
+                      );
+                    }
 
                     return {
                       label: (
@@ -252,112 +281,6 @@ const Dashboard: React.FC = () => {
                 />
               </div>
             </Col>
-            
-            {/* <Col xs={24} lg={9}>
-              <div className="action-center">
-                <div className="section-header">
-                  <div className="section-title-container">
-                    <AlertOutlined className="section-icon" />
-                    <Title level={4} className="section-title">Action Center</Title>
-                  </div>
-                  <Button 
-                    type="text" 
-                    size="small"
-                    onClick={handleViewAllTasks}
-                  >
-                    View All
-                  </Button>
-                </div>
-                
-                <div className="action-metrics">
-                  <Row gutter={8}>
-                    <Col span={8}>
-                      <div className="action-metric">
-                        <div className="action-metric-value success">12</div>
-                        <div className="action-metric-label">Successful</div>
-                      </div>
-                    </Col>
-                    <Col span={8}>
-                      <div className="action-metric">
-                        <div className="action-metric-value warning">3</div>
-                        <div className="action-metric-label">Pending</div>
-                      </div>
-                    </Col>
-                    <Col span={8}>
-                      <div className="action-metric">
-                        <div className="action-metric-value error">1</div>
-                        <div className="action-metric-label">Failed</div>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
-                
-                <div className="recent-actions">
-                  <Title level={5} className="actions-subtitle">Recent Action Runs</Title>
-                  <div className="action-items">
-                    <div className="action-item">
-                      <div className="action-item-content">
-                        <div className="action-item-title">Send calendar invites for risk assessment meetings</div>
-                        <div className="action-item-time">Mar 17, 02:30 PM</div>
-                      </div>
-                      <Tag color="green" size="small">Successful</Tag>
-                    </div>
-                    <div className="action-item">
-                      <div className="action-item-content">
-                        <div className="action-item-title">Send calendar invites for risk assessment meetings</div>
-                        <div className="action-item-time">Mar 16, 10:30 PM</div>
-                      </div>
-                      <Tag color="green" size="small">Successful</Tag>
-                    </div>
-                  </div>
-                  
-                  <Button type="dashed" block className="configure-action-btn">
-                    <SettingOutlined /> Configure New Action
-                  </Button>
-                </div>
-                
-                <div className="upcoming-tasks">
-                  <div className="section-header-small">
-                    <CalendarOutlined className="section-icon-small" />
-                    <Title level={5} className="section-title-small">Upcoming Tasks</Title>
-                    <Button type="text" size="small">View All</Button>
-                  </div>
-                  
-                  <div className="upcoming-task-items">
-                    <div className="upcoming-task-item">
-                      <div className="upcoming-task-indicator risk"></div>
-                      <div className="upcoming-task-content">
-                        <div className="upcoming-task-title">Risk Assessment</div>
-                        <div className="upcoming-task-meta">
-                          <CalendarOutlined /> 30 days overdue
-                        </div>
-                      </div>
-                      <Tag color="orange">Progress</Tag>
-                    </div>
-                    <div className="upcoming-task-item">
-                      <div className="upcoming-task-indicator risk"></div>
-                      <div className="upcoming-task-content">
-                        <div className="upcoming-task-title">Risk Assessment</div>
-                        <div className="upcoming-task-meta">
-                          <CalendarOutlined /> Due
-                        </div>
-                      </div>
-                      <Tag color="orange">Due</Tag>
-                    </div>
-                    <div className="upcoming-task-item">
-                      <div className="upcoming-task-indicator risk"></div>
-                      <div className="upcoming-task-content">
-                        <div className="upcoming-task-title">Risk Assessment</div>
-                        <div className="upcoming-task-meta">
-                          <CalendarOutlined /> 30 days overdue
-                        </div>
-                      </div>
-                      <Tag color="orange">Due</Tag>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Col> */}
           </Row>
         </div>
       </Content>
