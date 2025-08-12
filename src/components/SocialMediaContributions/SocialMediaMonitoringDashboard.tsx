@@ -527,39 +527,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
         </Row>
 
         {/* Selected Document Info */}
-        {selectedDocument && (
-          <Card style={{ marginBottom: 16 }}>
-            <Row gutter={[16, 8]}>
-              <Col span={24}>
-                <Title level={4} style={{ color: '#1890ff', margin: 0 }}>
-                  Selected Run Details
-                </Title>
-              </Col>
-              <Col xs={24} sm={12} md={6}>
-                <strong>Run ID:</strong>
-                <br />
-                <span style={{ fontSize: '0.9rem' }}>
-                  {selectedDocument.run_id.substring(0, 8)}...
-                </span>
-              </Col>
-              <Col xs={24} sm={12} md={6}>
-                <strong>Period:</strong>
-                <br />
-                <span style={{ fontSize: '0.9rem' }}>{formatPeriod(selectedDocument.period)}</span>
-              </Col>
-              <Col xs={24} sm={12} md={6}>
-                <strong>Duration:</strong>
-                <br />
-                <span style={{ fontSize: '0.9rem' }}>{Math.floor(selectedDocument.duration / 60)} min {Math.floor(selectedDocument.duration % 60)} sec</span>
-              </Col>
-              <Col xs={24} sm={12} md={6}>
-                <strong>Created:</strong>
-                <br />
-                <span style={{ fontSize: '0.9rem' }}>{dayjs(selectedDocument.created_at).format('MMM D, YYYY HH:mm')}</span>
-              </Col>
-            </Row>
-          </Card>
-        )}
+       
 
         {/* Summary Cards */}
         <Row gutter={[16, 16]} style={{ marginBottom: 24 }} justify="space-between">
