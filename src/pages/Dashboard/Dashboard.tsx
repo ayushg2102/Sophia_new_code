@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Row, Col, Typography, Card, Tag, Tabs, Input } from 'antd';
+import { Layout, Row, Col, Typography, Card, Tag, Tabs, Input, Button, Table } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { 
-  SearchOutlined
+  SearchOutlined,
+  AppstoreOutlined,
+  UnorderedListOutlined,
+  RightOutlined
 } from '@ant-design/icons';
 import Header from '../../components/Header/Header';
 import CreateTaskModal from '../../components/CreateTaskModal/CreateTaskModal';
@@ -41,6 +44,7 @@ const Dashboard: React.FC = () => {
   const [createModalVisible, setCreateModalVisible] = useState(false);
   const [tasks, setTasks] = useState<Task[]>(mockTasks);
   const [searchTerm, setSearchTerm] = useState('');
+  const [viewMode, setViewMode] = useState<'card' | 'list'>('card');
   const navigate = useNavigate();
 
   const handleCreateTask = (taskData: any) => {
@@ -174,17 +178,37 @@ const Dashboard: React.FC = () => {
               <div className="tasks-section">
                 <div className="tasks-header">
                   <h2 className="category-heading">Dashboard</h2>
-                  <Input
-                    placeholder="Search tasks..."
-                    prefix={<SearchOutlined />}
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    style={{
-                      width: 300,
-                      borderRadius: 8
-                    }}
-                    allowClear
-                  />
+                  <div className="header-controls">
+                    <Button.Group style={{ marginRight: 16 }}>
+                      <Button
+                        type={viewMode === 'card' ? 'primary' : 'default'}
+                        icon={<AppstoreOutlined />}
+                        onClick={() => setViewMode('card')}
+                        size="small"
+                      >
+                        Card
+                      </Button>
+                      <Button
+                        type={viewMode === 'list' ? 'primary' : 'default'}
+                        icon={<UnorderedListOutlined />}
+                        onClick={() => setViewMode('list')}
+                        size="small"
+                      >
+                        List
+                      </Button>
+                    </Button.Group>
+                    <Input
+                      placeholder="Search tasks..."
+                      prefix={<SearchOutlined />}
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      style={{
+                        width: 300,
+                        borderRadius: 8
+                      }}
+                      allowClear
+                    />
+                  </div>
                 </div>
                 <Tabs
                   tabPosition="left"
@@ -199,6 +223,7 @@ const Dashboard: React.FC = () => {
                     textAlign: 'left',
                     padding: '8px 0'
                   }}
+                  defaultActiveKey="Alerts & Monitoring - Compliance"
                   items={CATEGORIES
                     .filter(category => {
                       // Always show "Categories" as it's a heading
@@ -245,48 +270,105 @@ const Dashboard: React.FC = () => {
                         </span>
                       ),
                       key: category.key,
-                      children: (
+                      disabled: category.key === 'Categories',
+                      children: category.key === 'Categories' ? null : (
                         <div>
                           <div style={{ maxHeight: 'calc(100vh - 90px)', overflowY: 'auto', overflowX: 'hidden', width: '100%' }}>
-                            <Row gutter={[16, 16]} style={{ margin: 0, width: '100%' }}>
-                            {categoryTasks.length === 0 ? (
-                              <Col span={24} style={{ textAlign: 'left', color: '#aaa' }}>
-                                <Text type="secondary">No tasks in this category.</Text>
-                              </Col>
+                            {viewMode === 'card' ? (
+                              <Row gutter={[16, 16]} style={{ margin: 0, width: '100%' }}>
+                                {categoryTasks.length === 0 ? (
+                                  <Col span={24} style={{ textAlign: 'left', color: '#aaa' }}>
+                                    <Text type="secondary">No tasks in this category.</Text>
+                                  </Col>
+                                ) : (
+                                  categoryTasks.map((task) => (
+                                    <Col xs={24} sm={12} md={8} lg={6} key={task.task_id}>
+                                      <Card
+                                        className="task-square-card"
+                                        hoverable
+                                        style={{
+                                          borderRadius: 12,
+                                          boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                                          minHeight: 180,
+                                          display: 'flex',
+                                          flexDirection: 'column',
+                                          justifyContent: 'flex-start',
+                                          alignItems: 'center',
+                                          cursor: 'pointer',
+                                          textAlign: 'center',
+                                        }}
+                                        onClick={() =>{
+                                          console.log(task,"123")
+                                          handleTaskClick(task.task_id)}
+                                        } 
+                                      >
+                                        <Title level={5} style={{ marginBottom: 8 }}>{task.task_short_description}</Title>
+                                        <Text type="secondary" style={{ marginBottom: 8, display: 'block' }}>
+                                          {task.task_short_description}
+                                        </Text>
+                                        <div style={{ marginTop: 8 }}>
+                                          <Tag color={task.frequency === 'Daily' ? 'yellow' : 'default'}>{task.frequency}</Tag>
+                                        </div>
+                                      </Card>
+                                    </Col>
+                                  ))
+                                )}
+                              </Row>
                             ) : (
-                              categoryTasks.map((task) => (
-                                <Col xs={24} sm={12} md={8} lg={6} key={task.task_id}>
-                                  <Card
-                                    className="task-square-card"
-                                    hoverable
-                                    style={{
-                                      borderRadius: 12,
-                                      boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-                                      minHeight: 180,
-                                      display: 'flex',
-                                      flexDirection: 'column',
-                                      justifyContent: 'flex-start',
-                                      alignItems: 'center',
-                                      cursor: 'pointer',
-                                      textAlign: 'center',
-                                    }}
-                                    onClick={() =>{
-                                      console.log(task,"123")
-                                      handleTaskClick(task.task_id)}
-                                    } 
-                                  >
-                                    <Title level={5} style={{ marginBottom: 8 }}>{task.task_short_description}</Title>
-                                    <Text type="secondary" style={{ marginBottom: 8, display: 'block' }}>
-                                      {task.task_short_description}
-                                    </Text>
-                                    <div style={{ marginTop: 8 }}>
-                                      <Tag color={task.frequency === 'Daily' ? 'yellow' : 'default'}>{task.frequency}</Tag>
-                                    </div>
-                                  </Card>
-                                </Col>
-                              ))
+                              <Table
+                                dataSource={categoryTasks}
+                                pagination={false}
+                                size="middle"
+                                rowKey="task_id"
+                                style={{ background: 'white' }}
+                                columns={[
+                                  {
+                                    title: 'Task',
+                                    dataIndex: 'task_short_description',
+                                    key: 'task',
+                                    ellipsis: true,
+                                    render: (text: string) => (
+                                      <span style={{ fontWeight: 500 }}>{text}</span>
+                                    ),
+                                  },
+                                  {
+                                    title: 'Frequency',
+                                    dataIndex: 'frequency',
+                                    key: 'frequency',
+                                    width: 120,
+                                    render: (frequency: string) => (
+                                      <Tag color={frequency === 'Daily' ? 'yellow' : frequency === 'Weekly' ? 'orange' : frequency === 'Monthly' ? 'blue' : 'default'}>
+                                        {frequency}
+                                      </Tag>
+                                    ),
+                                  },
+                                  {
+                                    title: 'Status',
+                                    dataIndex: 'status',
+                                    key: 'status',
+                                    width: 100,
+                                    render: (status: string) => (
+                                      <Tag color={status === 'active' ? 'blue' : status === 'completed' ? 'green' : 'orange'}>
+                                        {status === 'active' ? 'Active' : status === 'completed' ? 'Done' : 'Pending'}
+                                      </Tag>
+                                    ),
+                                  },
+                                  {
+                                    title: 'Actions',
+                                    key: 'actions',
+                                    width: 80,
+                                    render: (_, task) => (
+                                      <Button
+                                        type="text"
+                                        icon={<RightOutlined />}
+                                        onClick={() => handleTaskClick(task.task_id)}
+                                        style={{ color: '#1677ff' }}
+                                      />
+                                    ),
+                                  },
+                                ]}
+                              />
                             )}
-                          </Row>
                           </div>
                         </div>
                       ),
