@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { 
   Row, 
   Col, 
@@ -13,11 +13,9 @@ import {
 } from 'antd';
 import { SearchOutlined, ReloadOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
-import politicalContributions from '../../data/politicalContribution.json';
 
 const { Text } = Typography;
 const { Option } = Select;
-const { Search } = Input;
 
 interface Contribution {
   key: string;
@@ -28,100 +26,184 @@ interface Contribution {
   ytdContribution: number;
   status: 'Red' | 'Amber' | 'Green';
   runDate: string;
+  documentId: string;
 }
 
-// Helper function to transform API data to table format
-const transformContributions = (data: any[]): Contribution[] => {
-  if (!Array.isArray(data)) return [];
+interface DocumentData {
+  _id: string;
+  created_at: string;
+  updated_at: string;
+  period: string;
+  duration: number;
+  run_id: string;
+  output: any[];
+}
+
+// API endpoint for political contributions
+const API_ENDPOINT = 'https://sophia.xponance.com/api/collection/political-contributions';
+
+// Helper function to format period string
+const formatPeriod = (period: string): string => {
+  if (!period || !period.includes(' to ')) return period;
   
-  const contributionsByEmployee: Record<string, Contribution> = {};
+  const [startDate, endDate] = period.split(' to ');
   
-  data.forEach(doc => {
-    if (!doc || !Array.isArray(doc.output)) return;
+  const formatDate = (dateStr: string): string => {
+    const date = dayjs(dateStr.trim());
+    return date.isValid() ? date.format('MMM D, YYYY') : dateStr;
+  };
+  
+  return `${formatDate(startDate)} - ${formatDate(endDate)}`;
+};
+
+// Helper function to transform API data to table format for a specific document
+const transformContributionsFromDocument = (doc: DocumentData): Contribution[] => {
+  if (!doc || !Array.isArray(doc.output)) return [];
+  
+  const contributions: Contribution[] = [];
+  
+  doc.output.forEach((contribution: any, index: number) => {
+    if (!contribution?.employee_name) return;
     
-    doc.output.forEach((contribution: any) => {
-      if (!contribution?.employee_id) return;
-      
-      const amount = Number(contribution.contribution_receipt_amount) || 0;
-      const date = contribution.contribution_receipt_date || '';
-      const employeeId = String(contribution.employee_id);
-      const employeeName = String(contribution.employee_name || 'Unknown');
-      
-      // Determine status based on amount (example thresholds)
-      let status: 'Red' | 'Amber' | 'Green' = 'Green';
-      if (amount > 2000) status = 'Red';
-      else if (amount > 1000) status = 'Amber';
-      
-      const employeeHasNoRecord = !contributionsByEmployee[employeeId];
-      const hasNewerDate = date && (
-        !contributionsByEmployee[employeeId]?.latestContributionDate || 
-        dayjs(date).isAfter(contributionsByEmployee[employeeId].latestContributionDate)
-      );
-      
-      if (employeeHasNoRecord || hasNewerDate) {
-        contributionsByEmployee[employeeId] = {
-          key: employeeId,
-          employeeName,
-          employeeId,
-          latestContribution: amount,
-          latestContributionDate: date,
-          ytdContribution: (contributionsByEmployee[employeeId]?.ytdContribution || 0) + amount,
-          status,
-          runDate: doc.period || 'Unknown'
-        };
-      } else if (contributionsByEmployee[employeeId]) {
-        // Update YTD if this is not the latest contribution
-        contributionsByEmployee[employeeId].ytdContribution = 
-          (contributionsByEmployee[employeeId].ytdContribution || 0) + amount;
-      }
+    const amount = Number(contribution.contribution_receipt_amount) || 0;
+    const date = contribution.contribution_receipt_date || '';
+    const employeeId = `${doc._id}_${contribution.employee_name}_${index}`;
+    const employeeName = String(contribution.employee_name || 'Unknown');
+    const ytdAmount = Number(contribution.contributor_aggregate_ytd) || 0;
+    const flag = contribution.Flag;
+    
+    // Determine status based on Flag or amount thresholds
+    let status: 'Red' | 'Amber' | 'Green' = 'Green';
+    if (flag === true || flag === 'Red' || amount > 2000) status = 'Red';
+    else if (flag === 'Amber' || amount > 1000) status = 'Amber';
+    
+    contributions.push({
+      key: employeeId,
+      employeeName,
+      employeeId,
+      latestContribution: amount,
+      latestContributionDate: date,
+      ytdContribution: ytdAmount || amount,
+      status,
+      runDate: dayjs(doc.created_at).format('MMM D, YYYY'),
+      documentId: doc._id
     });
   });
   
-  return Object.values(contributionsByEmployee);
+  return contributions;
+};
+
+// Function to fetch political contributions data from API
+const fetchPoliticalContributions = async (): Promise<DocumentData[]> => {
+  try {
+    const response = await fetch(API_ENDPOINT, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const result = await response.json();
+    return result?.data?.documents || [];
+  } catch (error) {
+    console.error('Error fetching political contributions:', error);
+    throw error;
+  }
 };
 
 const PoliticalContributionsDashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
+  const [debouncedSearchText, setDebouncedSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('All');
   const [runDateFilter, setRunDateFilter] = useState<string>('All');
   const [contributions, setContributions] = useState<Contribution[]>([]);
   const [runDates, setRunDates] = useState<{label: string, value: string}[]>([]);
+  const [allDocuments, setAllDocuments] = useState<DocumentData[]>([]);
+  const [selectedDocument, setSelectedDocument] = useState<DocumentData | null>(null);
   
   // Load and transform data on component mount
   useEffect(() => {
-    try {
-      setLoading(true);
-      const data = politicalContributions?.data?.documents || [];
-      const transformed = transformContributions(data);
-      setContributions(transformed);
-      
-      // Extract unique run dates
-      const dates = Array.from(new Set(transformed.map(c => c.runDate)))
-        .filter(Boolean)
-        .map(date => ({
-          label: date as string,
-          value: date as string
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        const documents = await fetchPoliticalContributions();
+        setAllDocuments(documents);
+        
+        // Create run date options from created_at values
+        const runDateOptions = documents.map(doc => ({
+          label: `${dayjs(doc.created_at).format('MMM D, YYYY')} - ${formatPeriod(doc.period)}`,
+          value: doc._id
         }));
-      
-      setRunDates([{ label: 'All Runs', value: 'All' }, ...dates]);
-    } catch (error) {
-      console.error('Error loading political contributions:', error);
-      message.error('Failed to load political contributions data');
-    } finally {
-      setLoading(false);
-    }
+        
+        setRunDates([{ label: 'All Runs', value: 'All' }, ...runDateOptions]);
+        
+        // Load all contributions initially
+        const allContributions: Contribution[] = [];
+        documents.forEach(doc => {
+          const docContributions = transformContributionsFromDocument(doc);
+          allContributions.push(...docContributions);
+        });
+        
+        setContributions(allContributions);
+        
+        if (documents.length > 0) {
+          message.success(`Loaded ${documents.length} document runs with ${allContributions.length} contribution records`);
+        }
+      } catch (error) {
+        console.error('Error loading political contributions:', error);
+        message.error('Failed to load political contributions data from API');
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadData();
   }, []);
+
+  // Filter data based on selected run date
+  useEffect(() => {
+    if (runDateFilter === 'All') {
+      // Show all contributions from all documents
+      const allContributions: Contribution[] = [];
+      allDocuments.forEach(doc => {
+        const docContributions = transformContributionsFromDocument(doc);
+        allContributions.push(...docContributions);
+      });
+      setContributions(allContributions);
+      setSelectedDocument(null);
+    } else {
+      // Show contributions from selected document only
+      const selectedDoc = allDocuments.find(doc => doc._id === runDateFilter);
+      if (selectedDoc) {
+        const docContributions = transformContributionsFromDocument(selectedDoc);
+        setContributions(docContributions);
+        setSelectedDocument(selectedDoc);
+      }
+    }
+  }, [runDateFilter, allDocuments]);
+
+  // Debounce search text
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchText(searchText);
+    }, 300); // 300ms debounce delay
+
+    return () => clearTimeout(timer);
+  }, [searchText]);
 
   const filteredData = useMemo(() => {
     return contributions.filter(item => {
-      const matchesSearch = item.employeeName.toLowerCase().includes(searchText.toLowerCase());
+      const matchesSearch = item.employeeName.toLowerCase().includes(debouncedSearchText.toLowerCase());
       const matchesStatus = statusFilter === 'All' || item.status === statusFilter;
-      const matchesRunDate = runDateFilter === 'All' || item.runDate === runDateFilter;
       
-      return matchesSearch && matchesStatus && matchesRunDate;
+      return matchesSearch && matchesStatus;
     });
-  }, [contributions, searchText, statusFilter, runDateFilter]);
+  }, [contributions, debouncedSearchText, statusFilter]);
 
   const columns = [
     {
@@ -171,9 +253,9 @@ const PoliticalContributionsDashboard: React.FC = () => {
     },
   ];
 
-    const handleSearch = (value: string) => {
-    setSearchText(value);
-  };
+    const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  }, []);
 
   const handleStatusChange = (value: string) => {
     setStatusFilter(value);
@@ -183,49 +265,69 @@ const PoliticalContributionsDashboard: React.FC = () => {
     setRunDateFilter(value);
   };
 
-  const handleFreshRun = () => {
-    setLoading(true);
-    // In a real app, this would trigger an API call to refresh the data
-    setTimeout(() => {
+  const handleFreshRun = async () => {
+    try {
+      setLoading(true);
+      const documents = await fetchPoliticalContributions();
+      setAllDocuments(documents);
+      
+      // Create run date options from created_at values
+      const runDateOptions = documents.map(doc => ({
+        label: `${dayjs(doc.created_at).format('MMM D, YYYY')} - ${formatPeriod(doc.period)}`,
+        value: doc._id
+      }));
+      
+      setRunDates([{ label: 'All Runs', value: 'All' }, ...runDateOptions]);
+      
+      // Reset to show all data
+      setRunDateFilter('All');
+      
       message.success('Political contributions data refreshed successfully');
+    } catch (error) {
+      console.error('Error refreshing political contributions:', error);
+      message.error('Failed to refresh political contributions data');
+    } finally {
       setLoading(false);
-    }, 1500);
+    }
   };
 
   // Calculate summary statistics
   const summaryStats = useMemo(() => {
+    console.log('contributions', contributions);
     const totalEmployees = contributions.length;
     const totalContributions = contributions.reduce((sum, curr) => sum + curr.ytdContribution, 0);
     const redAlerts = contributions.filter(c => c.status === 'Red').length;
     const amberAlerts = contributions.filter(c => c.status === 'Amber').length;
     const greenAlerts = contributions.filter(c => c.status === 'Green').length;
     
-    // Find most recent run date and period
+    // Use selected document data if available, otherwise use aggregated data
     let latestRun = 'No data';
     let periodConsidered = 'N/A';
+    let startedAt = '';
+    let completedAt = '';
+    let duration = 'N/A';
     
-    if (contributions.length > 0) {
-      // Get the latest run date
-      const latestRunData = contributions.reduce((latest, curr) => {
-        const currDate = curr.runDate ? new Date(curr.runDate.split(' to ')[0]).getTime() : 0;
-        const latestDate = latest?.runDate ? new Date(latest.runDate.split(' to ')[0]).getTime() : 0;
-        return currDate > latestDate ? curr : latest;
-      }, null as Contribution | null);
+    if (selectedDocument) {
+      // Use data from the selected document
+      latestRun = dayjs(selectedDocument.created_at).format('MMM D, YYYY');
+      periodConsidered = formatPeriod(selectedDocument.period);
+      startedAt = dayjs(selectedDocument.created_at).format('MM/DD/YYYY, hh:mm A');
+      completedAt = dayjs(selectedDocument.updated_at).format('MM/DD/YYYY, hh:mm A');
       
-      if (latestRunData) {
-        latestRun = latestRunData.runDate || 'N/A';
-        // Set period considered (assuming 1 month period ending on the run date)
-        const runDate = latestRunData.runDate ? new Date(latestRunData.runDate.split(' to ')[0]) : new Date();
-        const periodEnd = new Date(runDate);
-        const periodStart = new Date(runDate);
-        periodStart.setMonth(periodStart.getMonth() - 1);
-        periodConsidered = `${periodStart.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} - ${periodEnd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}`;
-      }
+      // Format duration from seconds to readable format
+      const durationSeconds = selectedDocument.duration;
+      const minutes = Math.floor(durationSeconds / 60);
+      const seconds = Math.floor(durationSeconds % 60);
+      duration = `${minutes} min ${seconds} sec`;
+    } else if (contributions.length > 0) {
+      // Fallback to aggregated data when showing all runs
+      latestRun = 'Multiple runs';
+      periodConsidered = 'All periods';
+      const now = new Date();
+      startedAt = now.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+      completedAt = now.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+      duration = 'Aggregated';
     }
-    
-    // Calculate duration (assuming 20 minutes for the run)
-    const startedAt = new Date();
-    const completedAt = new Date(startedAt.getTime() + 20 * 60 * 1000); // 20 minutes later
     
     return {
       totalEmployees,
@@ -235,12 +337,12 @@ const PoliticalContributionsDashboard: React.FC = () => {
       greenAlerts,
       latestRun,
       periodConsidered,
-      startedAt: startedAt.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
-      completedAt: completedAt.toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
-      duration: '19 min 58 sec',
+      startedAt,
+      completedAt,
+      duration,
       contributionCategory: ['Green', 'Amber', 'Red'] // Default category
     };
-  }, [contributions]);
+  }, [contributions, selectedDocument]);
 
   return (
     <div style={{ 
@@ -251,6 +353,41 @@ const PoliticalContributionsDashboard: React.FC = () => {
       boxSizing: 'border-box'
     }}>
       <Spin spinning={loading}>
+        {/* Selected Document Info */}
+        {/* {selectedDocument && (
+          <Card style={{ marginBottom: 16 }}>
+            <Row gutter={[16, 8]}>
+              <Col span={24}>
+                <Text strong style={{ fontSize: '16px', color: '#1890ff' }}>
+                  Selected Run Details
+                </Text>
+              </Col>
+              <Col xs={24} sm={12} md={6}>
+                <Text strong>Run ID:</Text>
+                <br />
+                <Text copyable={{ text: selectedDocument.run_id }}>
+                  {selectedDocument.run_id.substring(0, 8)}...
+                </Text>
+              </Col>
+              <Col xs={24} sm={12} md={6}>
+                <Text strong>Period:</Text>
+                <br />
+                <Text>{selectedDocument.period}</Text>
+              </Col>
+              <Col xs={24} sm={12} md={6}>
+                <Text strong>Duration:</Text>
+                <br />
+                <Text>{Math.floor(selectedDocument.duration / 60)} min {Math.floor(selectedDocument.duration % 60)} sec</Text>
+              </Col>
+              <Col xs={24} sm={12} md={6}>
+                <Text strong>Created:</Text>
+                <br />
+                <Text>{dayjs(selectedDocument.created_at).format('MMM D, YYYY HH:mm')}</Text>
+              </Col>
+            </Row>
+          </Card>
+        )} */}
+
         {/* Header Section */}
         <Row gutter={[16, 16]} style={{ 
           marginBottom: 24, 
@@ -275,13 +412,13 @@ const PoliticalContributionsDashboard: React.FC = () => {
             </Select>
           </Col>
           <Col xs={24} md={12}>
-            <Search
-              placeholder="Search by employee name..."
+            <Input
+              placeholder="Search by employee name"
               allowClear
-              enterButton={<SearchOutlined />}
-              onSearch={handleSearch}
+              value={searchText}
+              onChange={handleSearchChange}
               style={{ width: '100%' }}
-              loading={loading}
+              prefix={<SearchOutlined />}
             />
           </Col>
           <Col xs={24} md={6} style={{ textAlign: 'right' }}>
