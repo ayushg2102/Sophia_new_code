@@ -42,7 +42,7 @@ const CATEGORIES = [
 
 const Dashboard: React.FC = () => {
   const [createModalVisible, setCreateModalVisible] = useState(false);
-  const [tasks, setTasks] = useState<Task[]>(mockTasks);
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'card' | 'list'>('card');
   const navigate = useNavigate();
