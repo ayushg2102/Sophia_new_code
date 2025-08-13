@@ -111,65 +111,6 @@ const Dashboard: React.FC = () => {
       <Header />
       <Content className="dashboard-content">
         <div className="dashboard-container">
-          <div className="dashboard-header">
-            <div>
-              {/* <Title level={2} className="dashboard-title">
-                Dashboard
-              </Title> */}
-              {/* <Text className="dashboard-subtitle">
-                Manage your compliance tasks, automate workflows, and track progress across all business units
-              </Text> */}
-            </div>
-            {/* <Button 
-              type="primary" 
-              icon={<PlusOutlined />} 
-              size="large"
-              className="create-task-btn"
-              onClick={() => setCreateModalVisible(true)}
-            >
-              Create New Task
-            </Button> */}
-          </div>
-
-          {/* <Row gutter={[16, 16]} className="metrics-row">
-            <Col xs={24} sm={12} md={6}>
-              <MetricCard
-                title="Sub-Tasks Completed"
-                value={mockDashboardMetrics.active_tasks}
-                icon={<PlayCircleOutlined />}
-                color="#1677ff"
-                suffix="From Last Month"
-              />
-            </Col>
-            <Col xs={24} sm={12} md={6}>
-              <MetricCard
-                title="Overdue Sub-Tasks"
-                value={mockDashboardMetrics.due_this_week}
-                icon={<ClockCircleOutlined />}
-                color="#faad14"
-                suffix="Overdue"
-              />
-            </Col>
-            <Col xs={24} sm={12} md={6}>
-              <MetricCard
-                title="Active Employees"
-                value={mockDashboardMetrics.completed}
-                icon={<CheckCircleOutlined />}
-                color="#52c41a"
-                suffix="This Month"
-              />
-            </Col>
-            <Col xs={24} sm={12} md={6}>
-              <MetricCard
-                title="Pending Actions"
-                value={mockDashboardMetrics.actions_pending}
-                icon={<AlertOutlined />}
-                color="#ff4d4f"
-                suffix="Automated Workflows"
-              />
-            </Col>
-          </Row> */}
-
           {/* Category Overview Section */}
           {/* Removed the All Categories square card section as per new requirements */}
 
