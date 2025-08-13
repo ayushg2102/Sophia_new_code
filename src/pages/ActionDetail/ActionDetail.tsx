@@ -385,7 +385,7 @@ const ActionDetail: React.FC = () => {
             {/* Info Cards Row */}
             <Row gutter={16} style={{ marginBottom: '24px' }}>
               {/* Last run date & time card */}
-              <Col xs={24} sm={8}>
+              <Col xs={24} sm={8} lg={6}>
                 <Card 
                   style={{ 
                     borderRadius: '8px', 
@@ -408,7 +408,7 @@ const ActionDetail: React.FC = () => {
               </Col>
               
               {/* Trigger type card */}
-              <Col xs={24} sm={8}>
+              <Col xs={24} sm={8} lg={6}>
                 <Card 
                   style={{ 
                     borderRadius: '8px', 
@@ -437,7 +437,7 @@ const ActionDetail: React.FC = () => {
               </Col>
               
               {/* Capabilities card */}
-              <Col xs={24} sm={8}>
+              <Col xs={24} sm={8} lg={6}>
                 <Card 
                   style={{ 
                     borderRadius: '8px', 
