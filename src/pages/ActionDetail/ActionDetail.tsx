@@ -408,31 +408,34 @@ const ActionDetail: React.FC = () => {
     <Layout style={{ minHeight: '100vh', background: '#f5f5f5' }}>
       <Header />
       <Content style={{ padding: '16px 24px', height: 'calc(100vh - 64px)', display: 'flex', flexDirection: 'column' }}>
-        <div style={{ maxWidth: '100%', margin: '0', flex: 1, display: 'flex', flexDirection: 'column' }}>
-          {/* Header Section */}
-          <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <Button
-                type="text"
-                icon={<ArrowLeftOutlined />}
-                onClick={() => navigate(-1)}
-                style={{ padding: '4px 8px' }}
-              >
-                Back
-              </Button>
-              <div>
-                <Title level={2} style={{ margin: '0', fontSize: '20px', fontWeight: 600, lineHeight: '1.2' }}>
-                  {action.action_name}
-                </Title>
-                <Text type="secondary" style={{ fontSize: '13px' }}>
-                  {action.task_name}
-                </Text>
+        {/* Main Layout with Full Height Sidebar */}
+        <Row gutter={16} style={{ flex: 1, minHeight: 0 }}>
+          {/* Left Column - Header + Info Cards + Action Details */}
+          <Col xs={24} lg={18} style={{ display: 'flex', flexDirection: 'column' }}>
+            {/* Header Section */}
+            <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <Button
+                  type="text"
+                  icon={<ArrowLeftOutlined />}
+                  onClick={() => navigate(-1)}
+                  style={{ padding: '4px 8px' }}
+                >
+                  Back
+                </Button>
+                <div>
+                  <Title level={2} style={{ margin: '0', fontSize: '20px', fontWeight: 600, lineHeight: '1.2' }}>
+                    {action.action_name}
+                  </Title>
+                  <Text type="secondary" style={{ fontSize: '13px' }}>
+                    {action.task_name}
+                  </Text>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Info Cards Row */}
-          <Row gutter={16} style={{ marginBottom: '16px' }}>
+            {/* Info Cards Row */}
+            <Row gutter={16} style={{ marginBottom: '16px' }}>
             {/* Last run date & time card */}
             <Col xs={24} sm={8} lg={6}>
               <Card 
@@ -486,7 +489,7 @@ const ActionDetail: React.FC = () => {
             </Col>
             
             {/* Capabilities card */}
-            <Col xs={24} sm={8} lg={6}>
+            <Col xs={24} sm={8} lg={8}>
               <Card 
                 style={{ 
                   borderRadius: '6px', 
@@ -520,11 +523,8 @@ const ActionDetail: React.FC = () => {
             </Col>
           </Row>
 
-          {/* Main Content */}
-          <Row gutter={16} style={{ alignItems: 'stretch', flex: 1, minHeight: 0 }}>
-            {/* Left Column - Tabs */}
-            <Col xs={24} lg={18}>
-              <Card style={{ borderRadius: '6px', boxShadow: '0 1px 4px rgba(0,0,0,0.08)', height: '100%' }}>
+            {/* Action Details */}
+            <Card style={{ borderRadius: '6px', boxShadow: '0 1px 4px rgba(0,0,0,0.08)', flex: 1, display: 'flex', flexDirection: 'column' }}>
                 <div style={{ marginBottom: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <Text strong style={{ fontSize: '15px' }}>Action Details</Text>
                 </div>
@@ -663,26 +663,25 @@ const ActionDetail: React.FC = () => {
                     },
                   ]}
                 />
-              </Card>
-            </Col>
+            </Card>
+          </Col>
 
-            {/* Right Column - Details Sidebar */}
-            <Col xs={24} lg={6} style={{ display: 'flex', flexDirection: 'column' }}>
-              <DetailsSidebar
-                statusCounts={sidebarData.statusCounts}
-                totalItems={sidebarData.totalSubtasks}
-                donePercentage={sidebarData.donePercentage}
-                category={sidebarData.category}
-                nextDueDate={sidebarData.nextDueDate}
-                frequency={sidebarData.frequency}
-                description={sidebarData.description}
-                totalSubtasks={sidebarData.totalSubtasks}
-                occurrences={sidebarData.occurrences}
-                style={{ height: '100%' }}
-              />
-            </Col>
-          </Row>
-        </div>
+          {/* Right Column - Full Height Details Sidebar */}
+          <Col xs={24} lg={6} style={{ display: 'flex', flexDirection: 'column' }}>
+            <DetailsSidebar
+              statusCounts={sidebarData.statusCounts}
+              totalItems={sidebarData.totalSubtasks}
+              donePercentage={sidebarData.donePercentage}
+              category={sidebarData.category}
+              nextDueDate={sidebarData.nextDueDate}
+              frequency={sidebarData.frequency}
+              description={sidebarData.description}
+              totalSubtasks={sidebarData.totalSubtasks}
+              occurrences={sidebarData.occurrences}
+              style={{ height: '100%', flex: 1 }}
+            />
+          </Col>
+        </Row>
       </Content>
     </Layout>
   );

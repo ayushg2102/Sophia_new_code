@@ -531,37 +531,38 @@ const TaskView: React.FC = () => {
     <Layout style={{ minHeight: '100vh', background: '#f5f5f5' }}>
       <Header />
       <Content style={{ padding: '16px 24px', height: 'calc(100vh - 64px)', display: 'flex', flexDirection: 'column' }}>
-        <div style={{ maxWidth: '100%', margin: '0', flex: 1, display: 'flex', flexDirection: 'column' }}>
-          {/* Header Section */}
-          <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <Button
-                type="text"
-                icon={<ArrowLeftOutlined />}
-                onClick={() => navigate(-1)}
-                style={{ padding: '4px 8px' }}
-              >
-                Back
-              </Button>
-              <div>
-                <Title level={2} style={{ margin: '0', fontSize: '20px', fontWeight: 600, lineHeight: '1.2' }}>
-                  {task?.task_short_description || 'Social Media Alerts and Monitoring'}
-                </Title>
-                <Text type="secondary" style={{ fontSize: '13px' }}>
-                  {task?.task_category || 'Alerts & Compliance monitoring'}
-                </Text>
+        {/* Main Layout with Full Height Sidebar */}
+        <Row gutter={16} style={{ flex: 1, minHeight: 0 }}>
+          {/* Left Column - Header + Actions */}
+          <Col xs={24} lg={18} style={{ display: 'flex', flexDirection: 'column' }}>
+            {/* Header Section */}
+            <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <Button
+                  type="text"
+                  icon={<ArrowLeftOutlined />}
+                  onClick={() => navigate(-1)}
+                  style={{ padding: '4px 8px' }}
+                >
+                  Back
+                </Button>
+                <div>
+                  <Title level={2} style={{ margin: '0', fontSize: '20px', fontWeight: 600, lineHeight: '1.2' }}>
+                    {task?.task_short_description || 'Social Media Alerts and Monitoring'}
+                  </Title>
+                  <Text type="secondary" style={{ fontSize: '13px' }}>
+                    {task?.task_category || 'Alerts & Compliance monitoring'}
+                  </Text>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Main Content */}
-          <Row gutter={16} style={{ alignItems: 'stretch', flex: 1, minHeight: 0 }}>
-            {/* Left Column - Actions Table */}
-            <Col xs={24} lg={18}>
-              <Card style={{ borderRadius: '6px', boxShadow: '0 1px 4px rgba(0,0,0,0.08)', height: '100%' }}>
-                <div style={{ marginBottom: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Text strong style={{ fontSize: '15px' }}>Actions</Text>
-                </div>
+            {/* Actions Table */}
+            <Card style={{ borderRadius: '6px', boxShadow: '0 1px 4px rgba(0,0,0,0.08)', flex: 1, display: 'flex', flexDirection: 'column' }}>
+              <div style={{ marginBottom: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Text strong style={{ fontSize: '15px' }}>Actions</Text>
+              </div>
+              <div style={{ flex: 1, overflow: 'auto' }}>
                 <Table
                   columns={columns}
                   dataSource={actionsData}
@@ -575,26 +576,26 @@ const TaskView: React.FC = () => {
                   size="small"
                   style={{ fontSize: '13px' }}
                 />
-              </Card>
-            </Col>
+              </div>
+            </Card>
+          </Col>
 
-            {/* Right Column - Details Sidebar */}
-            <Col xs={24} lg={6} style={{ display: 'flex', flexDirection: 'column' }}>
-              <DetailsSidebar
-                statusCounts={statusCounts}
-                totalItems={totalSubtasks}
-                donePercentage={donePercentage}
-                category={taskDetails?.category || task?.task_category || 'Alerts and Monitoring'}
-                nextDueDate={taskDetails?.nextDueDate ? new Date(taskDetails.nextDueDate).toLocaleDateString() : '--'}
-                frequency={taskDetails?.frequency || task?.frequency || 'Quarterly'}
-                description={taskDetails?.description}
-                totalSubtasks={task?.subtasks?.length || 0}
-                occurrences={occurrencesData}
-                style={{ height: '100%' }}
-              />
-            </Col>
-          </Row>
-        </div>
+          {/* Right Column - Full Height Details Sidebar */}
+          <Col xs={24} lg={6} style={{ display: 'flex', flexDirection: 'column' }}>
+            <DetailsSidebar
+              statusCounts={statusCounts}
+              totalItems={totalSubtasks}
+              donePercentage={donePercentage}
+              category={taskDetails?.category || task?.task_category || 'Alerts and Monitoring'}
+              nextDueDate={taskDetails?.nextDueDate ? new Date(taskDetails.nextDueDate).toLocaleDateString() : '--'}
+              frequency={taskDetails?.frequency || task?.frequency || 'Quarterly'}
+              description={taskDetails?.description}
+              totalSubtasks={task?.subtasks?.length || 0}
+              occurrences={occurrencesData}
+              style={{ height: '100%', flex: 1 }}
+            />
+          </Col>
+        </Row>
       </Content>
     </Layout>
   );
