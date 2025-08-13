@@ -16,6 +16,7 @@ import { SearchOutlined, ReloadOutlined, DownloadOutlined } from '@ant-design/ic
 const { Title } = Typography;
 import dayjs from 'dayjs';
 import SocialMediaMonitoringDashboard from '../SocialMediaContributions/SocialMediaMonitoringDashboard';
+import Header from '../Header/Header';
 
 
 const { Option } = Select;
@@ -303,6 +304,8 @@ const TitleMonitoringDashboard: React.FC = () => {
 
   // Otherwise, return the Title Monitoring dashboard
   return (
+    <>
+    <Header />
     <div style={{ width: '100%', padding: '24px' }}>
      <Row gutter={[16, 16]} style={{ marginBottom: 24 }} align="middle">
           <Col xs={24} md={8}>
@@ -492,6 +495,7 @@ const TitleMonitoringDashboard: React.FC = () => {
         />
       </Card>
     </div>
+    </>
   );
 };
 
