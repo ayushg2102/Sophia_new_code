@@ -17,7 +17,9 @@ import {
 import dayjs from 'dayjs';
 import { 
   ArrowLeftOutlined, 
-  CheckCircleOutlined
+  CheckCircleOutlined,
+  DownOutlined,
+  RightOutlined
 } from '@ant-design/icons';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/Header/Header';
@@ -59,6 +61,7 @@ const ActionDetail: React.FC = () => {
   const [action, setAction] = useState<ActionDetailType | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('runs-history');
+  const [expandedRunLogs, setExpandedRunLogs] = useState<Set<string>>(new Set());
 
   // Get task data from navigation state (passed from TaskView)
   const passedTaskData = location.state as {
@@ -199,13 +202,47 @@ const ActionDetail: React.FC = () => {
       dataIndex: 'human_msg',
       key: 'human_msg',
       width: '55%',
-      render: (text: string, record: ActionRun) => (
-        <div style={{ whiteSpace: 'pre-wrap', lineHeight: '2.0' }}>
-          <Text strong style={{ fontSize: '13px' }}>
-            {text}
-          </Text>
-        </div>
-      ),
+      render: (text: string, record: ActionRun) => {
+        const rowKey = `${record.subtask_id}-${record.step_id}`;
+        const isExpanded = expandedRunLogs.has(rowKey);
+        const shouldTruncate = text && text.length > 100;
+        const displayText = isExpanded || !shouldTruncate ? text : `${text.substring(0, 100)}...`;
+        
+        const toggleExpanded = () => {
+          const newExpanded = new Set(expandedRunLogs);
+          if (isExpanded) {
+            newExpanded.delete(rowKey);
+          } else {
+            newExpanded.add(rowKey);
+          }
+          setExpandedRunLogs(newExpanded);
+        };
+        
+        return (
+          <div style={{ whiteSpace: 'pre-wrap', lineHeight: '2.0' }}>
+            <Text strong style={{ fontSize: '13px' }}>
+              {displayText}
+            </Text>
+            {shouldTruncate && (
+              <Button
+                type="text"
+                size="small"
+                icon={isExpanded ? <DownOutlined /> : <RightOutlined />}
+                onClick={toggleExpanded}
+                style={{ 
+                  marginLeft: '8px', 
+                  padding: '0 4px',
+                  height: '20px',
+                  fontSize: '10px',
+                  color: '#1890ff'
+                }}
+              >
+                {isExpanded ? 'Show Less' : 'Show More'}
+              </Button>
+            )}
+          </div>
+        );
+      },
     },
     {
       title: 'Run date & time',
@@ -504,7 +541,7 @@ const ActionDetail: React.FC = () => {
                           <Table
                             columns={runsColumns}
                             dataSource={runsData}
-                            rowKey={(record, index) => `${record.subtask_id}-${index}`}
+                            rowKey={(record, index) => `${record.subtask_id}-${record.step_id || index}`}
                             pagination={false}
                             size="small"
                             style={{ fontSize: '13px' }}
