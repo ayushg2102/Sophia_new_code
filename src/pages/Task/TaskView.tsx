@@ -90,10 +90,9 @@ const TaskView: React.FC = () => {
             // Set task details for sidebar
             setTaskDetails({
               category: taskData.task_category,
-              nextDueDate: taskData.task_due_date,
               frequency: taskData.frequency,
               description: taskData.description,
-              // Calculate next due date from subtasks if available
+              // Calculate next due date from subtasks if available, fallback to task due date
               nextDueDate: taskData.subtasks?.find((st: any) => st.status === 'due')?.due_date || taskData.task_due_date
             });
             
@@ -231,9 +230,19 @@ const TaskView: React.FC = () => {
         title: 'Run summary',
         dataIndex: 'runSummary',
         key: 'runSummary',
-        width: '30%',
+        width: '35%',
+        align: 'left' as const,
         render: (text: string) => (
-          <Text style={{ fontSize: '14px' }}>{text}</Text>
+          <div style={{ padding: '12px 16px' }}>
+            <div style={{ 
+              fontSize: '14px', 
+              lineHeight: '1.4',
+              color: '#262626',
+              fontWeight: '400'
+            }}>
+              {text}
+            </div>
+          </div>
         ),
       },
       {
@@ -241,8 +250,17 @@ const TaskView: React.FC = () => {
         dataIndex: 'runDate',
         key: 'runDate',
         width: '25%',
+        align: 'center' as const,
         render: (text: string) => (
-          <Text style={{ fontSize: '14px' }}>{text}</Text>
+          <div style={{ padding: '12px 16px', textAlign: 'center' }}>
+            <div style={{ 
+              fontSize: '14px', 
+              fontWeight: '500',
+              color: '#262626'
+            }}>
+              {text}
+            </div>
+          </div>
         ),
       },
       {
@@ -250,27 +268,72 @@ const TaskView: React.FC = () => {
         dataIndex: 'status',
         key: 'status',
         width: '15%',
+        align: 'center' as const,
         render: (status: string) => {
-          const getStatusColor = (status: string) => {
+          const getStatusConfig = (status: string) => {
             switch (status.toLowerCase()) {
               case 'completed':
               case 'success':
-                return '#52c41a';
+                return {
+                  color: '#52c41a',
+                  backgroundColor: '#f6ffed',
+                  borderColor: '#b7eb8f',
+                  text: 'Completed'
+                };
               case 'failed':
               case 'error':
-                return '#ff4d4f';
+                return {
+                  color: '#ff4d4f',
+                  backgroundColor: '#fff2f0',
+                  borderColor: '#ffccc7',
+                  text: 'Failed'
+                };
               case 'running':
               case 'in_progress':
-                return '#faad14';
+                return {
+                  color: '#faad14',
+                  backgroundColor: '#fffbe6',
+                  borderColor: '#ffe58f',
+                  text: 'Running'
+                };
               default:
-                return '#8c8c8c';
+                return {
+                  color: '#8c8c8c',
+                  backgroundColor: '#f5f5f5',
+                  borderColor: '#d9d9d9',
+                  text: status
+                };
             }
           };
           
+          const config = getStatusConfig(status);
+          
           return (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-              <CheckCircleOutlined style={{ color: getStatusColor(status) }} />
-              <Text style={{ color: getStatusColor(status), textTransform: 'capitalize' }}>{status}</Text>
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              padding: '8px 12px'
+            }}>
+              <div style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                padding: '4px 12px',
+                borderRadius: '16px',
+                backgroundColor: config.backgroundColor,
+                border: `1px solid ${config.borderColor}`,
+                fontSize: '12px',
+                fontWeight: '500'
+              }}>
+                <CheckCircleOutlined style={{ 
+                  color: config.color, 
+                  fontSize: '14px' 
+                }} />
+                <span style={{ color: config.color }}>
+                  {config.text}
+                </span>
+              </div>
             </div>
           );
         },
@@ -279,12 +342,26 @@ const TaskView: React.FC = () => {
         title: 'Occurrence',
         dataIndex: 'occurrence',
         key: 'occurrence',
-        width: '30%',
+        width: '25%',
+        align: 'left' as const,
         render: (text: string, record: any) => (
-          <div>
-            <Text style={{ fontWeight: 500, fontSize: '14px' }}>{text}</Text>
-            <br />
-            <Text type="secondary" style={{ fontSize: '12px' }}>Due: {record.dueDate}</Text>
+          <div style={{ padding: '8px 12px' }}>
+            <div style={{ 
+              fontWeight: 500, 
+              fontSize: '14px',
+              lineHeight: '1.4',
+              color: '#262626',
+              marginBottom: '4px'
+            }}>
+              {text}
+            </div>
+            <div style={{ 
+              fontSize: '12px',
+              lineHeight: '1.2',
+              color: '#8c8c8c'
+            }}>
+              Due: {record.dueDate}
+            </div>
           </div>
         ),
       },
@@ -319,14 +396,27 @@ const TaskView: React.FC = () => {
     }
 
     return (
-      <Table
-        columns={historyColumns}
-        dataSource={runHistory}
-        pagination={false}
-        size="small"
-        style={{ margin: '0 48px' }}
-        rowKey="key"
-      />
+      <div style={{ 
+        margin: '0 24px', 
+        padding: '16px',
+        backgroundColor: '#fafafa',
+        borderRadius: '8px'
+      }}>
+        <Table
+          columns={historyColumns}
+          dataSource={runHistory}
+          pagination={false}
+          size="middle"
+          rowKey="key"
+          bordered
+          style={{
+            backgroundColor: 'white',
+            borderRadius: '6px',
+            overflow: 'hidden'
+          }}
+          className="run-history-table"
+        />
+      </div>
     );
   };
 
