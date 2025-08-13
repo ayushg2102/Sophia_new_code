@@ -491,16 +491,16 @@ const TaskView: React.FC = () => {
     },
   ];
 
-  // Calculate status counts for donut chart
+  // Calculate status counts for donut chart based on subtasks
   const statusCounts = {
-    done: actionsData.filter((item: ActionData) => item.status === 'done').length,
-    ongoing: actionsData.filter((item: ActionData) => item.status === 'ongoing').length,
-    overdue: actionsData.filter((item: ActionData) => item.status === 'overdue').length,
-    due: actionsData.filter((item: ActionData) => item.status === 'due').length,
+    done: task?.subtasks?.filter((subtask: any) => subtask.status === 'completed').length || 0,
+    ongoing: task?.subtasks?.filter((subtask: any) => subtask.status === 'ongoing').length || 0,
+    overdue: task?.subtasks?.filter((subtask: any) => subtask.status === 'overdue').length || 0,
+    due: task?.subtasks?.filter((subtask: any) => subtask.status === 'due').length || 0,
   };
 
-  const totalItems = Object.values(statusCounts).reduce((sum, count) => sum + count, 0);
-  const donePercentage = totalItems > 0 ? Math.round((statusCounts.done / totalItems) * 100) : 0;
+  const totalSubtasks = task?.subtasks?.length || 0;
+  const donePercentage = totalSubtasks > 0 ? Math.round((statusCounts.done / totalSubtasks) * 100) : 0;
 
   // Transform subtasks data for occurrences
   const occurrencesData: OccurrenceData[] = task?.subtasks?.map((subtask: any, index: number) => {
@@ -592,7 +592,7 @@ const TaskView: React.FC = () => {
                   <Progress
                     type="circle"
                     percent={donePercentage}
-                    format={() => `${statusCounts.done}/${totalItems}\nDone`}
+                    format={() => `${statusCounts.done}/${totalSubtasks}\nDone`}
                     size={120}
                     strokeColor="#52c41a"
                     style={{ marginBottom: '16px' }}
