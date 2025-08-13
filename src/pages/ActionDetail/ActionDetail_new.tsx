@@ -151,8 +151,11 @@ Website Review Alert & Monitoring
       width: '35%',
       render: (text: string, record: ActionRun) => (
         <div>
-          <Text strong>{text}</Text>
+          <Text strong>{text || 'Process media content'}</Text>
           <br />
+          <Text type="secondary" style={{ fontSize: '12px' }}>
+            {record.description || '1. Open preferred social media platform.\n2. Navigate to the feed or timeline.\n3. Scroll through posts, paying attention to images and captions.\n4. Mark relevant posts with your network.'}
+          </Text>
         </div>
       ),
     },
@@ -329,7 +332,7 @@ Website Review Alert & Monitoring
               {action.action_name}
             </Title>
             <Text type="secondary" style={{ fontSize: '14px', display: 'block', marginBottom: '16px' }}>
-              {action.task_name}
+              &lt;{action.task_name}&gt;
             </Text>
             
             {/* Action metadata */}
@@ -382,6 +385,82 @@ Website Review Alert & Monitoring
                             pagination={false}
                             size="middle"
                             bordered
+                            expandable={{
+                              expandedRowRender: (record) => {
+                                return (
+                                  <div style={{ padding: '16px', backgroundColor: '#fafafa' }}>
+                                    <Collapse 
+                                      ghost
+                                      defaultActiveKey={['process-details']}
+                                      items={[
+                                        {
+                                          key: 'process-details',
+                                          label: 'Process Details',
+                                          children: (
+                                            <div>
+                                              <div style={{ marginBottom: '16px' }}>
+                                                <Text strong style={{ display: 'block', marginBottom: '8px' }}>Objective</Text>
+                                                <Text>{objective}</Text>
+                                              </div>
+                                              
+                                              <div style={{ marginBottom: '16px' }}>
+                                                <Text strong style={{ display: 'block', marginBottom: '8px' }}>Mail template</Text>
+                                                <div style={{ marginBottom: '8px' }}>
+                                                  <Text strong>Subject: </Text>
+                                                  <Text>{subject}</Text>
+                                                </div>
+                                                <div style={{
+                                                  backgroundColor: '#f8f9fa',
+                                                  padding: '12px',
+                                                  borderRadius: '4px',
+                                                  whiteSpace: 'pre-wrap',
+                                                  fontFamily: 'monospace',
+                                                  fontSize: '13px',
+                                                  border: '1px solid #e8e8e8'
+                                                }}>
+                                                  Hi Spencer,{body}
+                                                  Regards,  
+                                                  Sophia  
+                                                  Compliance Assistant
+                                                </div>
+                                              </div>
+                                              
+                                              <div style={{ marginBottom: '16px' }}>
+                                                <Text strong style={{ display: 'block', marginBottom: '8px' }}>Checklist</Text>
+                                                <ul style={{ paddingLeft: '20px', margin: 0 }}>
+                                                  <li>Use the mentioned email format</li>
+                                                  <li>Before sending the reminder, check if the due date is on a weekend or Xponance holiday</li>
+                                                  <li>If it is, move the reminder date to the previous working day. Repeat if needed until you find a business day.</li>
+                                                </ul>
+                                              </div>
+                                              
+                                              <div>
+                                                <Text strong style={{ display: 'block', marginBottom: '8px' }}>Xponance holidays</Text>
+                                                <Collapse 
+                                                  size="small"
+                                                  items={[{
+                                                    key: 'holidays',
+                                                    label: `${holidays.length} holidays`,
+                                                    children: (
+                                                      <ul style={{ paddingLeft: '20px', margin: 0 }}>
+                                                        {holidays.map((holiday, idx) => (
+                                                          <li key={idx}>{holiday.replace(/^-\s*/, '')}</li>
+                                                        ))}
+                                                      </ul>
+                                                    )
+                                                  }]}
+                                                />
+                                              </div>
+                                            </div>
+                                          )
+                                        }
+                                      ]}
+                                    />
+                                  </div>
+                                );
+                              },
+                              rowExpandable: () => true,
+                            }}
                           />
                         </div>
                       ),
@@ -445,6 +524,15 @@ Website Review Alert & Monitoring
                               }]}
                             />
                           </div>
+                        </div>
+                      ),
+                    },
+                    {
+                      key: 'configuration',
+                      label: 'Configuration',
+                      children: (
+                        <div style={{ padding: '16px', textAlign: 'center' }}>
+                          <Text type="secondary">Configuration data from API</Text>
                         </div>
                       ),
                     },

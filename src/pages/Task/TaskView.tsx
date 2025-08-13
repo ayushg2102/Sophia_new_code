@@ -477,19 +477,14 @@ const TaskView: React.FC = () => {
       key: 'actions',
       width: '15%',
       align: 'center' as const,
-      render: () => (
+      render: (_: any, record: ActionData) => (
         <Space size="small">
-          <Button
-            type="text"
-            icon={<LinkOutlined />}
-            size="small"
-            style={{ color: '#1890ff' }}
-          />
           <Button
             type="text"
             icon={<RightOutlined />}
             size="small"
             style={{ color: '#1890ff' }}
+            onClick={() => navigate(`/action/${record.key}`)}
           />
         </Space>
       ),
