@@ -2,34 +2,28 @@ import React, { useState, useEffect } from "react";
 import {
   Layout,
   Card,
-  Table,
-  Button,
-  Space,
   Typography,
+  Button,
+  Table,
+  Space,
   Row,
   Col,
-  Progress,
-  message,
   Spin,
-  List,
-  Collapse,
+  message,
 } from "antd";
 import {
   ArrowLeftOutlined,
-  LinkOutlined,
   RightOutlined,
-  LoadingOutlined,
-  ClockCircleOutlined,
   CheckCircleOutlined,
-  ExclamationCircleOutlined,
 } from "@ant-design/icons";
 import { useParams, useNavigate } from "react-router-dom";
-import Header from "../../components/Header/Header";
+import Header from '../../components/Header/Header';
+import DetailsSidebar, { OccurrenceData } from '../../components/DetailsSidebar';
+import './TaskView.css';
 import { Task } from "../../types";
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
-const { Panel } = Collapse;
 
 // Interface for action data
 interface ActionData {
@@ -41,13 +35,7 @@ interface ActionData {
   status: 'done' | 'ongoing' | 'overdue' | 'due';
 }
 
-// Interface for occurrence data
-interface OccurrenceData {
-  key: string;
-  period: string;
-  dueDate: string;
-  status: 'done' | 'ongoing' | 'overdue' | 'due';
-}
+
 
 const TaskView: React.FC = () => {
   const { taskId } = useParams<{ taskId: string }>();
@@ -135,21 +123,7 @@ const TaskView: React.FC = () => {
     fetchTaskDetail();
   }, [taskId]);
 
-  // Status icon helper
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case 'done':
-        return <CheckCircleOutlined style={{ color: '#52c41a' }} />;
-      case 'ongoing':
-        return <LoadingOutlined style={{ color: '#faad14' }} />;
-      case 'overdue':
-        return <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />;
-      case 'due':
-        return <ClockCircleOutlined style={{ color: '#d9d9d9' }} />;
-      default:
-        return <ClockCircleOutlined style={{ color: '#d9d9d9' }} />;
-    }
-  };
+
 
   // Fetch action details for all actions at once
   const fetchAllActionDetails = async (actions: any[]) => {
@@ -484,7 +458,16 @@ const TaskView: React.FC = () => {
             icon={<RightOutlined />}
             size="small"
             style={{ color: '#1890ff' }}
-            onClick={() => navigate(`/action/${record.key}`)}
+            onClick={() => navigate(`/action/${record.key}`, { 
+              state: { 
+                task: task,
+                taskDetails: taskDetails,
+                occurrencesData: occurrencesData,
+                statusCounts: statusCounts,
+                totalSubtasks: totalSubtasks,
+                donePercentage: donePercentage
+              }
+            })}
           />
         </Space>
       ),
@@ -578,118 +561,17 @@ const TaskView: React.FC = () => {
 
             {/* Right Column - Details Sidebar */}
             <Col xs={24} lg={8}>
-              <Card 
-                title="Details" 
-                style={{ 
-                  borderRadius: '8px', 
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-                  height: '100%',
-                  minHeight: '600px'
-                }}
-              >
-                {/* Donut Chart */}
-                <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-                  <Progress
-                    type="circle"
-                    percent={donePercentage}
-                    format={() => `${statusCounts.done}/${totalSubtasks}\nDone`}
-                    size={120}
-                    strokeColor="#52c41a"
-                    style={{ marginBottom: '16px' }}
-                  />
-                  
-                  {/* Status Legend */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'flex-start' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#52c41a' }}></div>
-                      <Text style={{ fontSize: '14px' }}>{statusCounts.done} Done</Text>
-                    </div>
-                    {/* <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#faad14' }}></div>
-                      <Text style={{ fontSize: '14px' }}>{statusCounts.ongoing} Ongoing</Text>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#ff4d4f' }}></div>
-                      <Text style={{ fontSize: '14px' }}>{statusCounts.overdue} Overdue</Text>
-                    </div> */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                      <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#faad14' }}></div>
-                      <Text style={{ fontSize: '14px' }}>{statusCounts.due} Due</Text>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Task Details */}
-                <div style={{ marginBottom: '24px' }}>
-                  <div style={{ marginBottom: '12px' }}>
-                    <Text type="secondary" style={{ fontSize: '12px' }}>Category</Text>
-                    <br />
-                    <Text style={{ fontSize: '14px', fontWeight: 500 }}>
-                      {taskDetails?.category || task?.task_category || 'Alerts and Monitoring'}
-                    </Text>
-                  </div>
-                  <div style={{ marginBottom: '12px' }}>
-                    <Text type="secondary" style={{ fontSize: '12px' }}>Next due on</Text>
-                    <br />
-                    <Text style={{ fontSize: '14px', fontWeight: 500 }}>
-                      {taskDetails?.nextDueDate ? new Date(taskDetails.nextDueDate).toLocaleDateString() : '--'}
-                    </Text>
-                  </div>
-                  <div style={{ marginBottom: '12px' }}>
-                    <Text type="secondary" style={{ fontSize: '12px' }}>Frequency</Text>
-                    <br />
-                    <Text style={{ fontSize: '14px', fontWeight: 500 }}>
-                      {taskDetails?.frequency || task?.frequency || 'Quarterly'}
-                    </Text>
-                  </div>
-                  {taskDetails?.description && (
-                    <div style={{ marginBottom: '12px' }}>
-                      <Text type="secondary" style={{ fontSize: '12px' }}>Description</Text>
-                      <br />
-                      <Text style={{ fontSize: '14px', fontWeight: 500 }}>
-                        {taskDetails.description}
-                      </Text>
-                    </div>
-                  )}
-                  <div style={{ marginBottom: '12px' }}>
-                    <Text type="secondary" style={{ fontSize: '12px' }}>Total Subtasks</Text>
-                    <br />
-                    <Text style={{ fontSize: '14px', fontWeight: 500 }}>
-                      {task?.subtasks?.length || 0}
-                    </Text>
-                  </div>
-                </div>
-
-                {/* Occurrences */}
-                <div>
-                  <Text type="secondary" style={{ fontSize: '12px', display: 'block', marginBottom: '12px' }}>
-                    Occurrence({occurrencesData.length})
-                  </Text>
-                  
-                  <Collapse ghost>
-                    <Panel header={`${occurrencesData.length} items`} key="1">
-                      <List
-                        size="small"
-                        dataSource={occurrencesData}
-                        renderItem={(item: OccurrenceData) => (
-                          <List.Item style={{ padding: '8px 0', border: 'none' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%' }}>
-                              {getStatusIcon(item.status)}
-                              <div style={{ flex: 1 }}>
-                                <Text style={{ fontSize: '14px' }}>{item.period}</Text>
-                                <br />
-                                <Text type="secondary" style={{ fontSize: '12px' }}>
-                                  Due: {item.dueDate}
-                                </Text>
-                              </div>
-                            </div>
-                          </List.Item>
-                        )}
-                      />
-                    </Panel>
-                  </Collapse>
-                </div>
-              </Card>
+              <DetailsSidebar
+                statusCounts={statusCounts}
+                totalItems={totalSubtasks}
+                donePercentage={donePercentage}
+                category={taskDetails?.category || task?.task_category || 'Alerts and Monitoring'}
+                nextDueDate={taskDetails?.nextDueDate ? new Date(taskDetails.nextDueDate).toLocaleDateString() : '--'}
+                frequency={taskDetails?.frequency || task?.frequency || 'Quarterly'}
+                description={taskDetails?.description}
+                totalSubtasks={task?.subtasks?.length || 0}
+                occurrences={occurrencesData}
+              />
             </Col>
           </Row>
         </div>

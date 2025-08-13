@@ -10,25 +10,18 @@ import {
   Collapse, 
   Tabs, 
   Table, 
-  Progress,
   Row,
   Col,
-  Space,
-  List
+  Space
 } from 'antd';
 import dayjs from 'dayjs';
 import { 
   ArrowLeftOutlined, 
-  CalendarOutlined, 
-  ToolOutlined, 
-  ClockCircleOutlined, 
-  CaretRightOutlined,
-  CheckCircleOutlined,
-  ExclamationCircleOutlined,
-  LoadingOutlined
+  CheckCircleOutlined
 } from '@ant-design/icons';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/Header/Header';
+import DetailsSidebar from '../../components/DetailsSidebar';
 import './ActionDetail.css';
 
 const { Content } = Layout;
@@ -62,9 +55,20 @@ interface ActionDetailType {
 const ActionDetail: React.FC = () => {
   const { actionId } = useParams<{ actionId: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const [action, setAction] = useState<ActionDetailType | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('runs-history');
+
+  // Get task data from navigation state (passed from TaskView)
+  const passedTaskData = location.state as {
+    task: any;
+    taskDetails: any;
+    occurrencesData: any[];
+    statusCounts: any;
+    totalSubtasks: number;
+    donePercentage: number;
+  } | null;
 
   // Fetch action details from API
   const fetchActionDetails = async () => {
@@ -76,7 +80,7 @@ const ActionDetail: React.FC = () => {
       if (response.ok) {
         const apiResponse = await response.json();
         if (apiResponse.status === 'success' && apiResponse.data) {
-          setAction({
+          const actionData = {
             action_id: apiResponse.data.action_id,
             action_name: apiResponse.data.action_instructions?.split('\n')[0] || 'Action',
             task_name: apiResponse.data.task_name || 'Task',
@@ -87,7 +91,8 @@ const ActionDetail: React.FC = () => {
             trigger_type: apiResponse.data.trigger_type || 'relative',
             action_runs: apiResponse.data.action_runs || [],
             status: 'active'
-          });
+          };
+          setAction(actionData);
         }
       } else {
         console.error('Failed to fetch action details');
@@ -226,21 +231,27 @@ Website Review Alert & Monitoring
     },
   ];
 
-  // Mock data for sidebar (as requested)
-  const mockSidebarData = {
-    completionRatio: { done: 4, total: 8 },
-    category: 'Alerts and Monitoring',
-    nextDueDate: '16 Aug 2025',
-    frequency: 'Quarterly',
-    occurrences: [
-      { key: '1', quarter: 'Q3 2025', status: 'done', dueDate: '03/31/2025' },
-      { key: '2', quarter: 'Q2 2025', status: 'ongoing', dueDate: '03/31/2025' },
-      { key: '3', quarter: 'Q1 2025', status: 'overdue', dueDate: '03/31/2025' },
-      { key: '4', quarter: 'Q4 2024', status: 'due', dueDate: '12/31/2024' },
-      { key: '5', quarter: 'Q3 2024', status: 'done', dueDate: '12/31/2024' },
-      { key: '6', quarter: 'Q2 2024', status: 'done', dueDate: '12/31/2024' },
-      { key: '7', quarter: 'Q1 2024', status: 'done', dueDate: '12/31/2024' },
-    ]
+  // Use passed task data from TaskView or fallback to default values
+  const sidebarData = passedTaskData ? {
+    statusCounts: passedTaskData.statusCounts,
+    totalSubtasks: passedTaskData.totalSubtasks,
+    donePercentage: passedTaskData.donePercentage,
+    category: passedTaskData.taskDetails?.category || passedTaskData.task?.task_category || 'Alerts and Monitoring',
+    nextDueDate: passedTaskData.taskDetails?.nextDueDate ? 
+      new Date(passedTaskData.taskDetails.nextDueDate).toLocaleDateString() : '--',
+    frequency: passedTaskData.taskDetails?.frequency || passedTaskData.task?.frequency || 'Quarterly',
+    description: passedTaskData.taskDetails?.description,
+    occurrences: passedTaskData.occurrencesData
+  } : {
+    // Fallback values when no data is passed (direct navigation)
+    statusCounts: { done: 0, ongoing: 0, overdue: 0, due: 0 },
+    totalSubtasks: 0,
+    donePercentage: 0,
+    category: 'Loading...',
+    nextDueDate: '--',
+    frequency: '--',
+    description: undefined,
+    occurrences: []
   };
 
   // Mock runs data if no API data
@@ -453,107 +464,19 @@ Website Review Alert & Monitoring
               </Card>
             </Col>
 
-            {/* Right Column - Sidebar */}
+            {/* Right Column - Details Sidebar */}
             <Col xs={24} lg={8}>
-              <Card 
-                title="Details" 
-                style={{ 
-                  borderRadius: '8px', 
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-                  height: '100%',
-                  minHeight: '600px'
-                }}
-              >
-                {/* Donut Chart */}
-                <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-                  <Progress
-                    type="circle"
-                    percent={Math.round((mockSidebarData.completionRatio.done / mockSidebarData.completionRatio.total) * 100)}
-                    format={() => `${mockSidebarData.completionRatio.done}/${mockSidebarData.completionRatio.total}\nDone`}
-                    size={120}
-                    strokeColor="#52c41a"
-                    style={{ marginBottom: '16px' }}
-                  />
-                  
-                  {/* Legend */}
-                  <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <div style={{ width: '8px', height: '8px', backgroundColor: '#52c41a', borderRadius: '50%' }}></div>
-                      <Text style={{ fontSize: '12px' }}>4 Done</Text>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <div style={{ width: '8px', height: '8px', backgroundColor: '#faad14', borderRadius: '50%' }}></div>
-                      <Text style={{ fontSize: '12px' }}>• Ongoing</Text>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <div style={{ width: '8px', height: '8px', backgroundColor: '#ff4d4f', borderRadius: '50%' }}></div>
-                      <Text style={{ fontSize: '12px' }}>2 Overdue</Text>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <div style={{ width: '8px', height: '8px', backgroundColor: '#d9d9d9', borderRadius: '50%' }}></div>
-                      <Text style={{ fontSize: '12px' }}>• Due</Text>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Info List */}
-                <div style={{ marginBottom: '24px' }}>
-                  <div style={{ marginBottom: '12px' }}>
-                    <Text type="secondary" style={{ fontSize: '12px', display: 'block' }}>Category:</Text>
-                    <Text strong>{mockSidebarData.category}</Text>
-                  </div>
-                  <div style={{ marginBottom: '12px' }}>
-                    <Text type="secondary" style={{ fontSize: '12px', display: 'block' }}>Next due on:</Text>
-                    <Text strong>{mockSidebarData.nextDueDate}</Text>
-                  </div>
-                  <div style={{ marginBottom: '12px' }}>
-                    <Text type="secondary" style={{ fontSize: '12px', display: 'block' }}>Frequency:</Text>
-                    <Text strong>{mockSidebarData.frequency}</Text>
-                  </div>
-                </div>
-
-                {/* Occurrences List */}
-                <div>
-                  <Text strong style={{ display: 'block', marginBottom: '12px' }}>Occurrence(s)</Text>
-                  <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
-                    <List
-                      size="small"
-                      dataSource={mockSidebarData.occurrences}
-                      renderItem={(item) => {
-                        const getStatusIcon = (status: string) => {
-                          switch (status) {
-                            case 'done':
-                              return <CheckCircleOutlined style={{ color: '#52c41a' }} />;
-                            case 'ongoing':
-                              return <LoadingOutlined style={{ color: '#faad14' }} />;
-                            case 'overdue':
-                              return <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />;
-                            default:
-                              return <ClockCircleOutlined style={{ color: '#d9d9d9' }} />;
-                          }
-                        };
-
-                        return (
-                          <List.Item style={{ padding: '8px 0', borderBottom: '1px solid #f0f0f0' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                {getStatusIcon(item.status)}
-                                <div>
-                                  <Text strong style={{ fontSize: '13px' }}>{item.quarter}</Text>
-                                  <br />
-                                  <Text type="secondary" style={{ fontSize: '11px' }}>
-                                    Due: {item.dueDate}
-                                  </Text>
-                                </div>
-                              </div>
-                            </div>
-                          </List.Item>
-                        );
-                      }}
-                    />
-                  </div>
-                </div>
-              </Card>
+              <DetailsSidebar
+                statusCounts={sidebarData.statusCounts}
+                totalItems={sidebarData.totalSubtasks}
+                donePercentage={sidebarData.donePercentage}
+                category={sidebarData.category}
+                nextDueDate={sidebarData.nextDueDate}
+                frequency={sidebarData.frequency}
+                description={sidebarData.description}
+                totalSubtasks={sidebarData.totalSubtasks}
+                occurrences={sidebarData.occurrences}
+              />
             </Col>
           </Row>
         </div>
