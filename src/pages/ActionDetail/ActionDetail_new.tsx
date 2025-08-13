@@ -1,35 +1,14 @@
+//HELLO WORLD : OLD component
+
 import React, { useEffect, useState } from 'react';
-import { 
-  Layout, 
-  Card, 
-  Tag, 
-  Button, 
-  Typography, 
-  Spin, 
-  Alert, 
-  Collapse, 
-  Tabs, 
-  Table, 
-  Progress,
-  Row,
-  Col,
-  Space,
-  List
-} from 'antd';
+import { Layout, Card, Tag, Button, Typography, Spin, Alert, Collapse } from 'antd';
 import dayjs from 'dayjs';
-import { 
-  ArrowLeftOutlined, 
-  CalendarOutlined, 
-  ToolOutlined, 
-  ClockCircleOutlined, 
-  CaretRightOutlined,
-  CheckCircleOutlined,
-  ExclamationCircleOutlined,
-  LoadingOutlined
-} from '@ant-design/icons';
+import { ArrowLeftOutlined, CalendarOutlined, ToolOutlined, ClockCircleOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import './ActionDetail.css';
+import PoliticalContributionsDashboard from '../../components/PoliticalContributionsDashboard';
+import SocialMediaMonitoringDashboard from '../../components/SocialMediaContributions/SocialMediaMonitoringDashboard';
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
@@ -64,590 +43,336 @@ const ActionDetail: React.FC = () => {
   const navigate = useNavigate();
   const [action, setAction] = useState<ActionDetailType | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('runs-history');
 
-  // Fetch action details from API
-  const fetchActionDetails = async () => {
-    if (!actionId) return;
-    
-    setLoading(true);
-    try {
-      const response = await fetch(`/api/action-details/${actionId}`);
-      if (response.ok) {
-        const apiResponse = await response.json();
-        if (apiResponse.status === 'success' && apiResponse.data) {
-          setAction({
-            action_id: apiResponse.data.action_id,
-            action_name: apiResponse.data.action_instructions?.split('\n')[0] || 'Action',
-            task_name: apiResponse.data.task_name || 'Task',
-            subtask_name: apiResponse.data.subtask_name || '',
-            instructions: apiResponse.data.action_instructions || '',
-            tools_used: apiResponse.data.tools_used || ['Send email', 'Send email 2'],
-            trigger_date: apiResponse.data.trigger_date || '',
-            trigger_type: apiResponse.data.trigger_type || 'relative',
-            action_runs: apiResponse.data.action_runs || [],
-            status: 'active'
-          });
-        }
-      } else {
-        console.error('Failed to fetch action details');
-      }
-    } catch (error) {
-      console.error('Error fetching action details:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Get task name from navigation state if available
+  const { state } = useLocation() as { state?: { taskName?: string, instructions?: string } };
+  const { taskName: taskNameFromState, instructions: instructionsFromState } = state || {};
 
   useEffect(() => {
-    fetchActionDetails();
-  }, [actionId]);
-
-  // Parse action instructions for process notes
-  const parseInstructions = (instructions: string) => {
-    const lines = instructions.split('\n');
-    const objective = lines[0] || '';
-    
-    // Extract email template
-    const subjectMatch = instructions.match(/Subject: "([^"]+)"/i);
-    const subject = subjectMatch ? subjectMatch[1] : 'Reminder – Sub task';
-    
-    // Extract email body (everything between Hi and Regards)
-    const bodyMatch = instructions.match(/Hi [^,]+,([\s\S]*?)Regards,/i);
-    const body = bodyMatch ? bodyMatch[1].trim() : `
-Hope you are doing well!
-
-I wanted to remind you that "Sub task" is due on <Sub Task Due Date>.  
-Here are some notes for your task:  
-Website Review Alert & Monitoring
-
-`;
-    
-    // Extract holidays
-    const holidayMatch = instructions.match(/Xponance Holidays:([\s\S]*?)$/i);
-    const holidays = holidayMatch ? holidayMatch[1].trim().split('\n').filter(line => line.trim()) : [
-      '- Jan 1: New Year\'s Day',
-      '- Jan 20: Martin Luther King Jr. Day',
-      '- Feb 17: Presidents\' Day',
-      '- May 26: Memorial Day',
-      '- Jun 19: Juneteenth',
-      '- Jul 4: Independence Day',
-      '- Sep 1: Labor Day',
-      '- Oct 13: Columbus Day',
-      '- Nov 11: Veterans Day',
-      '- Nov 27: Thanksgiving',
-      '- Dec 25: Christmas Day'
-    ];
-    
-    return { objective, subject, body, holidays };
-  };
-
-  // Runs history table columns
-  const runsColumns = [
-    {
-      title: 'Run Log',
-      dataIndex: 'human_msg',
-      key: 'human_msg',
-      width: '35%',
-      render: (text: string, record: ActionRun) => (
-        <div>
-          <Text strong>{text || 'Process media content'}</Text>
-          <br />
-          <Text type="secondary" style={{ fontSize: '12px' }}>
-            {record.description || '1. Open preferred social media platform.\n2. Navigate to the feed or timeline.\n3. Scroll through posts, paying attention to images and captions.\n4. Mark relevant posts with your network.'}
-          </Text>
-        </div>
-      ),
-    },
-    {
-      title: 'Run date & time',
-      dataIndex: 'run_timestamp',
-      key: 'run_timestamp',
-      width: '25%',
-      align: 'center' as const,
-      render: (timestamp: string) => (
-        <Text>{dayjs(timestamp).format('MM/DD/YYYY | hh:mm A')}</Text>
-      ),
-    },
-    {
-      title: 'Status',
-      dataIndex: 'run_status',
-      key: 'run_status',
-      width: '15%',
-      align: 'center' as const,
-      render: (status: string) => {
-        const getStatusConfig = (status: string) => {
-          switch (status?.toLowerCase()) {
-            case 'completed':
-            case 'success':
-              return { color: '#52c41a', bg: '#f6ffed', border: '#b7eb8f', text: 'Success' };
-            case 'failed':
-            case 'error':
-              return { color: '#ff4d4f', bg: '#fff2f0', border: '#ffccc7', text: 'Failed' };
-            case 'running':
-            case 'ongoing':
-              return { color: '#faad14', bg: '#fffbe6', border: '#ffe58f', text: 'Ongoing' };
-            default:
-              return { color: '#8c8c8c', bg: '#f5f5f5', border: '#d9d9d9', text: 'Due' };
-          }
+    setLoading(true);
+    const fetchActionDetail = async () => {
+      try {
+        // Replace with your actual API endpoint
+        const response = await fetch(`/api/action-details/${actionId}`);
+        if (!response.ok) throw new Error('Failed to fetch action details');
+        const apiData = await response.json();
+        
+        // Access the nested data property from the API response
+        const responseData = apiData.data || {};
+        
+        // Map API response to match our interface
+        const mappedAction: ActionDetailType = {
+          action_id: responseData.action_id,
+          action_name: 'Action',
+          task_name: taskNameFromState || responseData.task_name || 'Task',
+          subtask_name: responseData.subtask_name || '',
+          instructions: instructionsFromState || responseData.action_instructions,
+          tools_used: Array.isArray(responseData.tools_used) ? responseData.tools_used : [],
+          trigger_date: responseData.trigger_date,
+          trigger_type: responseData.trigger_type,
+          action_runs: Array.isArray(responseData.action_runs) ? responseData.action_runs : [],
+          status: responseData.status || apiData.status
         };
         
-        const config = getStatusConfig(status);
-        
-        return (
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '6px',
-            padding: '4px 12px',
-            borderRadius: '16px',
-            backgroundColor: config.bg,
-            border: `1px solid ${config.border}`,
-            fontSize: '12px',
-            fontWeight: '500'
-          }}>
-            <CheckCircleOutlined style={{ color: config.color, fontSize: '14px' }} />
-            <span style={{ color: config.color }}>{config.text}</span>
-          </div>
-        );
-      },
-    },
-    {
-      title: 'Occurrence',
-      dataIndex: 'subtask_name',
-      key: 'subtask_name',
-      width: '25%',
-      render: (text: string, record: ActionRun) => (
-        <div>
-          <Text strong>{text || 'Q3 2025'}</Text>
-          <br />
-          <Text type="secondary" style={{ fontSize: '12px' }}>
-            Due: {record.subtask_due_date ? dayjs(record.subtask_due_date).format('MM/DD/YYYY') : '03/31/2025'}
-          </Text>
-        </div>
-      ),
-    },
-  ];
+        setAction(mappedAction);
+        console.log(mappedAction,"mappedAction")
+      } catch (error) {
+        console.error('Error fetching action details:', error);
+        // Optionally set an error state here if you want to show an error message
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchActionDetail();
+  }, [actionId, taskNameFromState, instructionsFromState]);
 
-  // Mock data for sidebar (as requested)
-  const mockSidebarData = {
-    completionRatio: { done: 4, total: 8 },
-    category: 'Alerts and Monitoring',
-    nextDueDate: '16 Aug 2025',
-    frequency: 'Quarterly',
-    occurrences: [
-      { key: '1', quarter: 'Q3 2025', status: 'done', dueDate: '03/31/2025' },
-      { key: '2', quarter: 'Q2 2025', status: 'ongoing', dueDate: '03/31/2025' },
-      { key: '3', quarter: 'Q1 2025', status: 'overdue', dueDate: '03/31/2025' },
-      { key: '4', quarter: 'Q4 2024', status: 'due', dueDate: '12/31/2024' },
-      { key: '5', quarter: 'Q3 2024', status: 'done', dueDate: '12/31/2024' },
-      { key: '6', quarter: 'Q2 2024', status: 'done', dueDate: '12/31/2024' },
-      { key: '7', quarter: 'Q1 2024', status: 'done', dueDate: '12/31/2024' },
-    ]
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'completed':
+      case 'success':
+        return 'green';
+      case 'pending':
+        return 'orange';
+      case 'in review':
+        return 'blue';
+      default:
+        return 'default';
+    }
   };
 
-  // Mock runs data if no API data
-  const mockRunsData = [
-    {
-      run_timestamp: '2025-06-12T04:45:00.000Z',
-      run_status: 'completed',
-      description: 'Process media content',
-      human_msg: 'Process media content',
-      resume_at: '',
-      step_id: 1,
-      subtask_due_date: '2025-03-31T00:00:00.000Z',
-      subtask_id: 'q3-2025',
-      subtask_name: 'Q3 2025'
-    },
-    {
-      run_timestamp: '2025-06-12T04:45:00.000Z',
-      run_status: 'completed',
-      description: 'Identify keywords or trigger phrases',
-      human_msg: 'Identify keywords or trigger phrases',
-      resume_at: '',
-      step_id: 2,
-      subtask_due_date: '2025-03-31T00:00:00.000Z',
-      subtask_id: 'q3-2025-2',
-      subtask_name: 'Q3 2025'
-    },
-    {
-      run_timestamp: '2025-06-12T04:45:00.000Z',
-      run_status: 'completed',
-      description: 'Prepared excel file with analysis notes',
-      human_msg: 'Prepared excel file with analysis notes',
-      resume_at: '',
-      step_id: 3,
-      subtask_due_date: '2025-03-31T00:00:00.000Z',
-      subtask_id: 'q3-2025-3',
-      subtask_name: 'Q3 2025'
-    }
-  ];
+  const handleBackClick = () => {
+    navigate(-1);
+  };
 
   if (loading) {
-    return (
-      <Layout style={{ minHeight: '100vh', background: '#f5f5f5' }}>
-        <Header />
-        <Content style={{ padding: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Spin size="large" />
-        </Content>
-      </Layout>
-    );
+    return <Spin style={{ marginTop: 60 }} />;
   }
 
   if (!action) {
+    return <Alert message={'Action not found'} type="error" showIcon style={{ marginTop: 60 }} />;
+  }
+
+  // Special handling for full-width components
+  if (taskNameFromState === 'Political Contributions') {
     return (
-      <Layout style={{ minHeight: '100vh', background: '#f5f5f5' }}>
+      <div style={{ width: '100%', padding: '20px' }}>
         <Header />
-        <Content style={{ padding: '24px' }}>
-          <Alert
-            message="Action not found"
-            description="The requested action could not be found."
-            type="error"
-            showIcon
-          />
-        </Content>
-      </Layout>
+        <Button type="link" icon={<ArrowLeftOutlined />} onClick={handleBackClick}>
+            Back
+          </Button>
+        <PoliticalContributionsDashboard />
+      </div>
+    );
+  }
+  
+  if (taskNameFromState === 'Social Media') {
+    return (
+      <div style={{ width: '100%', padding: '20px' }}>
+        <Header />
+        <Button type="link" icon={<ArrowLeftOutlined />} onClick={handleBackClick}>
+            Back
+          </Button>
+        <SocialMediaMonitoringDashboard />
+      </div>
     );
   }
 
-  const { objective, subject, body, holidays } = parseInstructions(action.instructions);
-  const runsData = action.action_runs.length > 0 ? action.action_runs : mockRunsData;
-
+  // Default layout for other actions
   return (
-    <Layout style={{ minHeight: '100vh', background: '#f5f5f5' }}>
+    <Layout className="action-detail-layout">
       <Header />
-      <Content style={{ padding: '24px' }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          {/* Header Section */}
-          <div style={{ marginBottom: '24px' }}>
-            <Button
-              type="text"
-              icon={<ArrowLeftOutlined />}
-              onClick={() => navigate(-1)}
-              style={{ padding: '4px 8px', marginBottom: '16px' }}
-            >
-              Back
-            </Button>
-            <Title level={2} style={{ margin: '0 0 8px 0', fontSize: '24px', fontWeight: 600 }}>
-              {action.action_name}
-            </Title>
-            <Text type="secondary" style={{ fontSize: '14px', display: 'block', marginBottom: '16px' }}>
-              &lt;{action.task_name}&gt;
-            </Text>
-            
-            {/* Action metadata */}
-            <div style={{ marginBottom: '16px' }}>
-              <Space wrap size="middle">
-                <div>
-                  <Text type="secondary" style={{ fontSize: '12px', display: 'block' }}>Last run date & time</Text>
-                  <Text strong>
-                    {runsData[0]?.run_timestamp 
-                      ? dayjs(runsData[0].run_timestamp).format('MM/DD/YYYY | hh:mm A')
-                      : '06/12/2025 | 04:45 pm'
-                    }
-                  </Text>
-                </div>
-                <Tag 
-                  color={action.trigger_type === 'relative' ? 'green' : 'blue'}
-                  style={{ textTransform: 'capitalize' }}
-                >
-                  {action.trigger_type}
-                </Tag>
-                <Space>
-                  {action.tools_used.map((tool, index) => (
-                    <Tag key={index} color="processing">
-                      {tool}
-                    </Tag>
-                  ))}
-                </Space>
-              </Space>
+      <Content className="action-detail-content">
+        <div className="action-detail-back">
+          <Button type="link" icon={<ArrowLeftOutlined />} onClick={handleBackClick}>
+            Back
+          </Button>
+        </div>
+        <Card className="action-detail-card">
+          <div className="action-detail-header">
+            <Title level={3} className="action-detail-title">{action.action_name}</Title>
+            <div className="action-detail-meta">
+              <span className="action-detail-label">Task:</span> <span>{action.task_name}</span>
             </div>
           </div>
-
-          {/* Main Layout */}
-          <Row gutter={24} style={{ alignItems: 'stretch' }}>
-            {/* Left Column - Tabs */}
-            <Col xs={24} lg={16}>
-              <Card style={{ borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', height: '100%' }}>
-                <Tabs 
-                  activeKey={activeTab} 
-                  onChange={setActiveTab}
-                  items={[
-                    {
-                      key: 'runs-history',
-                      label: 'Runs history',
-                      children: (
-                        <div>
-                          <Table
-                            columns={runsColumns}
-                            dataSource={runsData}
-                            rowKey={(record, index) => `${record.subtask_id}-${index}`}
-                            pagination={false}
-                            size="middle"
-                            bordered
-                            expandable={{
-                              expandedRowRender: (record) => {
-                                return (
-                                  <div style={{ padding: '16px', backgroundColor: '#fafafa' }}>
-                                    <Collapse 
-                                      ghost
-                                      defaultActiveKey={['process-details']}
-                                      items={[
-                                        {
-                                          key: 'process-details',
-                                          label: 'Process Details',
-                                          children: (
-                                            <div>
-                                              <div style={{ marginBottom: '16px' }}>
-                                                <Text strong style={{ display: 'block', marginBottom: '8px' }}>Objective</Text>
-                                                <Text>{objective}</Text>
-                                              </div>
-                                              
-                                              <div style={{ marginBottom: '16px' }}>
-                                                <Text strong style={{ display: 'block', marginBottom: '8px' }}>Mail template</Text>
-                                                <div style={{ marginBottom: '8px' }}>
-                                                  <Text strong>Subject: </Text>
-                                                  <Text>{subject}</Text>
-                                                </div>
-                                                <div style={{
-                                                  backgroundColor: '#f8f9fa',
-                                                  padding: '12px',
-                                                  borderRadius: '4px',
-                                                  whiteSpace: 'pre-wrap',
-                                                  fontFamily: 'monospace',
-                                                  fontSize: '13px',
-                                                  border: '1px solid #e8e8e8'
-                                                }}>
-                                                  Hi Spencer,{body}
-                                                  Regards,  
-                                                  Sophia  
-                                                  Compliance Assistant
-                                                </div>
-                                              </div>
-                                              
-                                              <div style={{ marginBottom: '16px' }}>
-                                                <Text strong style={{ display: 'block', marginBottom: '8px' }}>Checklist</Text>
-                                                <ul style={{ paddingLeft: '20px', margin: 0 }}>
-                                                  <li>Use the mentioned email format</li>
-                                                  <li>Before sending the reminder, check if the due date is on a weekend or Xponance holiday</li>
-                                                  <li>If it is, move the reminder date to the previous working day. Repeat if needed until you find a business day.</li>
-                                                </ul>
-                                              </div>
-                                              
-                                              <div>
-                                                <Text strong style={{ display: 'block', marginBottom: '8px' }}>Xponance holidays</Text>
-                                                <Collapse 
-                                                  size="small"
-                                                  items={[{
-                                                    key: 'holidays',
-                                                    label: `${holidays.length} holidays`,
-                                                    children: (
-                                                      <ul style={{ paddingLeft: '20px', margin: 0 }}>
-                                                        {holidays.map((holiday, idx) => (
-                                                          <li key={idx}>{holiday.replace(/^-\s*/, '')}</li>
-                                                        ))}
-                                                      </ul>
-                                                    )
-                                                  }]}
-                                                />
-                                              </div>
-                                            </div>
-                                          )
-                                        }
-                                      ]}
-                                    />
-                                  </div>
-                                );
-                              },
-                              rowExpandable: () => true,
-                            }}
-                          />
-                        </div>
-                      ),
-                    },
-                    {
-                      key: 'process-notes',
-                      label: 'Process notes',
-                      children: (
-                        <div style={{ padding: '16px' }}>
-                          <div style={{ marginBottom: '16px' }}>
-                            <Text strong style={{ display: 'block', marginBottom: '8px' }}>Objective</Text>
-                            <Text>{objective}</Text>
-                          </div>
-                          
-                          <div style={{ marginBottom: '16px' }}>
-                            <Text strong style={{ display: 'block', marginBottom: '8px' }}>Mail template</Text>
-                            <div style={{ marginBottom: '8px' }}>
-                              <Text strong>Subject: </Text>
-                              <Text>{subject}</Text>
-                            </div>
-                            <Text strong style={{ display: 'block', marginBottom: '4px' }}>Mail:</Text>
-                            <div style={{
-                              backgroundColor: '#f8f9fa',
-                              padding: '12px',
-                              borderRadius: '4px',
-                              whiteSpace: 'pre-wrap',
-                              fontFamily: 'monospace',
-                              fontSize: '13px',
-                              border: '1px solid #e8e8e8'
-                            }}>
-                              Hi Spencer,{body}
-                              Regards,  
-                              Sophia  
-                              Compliance Assistant
-                            </div>
-                          </div>
-                          
-                          <div style={{ marginBottom: '16px' }}>
-                            <Text strong style={{ display: 'block', marginBottom: '8px' }}>Checklist</Text>
-                            <ul style={{ paddingLeft: '20px' }}>
-                              <li>Use the mentioned email format</li>
-                              <li>Before sending the reminder, check if the due date is on a weekend or Xponance holiday</li>
-                              <li>If it is, move the reminder date to the previous working day. Repeat if needed until you find a business day.</li>
-                            </ul>
-                          </div>
-                          
-                          <div>
-                            <Text strong style={{ display: 'block', marginBottom: '8px' }}>Xponance holidays</Text>
-                            <Collapse 
-                              size="small"
-                              items={[{
-                                key: 'holidays',
-                                label: `${holidays.length} holidays`,
-                                children: (
-                                  <ul style={{ paddingLeft: '20px', margin: 0 }}>
-                                    {holidays.map((holiday, idx) => (
-                                      <li key={idx}>{holiday.replace(/^-\s*/, '')}</li>
-                                    ))}
-                                  </ul>
-                                )
-                              }]}
-                            />
-                          </div>
-                        </div>
-                      ),
-                    },
-                    {
-                      key: 'configuration',
-                      label: 'Configuration',
-                      children: (
-                        <div style={{ padding: '16px', textAlign: 'center' }}>
-                          <Text type="secondary">Configuration data from API</Text>
-                        </div>
-                      ),
-                    },
-                  ]}
-                />
-              </Card>
-            </Col>
-
-            {/* Right Column - Sidebar */}
-            <Col xs={24} lg={8}>
-              <Card 
-                title="Details" 
-                style={{ 
-                  borderRadius: '8px', 
-                  boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
-                  height: '100%',
-                  minHeight: '600px'
-                }}
-              >
-                {/* Donut Chart */}
-                <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-                  <Progress
-                    type="circle"
-                    percent={Math.round((mockSidebarData.completionRatio.done / mockSidebarData.completionRatio.total) * 100)}
-                    format={() => `${mockSidebarData.completionRatio.done}/${mockSidebarData.completionRatio.total}\nDone`}
-                    size={120}
-                    strokeColor="#52c41a"
-                    style={{ marginBottom: '16px' }}
-                  />
-                  
-                  {/* Legend */}
-                  <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <div style={{ width: '8px', height: '8px', backgroundColor: '#52c41a', borderRadius: '50%' }}></div>
-                      <Text style={{ fontSize: '12px' }}>4 Done</Text>
+          
+          <div className="action-detail-section">
+            <Title level={5} className="action-detail-section-title">Instructions</Title>
+            <div className="action-detail-instructions">
+              {(() => {
+                const lines = action.instructions.split(/\r?\n/).filter(l => l.trim() !== '');
+                const stepLines = lines.filter(l => /^\s*(-|\d+\.|Step|•)/i.test(l.trim()));
+                const beforeList = [];
+                for (let i = 0; i < lines.length; i++) {
+                  if (/^\s*(-|\d+\.|Step|•)/i.test(lines[i].trim())) break;
+                  beforeList.push(lines[i]);
+                }
+                return <>
+                  {beforeList.length > 0 && (
+                    <div style={{ marginBottom: 8 }}>
+                      {beforeList.map((l, i) => <div key={i}>{l}</div>)}
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <div style={{ width: '8px', height: '8px', backgroundColor: '#faad14', borderRadius: '50%' }}></div>
-                      <Text style={{ fontSize: '12px' }}>• Ongoing</Text>
+                  )}
+                  {stepLines.length > 0 && (
+                    <ol style={{ marginLeft: 20, marginBottom: 8 }}>
+                      {stepLines.map((l, i) => 
+                        <li key={i} style={{ marginBottom: 4 }}>
+                          {l.replace(/^\s*(-|\d+\.|Step|•)\s*/, '')}
+                        </li>
+                      )}
+                    </ol>
+                  )}
+                  {stepLines.length === 0 && (
+                    <div>{lines.map((l, i) => <div key={i} style={{ marginBottom: 4 }}>{l}</div>)}</div>
+                  )}
+                </>;
+              })()}
+            </div>
+          </div>
+          
+          <div className="action-detail-section">
+            <Title level={5} className="action-detail-section-title">Capabilities</Title>
+            <div className="action-tools" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <ToolOutlined style={{ color: '#8c8c8c' }} />
+              {action.tools_used?.length > 0 ? (
+                action.tools_used.map((tool, index) => (
+                  <Tag key={index} color="blue" style={{ margin: 0 }}>
+                    {tool}
+                  </Tag>
+                ))
+              ) : (
+                <Text type="secondary">No tools specified</Text>
+              )}
+            </div>
+          </div>
+          
+          <div className="action-detail-trigger-row" style={{ 
+            display: 'flex', 
+            gap: 24, 
+            margin: '16px 0',
+            padding: '12px 0',
+            borderTop: '1px solid #f0f0f0',
+            borderBottom: '1px solid #f0f0f0'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span className="action-detail-label" style={{ color: '#8c8c8c' }}>Trigger Date:</span>
+              <Tag icon={<CalendarOutlined />} color="blue" style={{ margin: 0 }}>
+                {dayjs(action.trigger_date).isValid() 
+                  ? dayjs(action.trigger_date).format('MMM D, YYYY') 
+                  : action.trigger_date}
+              </Tag>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span className="action-detail-label" style={{ color: '#8c8c8c' }}>Trigger Type:</span>
+              <Tag icon={<ClockCircleOutlined />} color="magenta" style={{ margin: 0 }}>
+                {action.trigger_type}
+              </Tag>
+            </div>
+          </div>
+          
+          <div className="action-detail-section">
+            <Title level={5} className="action-detail-section-title">Action Runs</Title>
+            <Collapse
+              bordered={false}
+              className="action-runs-collapse"
+              expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+              style={{ background: 'none' }}
+            >
+              {action.action_runs.map((run, index) => (
+                <Collapse.Panel
+                  key={index}
+                  header={
+                    <div style={{ 
+                      display: 'flex', 
+                      justifyContent: 'space-between', 
+                      alignItems: 'center',
+                      width: '100%',
+                      padding: '8px 0'
+                    }}>
+                      <Text strong style={{ fontSize: '15px' }}>{run.subtask_name}</Text>
+                      <Tag 
+                        color={getStatusColor(run.run_status)} 
+                        style={{ 
+                          marginLeft: 8,
+                          textTransform: 'capitalize',
+                          fontWeight: 500
+                        }}
+                      >
+                        {run.run_status === 'success' ? 'Completed' : run.run_status.toLowerCase()}
+                      </Tag>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <div style={{ width: '8px', height: '8px', backgroundColor: '#ff4d4f', borderRadius: '50%' }}></div>
-                      <Text style={{ fontSize: '12px' }}>2 Overdue</Text>
+                  }
+                  className="action-run-panel"
+                  style={{
+                    marginBottom: 12,
+                    background: '#fff',
+                    borderRadius: 8,
+                    border: '1px solid #f0f0f0',
+                    overflow: 'hidden'
+                  }}
+                >
+                  <div className="action-run-details" style={{ padding: '12px 0' }}>
+                    <div className="detail-row" style={{ 
+                      display: 'flex', 
+                      marginBottom: 12,
+                      lineHeight: 1.5 
+                    }}>
+                      <span className="detail-label" style={{
+                        flex: '0 0 120px',
+                        color: '#8c8c8c',
+                        fontWeight: 500
+                      }}>When</span>
+                      <span className="detail-value" style={{ flex: 1 }}>
+                        {dayjs(run.run_timestamp).format('MMM D, YYYY [at] h:mm A')}
+                      </span>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                      <div style={{ width: '8px', height: '8px', backgroundColor: '#d9d9d9', borderRadius: '50%' }}></div>
-                      <Text style={{ fontSize: '12px' }}>• Due</Text>
+                    
+                    {run.human_msg && (
+                      <div className="detail-row" style={{
+                        display: 'flex',
+                        marginBottom: 12,
+                        lineHeight: 1.5
+                      }}>
+                        <span className="detail-label" style={{
+                          flex: '0 0 120px',
+                          color: '#8c8c8c',
+                          fontWeight: 500
+                        }}>Message</span>
+                        <span className="detail-value" style={{ flex: 1 }}>
+                          {run.human_msg}
+                        </span>
+                      </div>
+                    )}
+                    
+                    {run.description && (
+                      <div className="detail-row" style={{
+                        display: 'flex',
+                        marginBottom: 12,
+                        lineHeight: 1.5
+                      }}>
+                        <span className="detail-label" style={{
+                          flex: '0 0 120px',
+                          color: '#8c8c8c',
+                          fontWeight: 500
+                        }}>Details</span>
+                        <span className="detail-value" style={{ flex: 1 }}>
+                          {run.description}
+                        </span>
+                      </div>
+                    )}
+                    
+                    <div className="detail-row" style={{
+                      display: 'flex',
+                      marginBottom: 12,
+                      alignItems: 'center',
+                      lineHeight: 1.5
+                    }}>
+                      <span className="detail-label" style={{
+                        flex: '0 0 120px',
+                        color: '#8c8c8c',
+                        fontWeight: 500
+                      }}>Status</span>
+                      <span className="detail-value" style={{ flex: 1 }}>
+                        <Tag 
+                          color={getStatusColor(run.run_status)}
+                          style={{
+                            textTransform: 'capitalize',
+                            margin: 0
+                          }}
+                        >
+                          {run.run_status === 'success' ? 'Completed' : run.run_status.toLowerCase()}
+                        </Tag>
+                      </span>
                     </div>
+                    
+                    {run.resume_at && (
+                      <div className="detail-row" style={{
+                        display: 'flex',
+                        marginBottom: 0,
+                        lineHeight: 1.5
+                      }}>
+                        <span className="detail-label" style={{
+                          flex: '0 0 120px',
+                          color: '#8c8c8c',
+                          fontWeight: 500
+                        }}>Next Action</span>
+                        <span className="detail-value" style={{ flex: 1 }}>
+                          {dayjs(run.resume_at).isValid()
+                            ? `Scheduled for ${dayjs(run.resume_at).format('MMM D, YYYY [at] h:mm A')}`
+                            : `Will resume ${run.resume_at}`}
+                        </span>
+                      </div>
+                    )}
                   </div>
-                </div>
-
-                {/* Info List */}
-                <div style={{ marginBottom: '24px' }}>
-                  <div style={{ marginBottom: '12px' }}>
-                    <Text type="secondary" style={{ fontSize: '12px', display: 'block' }}>Category:</Text>
-                    <Text strong>{mockSidebarData.category}</Text>
-                  </div>
-                  <div style={{ marginBottom: '12px' }}>
-                    <Text type="secondary" style={{ fontSize: '12px', display: 'block' }}>Next due on:</Text>
-                    <Text strong>{mockSidebarData.nextDueDate}</Text>
-                  </div>
-                  <div style={{ marginBottom: '12px' }}>
-                    <Text type="secondary" style={{ fontSize: '12px', display: 'block' }}>Frequency:</Text>
-                    <Text strong>{mockSidebarData.frequency}</Text>
-                  </div>
-                </div>
-
-                {/* Occurrences List */}
-                <div>
-                  <Text strong style={{ display: 'block', marginBottom: '12px' }}>Occurrence(s)</Text>
-                  <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
-                    <List
-                      size="small"
-                      dataSource={mockSidebarData.occurrences}
-                      renderItem={(item) => {
-                        const getStatusIcon = (status: string) => {
-                          switch (status) {
-                            case 'done':
-                              return <CheckCircleOutlined style={{ color: '#52c41a' }} />;
-                            case 'ongoing':
-                              return <LoadingOutlined style={{ color: '#faad14' }} />;
-                            case 'overdue':
-                              return <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />;
-                            default:
-                              return <ClockCircleOutlined style={{ color: '#d9d9d9' }} />;
-                          }
-                        };
-
-                        return (
-                          <List.Item style={{ padding: '8px 0', borderBottom: '1px solid #f0f0f0' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                {getStatusIcon(item.status)}
-                                <div>
-                                  <Text strong style={{ fontSize: '13px' }}>{item.quarter}</Text>
-                                  <br />
-                                  <Text type="secondary" style={{ fontSize: '11px' }}>
-                                    Due: {item.dueDate}
-                                  </Text>
-                                </div>
-                              </div>
-                            </div>
-                          </List.Item>
-                        );
-                      }}
-                    />
-                  </div>
-                </div>
-              </Card>
-            </Col>
-          </Row>
-        </div>
+                </Collapse.Panel>
+              ))}
+            </Collapse>
+          </div>
+        </Card>
       </Content>
     </Layout>
   );
 };
 
 export default ActionDetail;
+
