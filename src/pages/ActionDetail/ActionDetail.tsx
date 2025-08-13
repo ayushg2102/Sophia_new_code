@@ -445,40 +445,14 @@ const ActionDetail: React.FC = () => {
                             <Text strong style={{ display: 'block', marginBottom: '8px' }}>Objective</Text>
                             <Text>{objective}</Text>
                           </div>
-                          
-                          <div style={{ marginBottom: '16px' }}>
-                            <Text strong style={{ display: 'block', marginBottom: '8px' }}>Mail template</Text>
-                            <div style={{ marginBottom: '8px' }}>
-                              <Text strong>Subject: </Text>
-                              <Text>{subject}</Text>
-                            </div>
-                            <Text strong style={{ display: 'block', marginBottom: '4px' }}>Mail:</Text>
-                            <div style={{
-                              backgroundColor: '#f8f9fa',
-                              padding: '12px',
-                              borderRadius: '4px',
-                              whiteSpace: 'pre-wrap',
-                              fontFamily: 'monospace',
-                              fontSize: '13px',
-                              border: '1px solid #e8e8e8'
-                            }}>
-                              Hi {recipientName},
 
-{body}
+                          {/* add a action_instructions data UI below where xponance holdiays should not come as its below */}
 
-Regards,
-Sophia
-Compliance Assistant
-                            </div>
-                          </div>
-                          
                           <div style={{ marginBottom: '16px' }}>
-                            <Text strong style={{ display: 'block', marginBottom: '8px' }}>Checklist</Text>
-                            <ul style={{ paddingLeft: '20px' }}>
-                              <li>Use the mentioned email format</li>
-                              <li>Before sending the reminder, check if the due date is on a weekend or Xponance holiday</li>
-                              <li>If it is, move the reminder date to the previous working day. Repeat if needed until you find a business day.</li>
-                            </ul>
+                            <Text strong style={{ display: 'block', marginBottom: '8px' }}>Instructions</Text>
+                            <Text>{action.instructions.split('\n').map((line, index) => (
+                              <Text key={index}>{line}</Text>
+                            ))}</Text>
                           </div>
                           
                           <div>
