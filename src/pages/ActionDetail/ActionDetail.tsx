@@ -200,9 +200,10 @@ const ActionDetail: React.FC = () => {
       key: 'human_msg',
       width: '35%',
       render: (text: string, record: ActionRun) => (
-        <div>
-          <Text strong>{text}</Text>
-          <br />
+        <div style={{ whiteSpace: 'pre-wrap', lineHeight: '1.8' }}>
+          <Text strong style={{ fontSize: '13px' }}>
+            {text}
+          </Text>
         </div>
       ),
     },
