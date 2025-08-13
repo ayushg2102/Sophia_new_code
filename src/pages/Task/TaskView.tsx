@@ -530,33 +530,37 @@ const TaskView: React.FC = () => {
   return (
     <Layout style={{ minHeight: '100vh', background: '#f5f5f5' }}>
       <Header />
-      <Content style={{ padding: '24px' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+      <Content style={{ padding: '16px 24px' }}>
+        <div style={{ maxWidth: '100%', margin: '0' }}>
           {/* Header Section */}
-          <div style={{ marginBottom: '24px' }}>
-            <Button
-              type="text"
-              icon={<ArrowLeftOutlined />}
-              onClick={() => navigate(-1)}
-              style={{ padding: '4px 8px', marginBottom: '16px' }}
-            >
-              Back
-            </Button>
-            <Title level={2} style={{ margin: '0 0 8px 0', fontSize: '24px', fontWeight: 600 }}>
-              {task?.task_short_description || 'Social Media Alerts and Monitoring'}
-            </Title>
-            <Text type="secondary" style={{ fontSize: '14px' }}>
-              {task?.task_category || 'Alerts & Compliance monitoring'}
-            </Text>
+          <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <Button
+                type="text"
+                icon={<ArrowLeftOutlined />}
+                onClick={() => navigate(-1)}
+                style={{ padding: '4px 8px' }}
+              >
+                Back
+              </Button>
+              <div>
+                <Title level={2} style={{ margin: '0', fontSize: '20px', fontWeight: 600, lineHeight: '1.2' }}>
+                  {task?.task_short_description || 'Social Media Alerts and Monitoring'}
+                </Title>
+                <Text type="secondary" style={{ fontSize: '13px' }}>
+                  {task?.task_category || 'Alerts & Compliance monitoring'}
+                </Text>
+              </div>
+            </div>
           </div>
 
           {/* Main Content */}
-          <Row gutter={24} style={{ alignItems: 'stretch' }}>
+          <Row gutter={16} style={{ alignItems: 'stretch' }}>
             {/* Left Column - Actions Table */}
             <Col xs={24} lg={16}>
-              <Card style={{ borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', height: '100%' }}>
-                <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Text strong style={{ fontSize: '16px' }}>Actions</Text>
+              <Card style={{ borderRadius: '6px', boxShadow: '0 1px 4px rgba(0,0,0,0.08)', height: '100%' }}>
+                <div style={{ marginBottom: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Text strong style={{ fontSize: '15px' }}>Actions</Text>
                 </div>
                 <Table
                   columns={columns}
@@ -568,7 +572,8 @@ const TaskView: React.FC = () => {
                     onExpandedRowsChange: setExpandedRowKeys,
                   }}
                   pagination={false}
-                  size="middle"
+                  size="small"
+                  style={{ fontSize: '13px' }}
                 />
               </Card>
             </Col>

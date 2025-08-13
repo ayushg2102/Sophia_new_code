@@ -116,9 +116,9 @@ const ActionDetail: React.FC = () => {
   // Special handling for full-width components
   if (taskNameFromState === 'Political Contributions') {
     return (
-      <div style={{ width: '100%', padding: '20px' }}>
+      <div style={{ width: '100%', padding: '16px 24px' }}>
         <Header />
-        <Button type="link" icon={<ArrowLeftOutlined />} onClick={handleBackClick}>
+        <Button type="text" icon={<ArrowLeftOutlined />} onClick={handleBackClick} style={{ padding: '4px 8px', marginBottom: '12px' }}>
             Back
           </Button>
         <PoliticalContributionsDashboard />
@@ -128,9 +128,9 @@ const ActionDetail: React.FC = () => {
   
   if (taskNameFromState === 'Social Media') {
     return (
-      <div style={{ width: '100%', padding: '20px' }}>
+      <div style={{ width: '100%', padding: '16px 24px' }}>
         <Header />
-        <Button type="link" icon={<ArrowLeftOutlined />} onClick={handleBackClick}>
+        <Button type="text" icon={<ArrowLeftOutlined />} onClick={handleBackClick} style={{ padding: '4px 8px', marginBottom: '12px' }}>
             Back
           </Button>
         <SocialMediaMonitoringDashboard />
@@ -150,14 +150,14 @@ const ActionDetail: React.FC = () => {
         </div>
         <Card className="action-detail-card">
           <div className="action-detail-header">
-            <Title level={3} className="action-detail-title">{action.action_name}</Title>
+            <Title level={3} className="action-detail-title" style={{ fontSize: '18px', margin: '0 0 8px 0', fontWeight: 600 }}>{action.action_name}</Title>
             <div className="action-detail-meta">
-              <span className="action-detail-label">Task:</span> <span>{action.task_name}</span>
+              <Text type="secondary" style={{ fontSize: '13px' }}><span className="action-detail-label">Task:</span> <span>{action.task_name}</span></Text>
             </div>
           </div>
           
           <div className="action-detail-section">
-            <Title level={5} className="action-detail-section-title">Instructions</Title>
+            <Title level={5} className="action-detail-section-title" style={{ fontSize: '14px', margin: '0 0 8px 0', fontWeight: 600 }}>Instructions</Title>
             <div className="action-detail-instructions">
               {(() => {
                 const lines = action.instructions.split(/\r?\n/).filter(l => l.trim() !== '');
@@ -191,7 +191,7 @@ const ActionDetail: React.FC = () => {
           </div>
           
           <div className="action-detail-section">
-            <Title level={5} className="action-detail-section-title">Capabilities</Title>
+            <Title level={5} className="action-detail-section-title" style={{ fontSize: '14px', margin: '0 0 8px 0', fontWeight: 600 }}>Capabilities</Title>
             <div className="action-tools" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
               <ToolOutlined style={{ color: '#8c8c8c' }} />
               {action.tools_used?.length > 0 ? (
@@ -208,14 +208,14 @@ const ActionDetail: React.FC = () => {
           
           <div className="action-detail-trigger-row" style={{ 
             display: 'flex', 
-            gap: 24, 
-            margin: '16px 0',
-            padding: '12px 0',
+            gap: 16, 
+            margin: '12px 0',
+            padding: '8px 0',
             borderTop: '1px solid #f0f0f0',
             borderBottom: '1px solid #f0f0f0'
           }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span className="action-detail-label" style={{ color: '#8c8c8c' }}>Trigger Date:</span>
+              <span className="action-detail-label" style={{ color: '#8c8c8c', fontSize: '13px' }}>Trigger Date:</span>
               <Tag icon={<CalendarOutlined />} color="blue" style={{ margin: 0 }}>
                 {dayjs(action.trigger_date).isValid() 
                   ? dayjs(action.trigger_date).format('MMM D, YYYY') 
@@ -223,7 +223,7 @@ const ActionDetail: React.FC = () => {
               </Tag>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span className="action-detail-label" style={{ color: '#8c8c8c' }}>Trigger Type:</span>
+              <span className="action-detail-label" style={{ color: '#8c8c8c', fontSize: '13px' }}>Trigger Type:</span>
               <Tag icon={<ClockCircleOutlined />} color="magenta" style={{ margin: 0 }}>
                 {action.trigger_type}
               </Tag>
@@ -231,7 +231,7 @@ const ActionDetail: React.FC = () => {
           </div>
           
           <div className="action-detail-section">
-            <Title level={5} className="action-detail-section-title">Action Runs</Title>
+            <Title level={5} className="action-detail-section-title" style={{ fontSize: '14px', margin: '0 0 8px 0', fontWeight: 600 }}>Action Runs</Title>
             <Collapse
               bordered={false}
               className="action-runs-collapse"
@@ -249,7 +249,7 @@ const ActionDetail: React.FC = () => {
                       width: '100%',
                       padding: '8px 0'
                     }}>
-                      <Text strong style={{ fontSize: '15px' }}>{run.subtask_name}</Text>
+                      <Text strong style={{ fontSize: '14px' }}>{run.subtask_name}</Text>
                       <Tag 
                         color={getStatusColor(run.run_status)} 
                         style={{ 
@@ -264,14 +264,14 @@ const ActionDetail: React.FC = () => {
                   }
                   className="action-run-panel"
                   style={{
-                    marginBottom: 12,
+                    marginBottom: 8,
                     background: '#fff',
-                    borderRadius: 8,
+                    borderRadius: 6,
                     border: '1px solid #f0f0f0',
                     overflow: 'hidden'
                   }}
                 >
-                  <div className="action-run-details" style={{ padding: '12px 0' }}>
+                  <div className="action-run-details" style={{ padding: '8px 0' }}>
                     <div className="detail-row" style={{ 
                       display: 'flex', 
                       marginBottom: 12,

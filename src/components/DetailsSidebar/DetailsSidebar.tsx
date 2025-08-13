@@ -193,83 +193,84 @@ const DetailsSidebar: React.FC<DetailsSidebarProps> = ({
     <Card 
       title={title}
       style={{ 
-        borderRadius: '8px', 
-        boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+        borderRadius: '6px', 
+        boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
         height: '100%',
-        minHeight: '600px',
+        minHeight: '500px',
         ...style
       }}
+      bodyStyle={{ padding: '16px' }}
     >
       {/* Donut Chart */}
-      <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-        <div style={{ marginBottom: '16px' }}>
+      <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+        <div style={{ marginBottom: '12px' }}>
           <MultiColorDonut />
         </div>
         
         {/* Status Legend */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'flex-start' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#52c41a' }}></div>
-            <Text style={{ fontSize: '14px' }}>{statusCounts.done} Done</Text>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', alignItems: 'flex-start' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#52c41a' }}></div>
+            <Text style={{ fontSize: '13px' }}>{statusCounts.done} Done</Text>
           </div>
           {statusCounts.ongoing > 0 && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#faad14' }}></div>
-              <Text style={{ fontSize: '14px' }}>{statusCounts.ongoing} Ongoing</Text>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#faad14' }}></div>
+              <Text style={{ fontSize: '13px' }}>{statusCounts.ongoing} Ongoing</Text>
             </div>
           )}
           {statusCounts.overdue > 0 && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#ff4d4f' }}></div>
-              <Text style={{ fontSize: '14px' }}>{statusCounts.overdue} Overdue</Text>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#ff4d4f' }}></div>
+              <Text style={{ fontSize: '13px' }}>{statusCounts.overdue} Overdue</Text>
             </div>
           )}
           {statusCounts.due > 0 && (
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#faad14' }}></div>
-              <Text style={{ fontSize: '14px' }}>{statusCounts.due} Due</Text>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#faad14' }}></div>
+              <Text style={{ fontSize: '13px' }}>{statusCounts.due} Due</Text>
             </div>
           )}
         </div>
       </div>
 
       {/* Details */}
-      <div style={{ marginBottom: '24px' }}>
-        <div style={{ marginBottom: '12px' }}>
-          <Text type="secondary" style={{ fontSize: '12px' }}>Category</Text>
+      <div style={{ marginBottom: '18px' }}>
+        <div style={{ marginBottom: '10px' }}>
+          <Text type="secondary" style={{ fontSize: '11px' }}>Category</Text>
           <br />
-          <Text style={{ fontSize: '14px', fontWeight: 500 }}>
+          <Text style={{ fontSize: '13px', fontWeight: 500 }}>
             {category}
           </Text>
         </div>
-        <div style={{ marginBottom: '12px' }}>
-          <Text type="secondary" style={{ fontSize: '12px' }}>Next due on</Text>
+        <div style={{ marginBottom: '10px' }}>
+          <Text type="secondary" style={{ fontSize: '11px' }}>Next due on</Text>
           <br />
-          <Text style={{ fontSize: '14px', fontWeight: 500 }}>
+          <Text style={{ fontSize: '13px', fontWeight: 500 }}>
             {nextDueDate}
           </Text>
         </div>
-        <div style={{ marginBottom: '12px' }}>
-          <Text type="secondary" style={{ fontSize: '12px' }}>Frequency</Text>
+        <div style={{ marginBottom: '10px' }}>
+          <Text type="secondary" style={{ fontSize: '11px' }}>Frequency</Text>
           <br />
-          <Text style={{ fontSize: '14px', fontWeight: 500 }}>
+          <Text style={{ fontSize: '13px', fontWeight: 500 }}>
             {frequency}
           </Text>
         </div>
         {description && (
-          <div style={{ marginBottom: '12px' }}>
-            <Text type="secondary" style={{ fontSize: '12px' }}>Description</Text>
+          <div style={{ marginBottom: '10px' }}>
+            <Text type="secondary" style={{ fontSize: '11px' }}>Description</Text>
             <br />
-            <Text style={{ fontSize: '14px', fontWeight: 500 }}>
+            <Text style={{ fontSize: '13px', fontWeight: 500 }}>
               {description}
             </Text>
           </div>
         )}
         {totalSubtasks !== undefined && (
-          <div style={{ marginBottom: '12px' }}>
-            <Text type="secondary" style={{ fontSize: '12px' }}>Total Subtasks</Text>
+          <div style={{ marginBottom: '10px' }}>
+            <Text type="secondary" style={{ fontSize: '11px' }}>Total Subtasks</Text>
             <br />
-            <Text style={{ fontSize: '14px', fontWeight: 500 }}>
+            <Text style={{ fontSize: '13px', fontWeight: 500 }}>
               {totalSubtasks}
             </Text>
           </div>
@@ -278,7 +279,7 @@ const DetailsSidebar: React.FC<DetailsSidebarProps> = ({
 
       {/* Occurrences */}
       <div>
-        <Text type="secondary" style={{ fontSize: '12px', display: 'block', marginBottom: '12px' }}>
+        <Text type="secondary" style={{ fontSize: '11px', display: 'block', marginBottom: '10px' }}>
           Occurrence({occurrences.length})
         </Text>
         
@@ -288,13 +289,13 @@ const DetailsSidebar: React.FC<DetailsSidebarProps> = ({
               size="small"
               dataSource={occurrences}
               renderItem={(item: OccurrenceData) => (
-                <List.Item style={{ padding: '8px 0', border: 'none' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%' }}>
+                <List.Item style={{ padding: '6px 0', border: 'none' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', width: '100%' }}>
                     {getStatusIcon(item.status)}
                     <div style={{ flex: 1 }}>
-                      <Text style={{ fontSize: '14px' }}>{item.period}</Text>
+                      <Text style={{ fontSize: '13px' }}>{item.period}</Text>
                       <br />
-                      <Text type="secondary" style={{ fontSize: '12px' }}>
+                      <Text type="secondary" style={{ fontSize: '11px' }}>
                         Due: {item.dueDate}
                       </Text>
                     </div>
