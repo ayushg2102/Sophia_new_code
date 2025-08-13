@@ -458,16 +458,24 @@ const TaskView: React.FC = () => {
             icon={<RightOutlined />}
             size="small"
             style={{ color: '#1890ff' }}
-            onClick={() => navigate(`/action/${record.key}`, { 
-              state: { 
-                task: task,
-                taskDetails: taskDetails,
-                occurrencesData: occurrencesData,
-                statusCounts: statusCounts,
-                totalSubtasks: totalSubtasks,
-                donePercentage: donePercentage
+            onClick={() => {
+              if (task?.task_short_description === "Social Media") {
+                navigate('/social-media-dashboard');
+              } else if (task?.task_short_description === "Political Contributions") {
+                navigate('/political-contributions-dashboard');
+              } else {
+                navigate(`/action/${record.key}`, { 
+                  state: { 
+                    task: task,
+                    taskDetails: taskDetails,
+                    occurrencesData: occurrencesData,
+                    statusCounts: statusCounts,
+                    totalSubtasks: totalSubtasks,
+                    donePercentage: donePercentage
+                  }
+                });
               }
-            })}
+            }}
           />
         </Space>
       ),
@@ -532,7 +540,7 @@ const TaskView: React.FC = () => {
               {task?.task_short_description || 'Social Media Alerts and Monitoring'}
             </Title>
             <Text type="secondary" style={{ fontSize: '14px' }}>
-              Alerts & Compliance monitoring
+              {task?.task_category || 'Alerts & Compliance monitoring'}
             </Text>
           </div>
 
@@ -548,7 +556,7 @@ const TaskView: React.FC = () => {
                   columns={columns}
                   dataSource={actionsData}
                   rowKey="key"
-                  expandable={{
+                  expandable={(task?.task_short_description === "Social Media" || task?.task_short_description === "Political Contributions") ? undefined : {
                     expandedRowRender: (record) => expandedRowRender(record),
                     expandedRowKeys,
                     onExpandedRowsChange: setExpandedRowKeys,

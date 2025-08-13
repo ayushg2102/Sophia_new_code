@@ -8,6 +8,8 @@ import SubtaskDetail from './pages/SubtaskDetail/SubtaskDetail';
 import ActionDetail from './pages/ActionDetail/ActionDetail';
 import AllTasks from './pages/Dashboard/AllTasks';
 import ExternalRedirect from './components/ExternalRedirect/ExternalRedirect';
+import SocialMediaMonitoringDashboard from './components/SocialMediaContributions/SocialMediaMonitoringDashboard';
+import PoliticalContributionsDashboard from './components/PoliticalContributionsDashboard';
 
 const theme = {
   token: {
@@ -39,7 +41,8 @@ function App() {
             <Route path="/subtask/:subtaskId" element={<SubtaskDetail />} />
             <Route path="/action/:actionId" element={<ActionDetail />} />
             <Route path="/all-tasks" element={<AllTasks />} />
-            
+            <Route path="/social-media-dashboard" element={<SocialMediaMonitoringDashboard />} />
+            <Route path="/political-contributions-dashboard" element={<PoliticalContributionsDashboard />} />
             {/* Default route - redirect to tasks */}
             <Route path="/" element={<Navigate to="/tasks" replace />} />
             

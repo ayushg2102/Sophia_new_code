@@ -13,6 +13,7 @@ import {
 } from 'antd';
 import { SearchOutlined, ReloadOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
+import Header from '../Header/Header';
 
 const { Text } = Typography;
 const { Option } = Select;
@@ -391,11 +392,13 @@ const PoliticalContributionsDashboard: React.FC = () => {
   }, [contributions, selectedDocument]);
 
   return (
+    <>
+    <Header />
     <div style={{ 
       width: '100%', 
       maxWidth: '100%',
       padding: '0 24px',
-      margin: 0,
+      marginTop: 24,
       boxSizing: 'border-box'
     }}>
       <Spin spinning={loading}>
@@ -593,6 +596,7 @@ const PoliticalContributionsDashboard: React.FC = () => {
         </div>
       </Spin>
     </div>
+    </>
   );
 };
 

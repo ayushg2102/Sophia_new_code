@@ -319,7 +319,7 @@ Website Review Alert & Monitoring
   }
 
   const { objective, subject, body, holidays } = parseInstructions(action.instructions);
-  const runsData = action.action_runs.length > 0 ? action.action_runs : mockRunsData;
+  const runsData = action.action_runs.length > 0 ? action.action_runs : [];
 
   return (
     <Layout style={{ minHeight: '100vh', background: '#f5f5f5' }}>

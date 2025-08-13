@@ -9,6 +9,7 @@ import {
 } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import TitleMonitoringDashboard from '../TitleMonitoringDashboard';
+import Header from '../Header/Header';
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -474,7 +475,10 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
 
 
   return (
+    <>
+    <Header />
     <div className="social-media-dashboard" style={{ padding: '24px' }}>
+      
       <Spin spinning={loading}>
       {/* Header Section */}
       <Row gutter={[16, 16]} style={{ 
@@ -683,6 +687,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
         </Card>
       </Spin>
     </div>
+  </>
   );
 };
 
