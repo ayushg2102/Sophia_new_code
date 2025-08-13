@@ -64,6 +64,7 @@ const Header: React.FC = () => {
         
         <div className="header-actions">
           <Space size="middle">            
+            <h1 onClick={handleLogoClick} style={{cursor:'pointer',color:'#1677ff',fontSize:'16px',fontWeight:'600',marginRight:'20px'}}>Tasks</h1>
             <Dropdown menu={{ items: menuItems, onClick: handleMenuClick }} placement="bottomRight">
               <div className="user-profile">
                 <Avatar src={SophiaUser} className="user-avatar" size={44} />

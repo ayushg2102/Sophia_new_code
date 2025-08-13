@@ -177,8 +177,19 @@ const Dashboard: React.FC = () => {
             <Col xs={24} lg={24}>
               <div className="tasks-section">
                 <div className="tasks-header">
-                  <h2 className="category-heading">Dashboard</h2>
+                  <h2 className="category-heading">Task List</h2>
                   <div className="header-controls">
+                    <Input
+                      placeholder="Search tasks..."
+                      prefix={<SearchOutlined />}
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      style={{
+                        width: 300,
+                        borderRadius: 8
+                      }}
+                      allowClear
+                    />
                     <Button.Group style={{ marginRight: 16 }}>
                       <Button
                         type={viewMode === 'card' ? 'primary' : 'default'}
@@ -197,17 +208,6 @@ const Dashboard: React.FC = () => {
                         List
                       </Button>
                     </Button.Group>
-                    <Input
-                      placeholder="Search tasks..."
-                      prefix={<SearchOutlined />}
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      style={{
-                        width: 300,
-                        borderRadius: 8
-                      }}
-                      allowClear
-                    />
                   </div>
                 </div>
                 <Tabs
@@ -273,6 +273,15 @@ const Dashboard: React.FC = () => {
                       disabled: category.key === 'Categories',
                       children: category.key === 'Categories' ? null : (
                         <div>
+                          <h3 style={{ 
+                            fontSize: '18px', 
+                            fontWeight: '600', 
+                            color: '#262626', 
+                            marginBottom: '16px',
+                            marginTop: '8px'
+                          }}>
+                            Tasks
+                          </h3>
                           <div style={{ maxHeight: 'calc(100vh - 90px)', overflowY: 'auto', overflowX: 'hidden', width: '100%' }}>
                             {viewMode === 'card' ? (
                               <Row gutter={[16, 16]} style={{ margin: 0, width: '100%' }}>
