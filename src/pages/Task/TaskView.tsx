@@ -443,7 +443,7 @@ const TaskView: React.FC = () => {
       ),
     },
     {
-      title: 'Next run due',
+      title: 'Trigger Date',
       dataIndex: 'nextRunDue',
       key: 'nextRunDue',
       width: '15%',
