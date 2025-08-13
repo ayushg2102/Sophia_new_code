@@ -530,8 +530,8 @@ const TaskView: React.FC = () => {
   return (
     <Layout style={{ minHeight: '100vh', background: '#f5f5f5' }}>
       <Header />
-      <Content style={{ padding: '16px 24px' }}>
-        <div style={{ maxWidth: '100%', margin: '0' }}>
+      <Content style={{ padding: '16px 24px', height: 'calc(100vh - 64px)', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ maxWidth: '100%', margin: '0', flex: 1, display: 'flex', flexDirection: 'column' }}>
           {/* Header Section */}
           <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -555,7 +555,7 @@ const TaskView: React.FC = () => {
           </div>
 
           {/* Main Content */}
-          <Row gutter={16} style={{ alignItems: 'stretch' }}>
+          <Row gutter={16} style={{ alignItems: 'stretch', flex: 1, minHeight: 0 }}>
             {/* Left Column - Actions Table */}
             <Col xs={24} lg={16}>
               <Card style={{ borderRadius: '6px', boxShadow: '0 1px 4px rgba(0,0,0,0.08)', height: '100%' }}>
@@ -579,7 +579,7 @@ const TaskView: React.FC = () => {
             </Col>
 
             {/* Right Column - Details Sidebar */}
-            <Col xs={24} lg={8}>
+            <Col xs={24} lg={8} style={{ display: 'flex', flexDirection: 'column' }}>
               <DetailsSidebar
                 statusCounts={statusCounts}
                 totalItems={totalSubtasks}
@@ -590,6 +590,7 @@ const TaskView: React.FC = () => {
                 description={taskDetails?.description}
                 totalSubtasks={task?.subtasks?.length || 0}
                 occurrences={occurrencesData}
+                style={{ height: '100%' }}
               />
             </Col>
           </Row>

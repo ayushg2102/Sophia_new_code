@@ -196,10 +196,11 @@ const DetailsSidebar: React.FC<DetailsSidebarProps> = ({
         borderRadius: '6px', 
         boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
         height: '100%',
-        minHeight: '500px',
+        display: 'flex',
+        flexDirection: 'column',
         ...style
       }}
-      bodyStyle={{ padding: '16px' }}
+      bodyStyle={{ padding: '16px', flex: 1, overflow: 'auto', display: 'flex', flexDirection: 'column' }}
     >
       {/* Donut Chart */}
       <div style={{ textAlign: 'center', marginBottom: '20px' }}>
@@ -278,33 +279,37 @@ const DetailsSidebar: React.FC<DetailsSidebarProps> = ({
       </div>
 
       {/* Occurrences */}
-      <div>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
         <Text type="secondary" style={{ fontSize: '11px', display: 'block', marginBottom: '10px' }}>
           Occurrence({occurrences.length})
         </Text>
         
-        <Collapse ghost>
-          <Panel header={`${occurrences.length} items`} key="1">
-            <List
-              size="small"
-              dataSource={occurrences}
-              renderItem={(item: OccurrenceData) => (
-                <List.Item style={{ padding: '6px 0', border: 'none' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', width: '100%' }}>
-                    {getStatusIcon(item.status)}
-                    <div style={{ flex: 1 }}>
-                      <Text style={{ fontSize: '13px' }}>{item.period}</Text>
-                      <br />
-                      <Text type="secondary" style={{ fontSize: '11px' }}>
-                        Due: {item.dueDate}
-                      </Text>
-                    </div>
-                  </div>
-                </List.Item>
-              )}
-            />
-          </Panel>
-        </Collapse>
+        <div style={{ flex: 1, overflow: 'hidden' }}>
+          <Collapse ghost style={{ height: '100%' }}>
+            <Panel header={`${occurrences.length} items`} key="1" style={{ height: '100%' }}>
+              <div style={{ maxHeight: '300px', overflow: 'auto' }}>
+                <List
+                  size="small"
+                  dataSource={occurrences}
+                  renderItem={(item: OccurrenceData) => (
+                    <List.Item style={{ padding: '6px 0', border: 'none' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', width: '100%' }}>
+                        {getStatusIcon(item.status)}
+                        <div style={{ flex: 1 }}>
+                          <Text style={{ fontSize: '13px' }}>{item.period}</Text>
+                          <br />
+                          <Text type="secondary" style={{ fontSize: '11px' }}>
+                            Due: {item.dueDate}
+                          </Text>
+                        </div>
+                      </div>
+                    </List.Item>
+                  )}
+                />
+              </div>
+            </Panel>
+          </Collapse>
+        </div>
       </div>
     </Card>
   );
