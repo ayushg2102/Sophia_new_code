@@ -382,33 +382,94 @@ const ActionDetail: React.FC = () => {
               {action.task_name}
             </Text>
             
-            {/* Action metadata */}
-            <div style={{ marginBottom: '16px' }}>
-              <Space wrap size="middle">
-                <div>
-                  <Text type="secondary" style={{ fontSize: '12px', display: 'block' }}>Last run date & time</Text>
-                  <Text strong>
+            {/* Info Cards Row */}
+            <Row gutter={16} style={{ marginBottom: '24px' }}>
+              {/* Last run date & time card */}
+              <Col xs={24} sm={8}>
+                <Card 
+                  style={{ 
+                    borderRadius: '8px', 
+                    border: '1px solid #e8e8e8',
+                    boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
+                    height: '100%'
+                  }}
+                  bodyStyle={{ padding: '16px' }}
+                >
+                  <Text type="secondary" style={{ fontSize: '12px', display: 'block', marginBottom: '8px' }}>
+                    Last run date & time
+                  </Text>
+                  <Text strong style={{ fontSize: '14px' }}>
                     {runsData[0]?.run_timestamp 
                       ? dayjs(runsData[0].run_timestamp).format('MM/DD/YYYY | hh:mm A')
                       : '06/12/2025 | 04:45 pm'
                     }
                   </Text>
-                </div>
-                <Tag 
-                  color={action.trigger_type === 'relative' ? 'green' : 'blue'}
-                  style={{ textTransform: 'capitalize' }}
+                </Card>
+              </Col>
+              
+              {/* Trigger type card */}
+              <Col xs={24} sm={8}>
+                <Card 
+                  style={{ 
+                    borderRadius: '8px', 
+                    border: '1px solid #e8e8e8',
+                    boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
+                    height: '100%'
+                  }}
+                  bodyStyle={{ padding: '16px' }}
                 >
-                  {action.trigger_type}
-                </Tag>
-                <Space>
-                  {action.tools_used.map((tool, index) => (
-                    <Tag key={index} color="processing">
-                      {tool}
-                    </Tag>
-                  ))}
-                </Space>
-              </Space>
-            </div>
+                  <Text type="secondary" style={{ fontSize: '12px', display: 'block', marginBottom: '8px' }}>
+                    Trigger type
+                  </Text>
+                  <Tag 
+                    color={action.trigger_type === 'relative' ? 'green' : 'blue'}
+                    style={{ 
+                      textTransform: 'capitalize',
+                      borderRadius: '16px',
+                      padding: '4px 12px',
+                      fontSize: '12px',
+                      fontWeight: '500'
+                    }}
+                  >
+                    {action.trigger_type}
+                  </Tag>
+                </Card>
+              </Col>
+              
+              {/* Capabilities card */}
+              <Col xs={24} sm={8}>
+                <Card 
+                  style={{ 
+                    borderRadius: '8px', 
+                    border: '1px solid #e8e8e8',
+                    boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
+                    height: '100%'
+                  }}
+                  bodyStyle={{ padding: '16px' }}
+                >
+                  <Text type="secondary" style={{ fontSize: '12px', display: 'block', marginBottom: '8px' }}>
+                    Capabilities
+                  </Text>
+                  <Space wrap size="small">
+                    {action.tools_used.map((tool, index) => (
+                      <Tag 
+                        key={index} 
+                        color="processing"
+                        style={{
+                          borderRadius: '16px',
+                          padding: '4px 12px',
+                          fontSize: '12px',
+                          fontWeight: '500',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        {tool}
+                      </Tag>
+                    ))}
+                  </Space>
+                </Card>
+              </Col>
+            </Row>
           </div>
 
           {/* Main Layout */}
