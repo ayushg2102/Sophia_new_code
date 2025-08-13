@@ -11,10 +11,9 @@ import {
   Spin,
   message,
 } from 'antd';
-import { SearchOutlined, ReloadOutlined } from '@ant-design/icons';
+import { SearchOutlined, ReloadOutlined, DownloadOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import Header from '../Header/Header';
-
 const { Text } = Typography;
 const { Option } = Select;
 
@@ -119,6 +118,8 @@ const fetchPoliticalContributions = async (): Promise<DocumentData[]> => {
 const PoliticalContributionsDashboard: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [debouncedSearchText, setDebouncedSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState<string[]>([]);
   const [runDateFilter, setRunDateFilter] = useState<string>('All');
@@ -301,6 +302,14 @@ const PoliticalContributionsDashboard: React.FC = () => {
   const handleRunDateChange = (value: string) => {
     setRunDateFilter(value);
   };
+  const handleFileDownload = () => {
+    const link = document.createElement('a');
+    link.href = '/assets/Files/political_contributions_20250804_155626.xlsx';
+    link.download = 'political_contributions_20250804_155626.xlsx';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   const handleFreshRun = async () => {
     try {
@@ -471,7 +480,7 @@ const PoliticalContributionsDashboard: React.FC = () => {
               prefix={<SearchOutlined />}
             />
           </Col>
-          <Col span={5} style={{ textAlign: 'center' }}>
+          <Col span={5} style={{ textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Button 
               type="primary" 
               icon={<ReloadOutlined />}
@@ -480,6 +489,15 @@ const PoliticalContributionsDashboard: React.FC = () => {
               style={{ width: '100%' }}
             >
               Execute fresh run
+            </Button>
+            <Button 
+              type="primary" 
+              icon={<DownloadOutlined />}
+              onClick={handleFileDownload}
+              loading={loading}
+              style={{ width: '100%', marginLeft: '16px' }}
+            >
+              Download File
             </Button>
           </Col>
         </Row>
@@ -576,11 +594,17 @@ const PoliticalContributionsDashboard: React.FC = () => {
             columns={columns} 
             dataSource={filteredData} 
             loading={loading}
-            pagination={{ 
-              pageSize: 10, 
-              position: ['bottomCenter'],
+            pagination={{
+              current: currentPage,
+              pageSize: pageSize,
+              total: filteredData.length,
               showSizeChanger: true,
-              showTotal: (total) => `Total ${total} employees`
+              showQuickJumper: true,
+              showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
+              onChange: (page, size) => {
+                setCurrentPage(page);
+                setPageSize(size || 10);
+              },
             }}
             scroll={{ x: 'max-content' }}
             style={{ width: '100%' }}

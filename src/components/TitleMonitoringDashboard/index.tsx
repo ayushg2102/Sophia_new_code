@@ -12,7 +12,7 @@ import {
   Badge,
 
 } from 'antd';
-import { SearchOutlined, ReloadOutlined } from '@ant-design/icons';
+import { SearchOutlined, ReloadOutlined, DownloadOutlined } from '@ant-design/icons';
 const { Title } = Typography;
 import dayjs from 'dayjs';
 import SocialMediaMonitoringDashboard from '../SocialMediaContributions/SocialMediaMonitoringDashboard';
@@ -190,6 +190,15 @@ const TitleMonitoringDashboard: React.FC = () => {
     setMonitoringType(value);
   };
 
+  const handleFileDownload = () => {
+    const link = document.createElement('a');
+    link.href = '/assets/Files/social_media_20250804_155626.xlsx';
+    link.download = 'social_media_20250804_155626.xlsx';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const handleFreshRun = async () => {
     try {
       setLoading(true);
@@ -294,7 +303,7 @@ const TitleMonitoringDashboard: React.FC = () => {
 
   // Otherwise, return the Title Monitoring dashboard
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: '100%', padding: '24px' }}>
      <Row gutter={[16, 16]} style={{ marginBottom: 24 }} align="middle">
           <Col xs={24} md={8}>
             <Select
@@ -326,6 +335,14 @@ const TitleMonitoringDashboard: React.FC = () => {
               onClick={handleFreshRun}
             >
               Execute Fresh Run
+            </Button>
+            <Button 
+              type="primary" 
+              icon={<DownloadOutlined />}
+              style={{ marginLeft: 8 }}
+              onClick={handleFileDownload}
+            >
+              Download File
             </Button>
           </Col>
         </Row>

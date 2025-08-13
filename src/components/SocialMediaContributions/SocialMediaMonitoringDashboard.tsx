@@ -5,7 +5,8 @@ import {
 } from 'antd';
 import { 
   LinkedinOutlined, TwitterOutlined, FacebookOutlined, 
-  SearchOutlined, ReloadOutlined 
+  SearchOutlined, ReloadOutlined, 
+  DownloadOutlined
 } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import TitleMonitoringDashboard from '../TitleMonitoringDashboard';
@@ -284,7 +285,14 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
     setSearchText(e.target.value);
     setCurrentPage(1);
   }, []);
-
+  const handleFileDownload = () => {
+    const link = document.createElement('a');
+    link.href = '/assets/Files/social_media_20250804_155626.xlsx';
+    link.download = 'social_media_20250804_155626.xlsx';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   // Handler for fresh run
   const handleFreshRun = async () => {
     try {
@@ -514,7 +522,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
             prefix={<SearchOutlined />}
           />
         </Col>
-        <Col span={6} style={{ textAlign: 'center' }}>
+        <Col span={6} style={{ textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
           <Button 
             type="primary" 
             icon={<ReloadOutlined />}
@@ -524,6 +532,15 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
           >
             Execute fresh run
           </Button>
+          <Button 
+              type="primary" 
+              icon={<DownloadOutlined />}
+              onClick={handleFileDownload}
+              loading={loading}
+              style={{ width: '100%', marginLeft: '16px' }}
+            >
+              Download File
+            </Button>
         </Col>
       </Row>
         {/* Title Section */}
