@@ -198,9 +198,9 @@ const ActionDetail: React.FC = () => {
       title: 'Run Log',
       dataIndex: 'human_msg',
       key: 'human_msg',
-      width: '35%',
+      width: '55%',
       render: (text: string, record: ActionRun) => (
-        <div style={{ whiteSpace: 'pre-wrap', lineHeight: '1.8' }}>
+        <div style={{ whiteSpace: 'pre-wrap', lineHeight: '2.0' }}>
           <Text strong style={{ fontSize: '13px' }}>
             {text}
           </Text>
@@ -211,7 +211,7 @@ const ActionDetail: React.FC = () => {
       title: 'Run date & time',
       dataIndex: 'run_timestamp',
       key: 'run_timestamp',
-      width: '25%',
+      width: '12%',
       align: 'center' as const,
       render: (timestamp: string) => (
         <Text>{dayjs(timestamp).format('MM/DD/YYYY | hh:mm A')}</Text>
@@ -221,7 +221,7 @@ const ActionDetail: React.FC = () => {
       title: 'Status',
       dataIndex: 'run_status',
       key: 'run_status',
-      width: '15%',
+      width: '10%',
       align: 'center' as const,
       render: (status: string) => {
         const getStatusConfig = (status: string) => {
@@ -264,7 +264,7 @@ const ActionDetail: React.FC = () => {
       title: 'Occurrence',
       dataIndex: 'subtask_name',
       key: 'subtask_name',
-      width: '25%',
+      width: '10%',
       render: (text: string, record: ActionRun) => (
         <div>
           <Text strong>{text || 'Q3 2025'}</Text>
@@ -370,123 +370,131 @@ const ActionDetail: React.FC = () => {
   return (
     <Layout style={{ minHeight: '100vh', background: '#f5f5f5' }}>
       <Header />
-      <Content style={{ padding: '24px' }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+      <Content style={{ padding: '16px 24px', height: 'calc(100vh - 64px)', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ maxWidth: '100%', margin: '0', flex: 1, display: 'flex', flexDirection: 'column' }}>
           {/* Header Section */}
-          <div style={{ marginBottom: '24px' }}>
-            <Button
-              type="text"
-              icon={<ArrowLeftOutlined />}
-              onClick={() => navigate(-1)}
-              style={{ padding: '4px 8px', marginBottom: '16px' }}
-            >
-              Back
-            </Button>
-            <Title level={2} style={{ margin: '0 0 8px 0', fontSize: '24px', fontWeight: 600 }}>
-              {action.action_name}
-            </Title>
-            <Text type="secondary" style={{ fontSize: '14px', display: 'block', marginBottom: '16px' }}>
-              {action.task_name}
-            </Text>
-            
-            {/* Info Cards Row */}
-            <Row gutter={16} style={{ marginBottom: '24px' }}>
-              {/* Last run date & time card */}
-              <Col xs={24} sm={8} lg={6}>
-                <Card 
-                  style={{ 
-                    borderRadius: '8px', 
-                    border: '1px solid #e8e8e8',
-                    boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
-                    height: '100%'
-                  }}
-                  bodyStyle={{ padding: '16px' }}
-                >
-                  <Text type="secondary" style={{ fontSize: '12px', display: 'block', marginBottom: '8px' }}>
-                    Last run date & time
-                  </Text>
-                  <Text strong style={{ fontSize: '14px' }}>
-                    {runsData[0]?.run_timestamp 
-                      ? dayjs(runsData[0].run_timestamp).format('MM/DD/YYYY | hh:mm A')
-                      : '06/12/2025 | 04:45 pm'
-                    }
-                  </Text>
-                </Card>
-              </Col>
-              
-              {/* Trigger type card */}
-              <Col xs={24} sm={8} lg={6}>
-                <Card 
-                  style={{ 
-                    borderRadius: '8px', 
-                    border: '1px solid #e8e8e8',
-                    boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
-                    height: '100%'
-                  }}
-                  bodyStyle={{ padding: '16px' }}
-                >
-                  <Text type="secondary" style={{ fontSize: '12px', display: 'block', marginBottom: '8px' }}>
-                    Trigger type
-                  </Text>
-                  <Tag 
-                    color={action.trigger_type === 'relative' ? 'green' : 'blue'}
-                    style={{ 
-                      textTransform: 'capitalize',
-                      borderRadius: '16px',
-                      padding: '4px 12px',
-                      fontSize: '12px',
-                      fontWeight: '500'
-                    }}
-                  >
-                    {action.trigger_type}
-                  </Tag>
-                </Card>
-              </Col>
-              
-              {/* Capabilities card */}
-              <Col xs={24} sm={8} lg={6}>
-                <Card 
-                  style={{ 
-                    borderRadius: '8px', 
-                    border: '1px solid #e8e8e8',
-                    boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
-                    height: '100%'
-                  }}
-                  bodyStyle={{ padding: '16px' }}
-                >
-                  <Text type="secondary" style={{ fontSize: '12px', display: 'block', marginBottom: '8px' }}>
-                    Capabilities
-                  </Text>
-                  <Space wrap size="small">
-                    {action.tools_used.map((tool, index) => (
-                      <Tag 
-                        key={index} 
-                        color="processing"
-                        style={{
-                          borderRadius: '16px',
-                          padding: '4px 12px',
-                          fontSize: '12px',
-                          fontWeight: '500',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        {tool}
-                      </Tag>
-                    ))}
-                  </Space>
-                </Card>
-              </Col>
-            </Row>
+          <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <Button
+                type="text"
+                icon={<ArrowLeftOutlined />}
+                onClick={() => navigate(-1)}
+                style={{ padding: '4px 8px' }}
+              >
+                Back
+              </Button>
+              <div>
+                <Title level={2} style={{ margin: '0', fontSize: '20px', fontWeight: 600, lineHeight: '1.2' }}>
+                  {action.action_name}
+                </Title>
+                <Text type="secondary" style={{ fontSize: '13px' }}>
+                  {action.task_name}
+                </Text>
+              </div>
+            </div>
           </div>
 
-          {/* Main Layout */}
-          <Row gutter={24} style={{ alignItems: 'stretch' }}>
+          {/* Info Cards Row */}
+          <Row gutter={16} style={{ marginBottom: '16px' }}>
+            {/* Last run date & time card */}
+            <Col xs={24} sm={8} lg={6}>
+              <Card 
+                style={{ 
+                  borderRadius: '6px', 
+                  border: '1px solid #e8e8e8',
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+                  height: '100%'
+                }}
+                bodyStyle={{ padding: '12px' }}
+              >
+                <Text type="secondary" style={{ fontSize: '11px', display: 'block', marginBottom: '6px' }}>
+                  Last run date & time
+                </Text>
+                <Text strong style={{ fontSize: '13px' }}>
+                  {runsData[0]?.run_timestamp 
+                    ? dayjs(runsData[0].run_timestamp).format('MM/DD/YYYY | hh:mm A')
+                    : '06/12/2025 | 04:45 pm'
+                  }
+                </Text>
+              </Card>
+            </Col>
+            
+            {/* Trigger type card */}
+            <Col xs={24} sm={8} lg={6}>
+              <Card 
+                style={{ 
+                  borderRadius: '6px', 
+                  border: '1px solid #e8e8e8',
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+                  height: '100%'
+                }}
+                bodyStyle={{ padding: '12px' }}
+              >
+                <Text type="secondary" style={{ fontSize: '11px', display: 'block', marginBottom: '6px' }}>
+                  Trigger type
+                </Text>
+                <Tag 
+                  color={action.trigger_type === 'relative' ? 'green' : 'blue'}
+                  style={{ 
+                    textTransform: 'capitalize',
+                    borderRadius: '16px',
+                    padding: '2px 8px',
+                    fontSize: '11px',
+                    fontWeight: '500'
+                  }}
+                >
+                  {action.trigger_type}
+                </Tag>
+              </Card>
+            </Col>
+            
+            {/* Capabilities card */}
+            <Col xs={24} sm={8} lg={6}>
+              <Card 
+                style={{ 
+                  borderRadius: '6px', 
+                  border: '1px solid #e8e8e8',
+                  boxShadow: '0 1px 4px rgba(0,0,0,0.08)',
+                  height: '100%'
+                }}
+                bodyStyle={{ padding: '12px' }}
+              >
+                <Text type="secondary" style={{ fontSize: '11px', display: 'block', marginBottom: '6px' }}>
+                  Capabilities
+                </Text>
+                <Space wrap size="small">
+                  {action.tools_used.map((tool, index) => (
+                    <Tag 
+                      key={index} 
+                      color="processing"
+                      style={{
+                        borderRadius: '12px',
+                        padding: '2px 8px',
+                        fontSize: '11px',
+                        fontWeight: '500',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {tool}
+                    </Tag>
+                  ))}
+                </Space>
+              </Card>
+            </Col>
+          </Row>
+
+          {/* Main Content */}
+          <Row gutter={16} style={{ alignItems: 'stretch', flex: 1, minHeight: 0 }}>
             {/* Left Column - Tabs */}
             <Col xs={24} lg={16}>
-              <Card style={{ borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', height: '100%' }}>
+              <Card style={{ borderRadius: '6px', boxShadow: '0 1px 4px rgba(0,0,0,0.08)', height: '100%' }}>
+                <div style={{ marginBottom: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Text strong style={{ fontSize: '15px' }}>Action Details</Text>
+                </div>
                 <Tabs 
                   activeKey={activeTab} 
                   onChange={setActiveTab}
+                  size="small"
                   items={[
                     {
                       key: 'runs-history',
@@ -498,8 +506,8 @@ const ActionDetail: React.FC = () => {
                             dataSource={runsData}
                             rowKey={(record, index) => `${record.subtask_id}-${index}`}
                             pagination={false}
-                            size="middle"
-                            bordered
+                            size="small"
+                            style={{ fontSize: '13px' }}
                           />
                         </div>
                       ),
@@ -622,7 +630,7 @@ const ActionDetail: React.FC = () => {
             </Col>
 
             {/* Right Column - Details Sidebar */}
-            <Col xs={24} lg={8}>
+            <Col xs={24} lg={8} style={{ display: 'flex', flexDirection: 'column' }}>
               <DetailsSidebar
                 statusCounts={sidebarData.statusCounts}
                 totalItems={sidebarData.totalSubtasks}
@@ -633,6 +641,7 @@ const ActionDetail: React.FC = () => {
                 description={sidebarData.description}
                 totalSubtasks={sidebarData.totalSubtasks}
                 occurrences={sidebarData.occurrences}
+                style={{ height: '100%' }}
               />
             </Col>
           </Row>
