@@ -166,7 +166,13 @@ const ActionDetail: React.FC = () => {
       }
     }
 
-    // Default holidays list (omit from instructions as requested)
+    // Remove Xponance Holidays section from instructions
+    let cleanInstructions = instructions.replace(/Xponance Holidays:[\s\S]*?(?=\n\n|$)/i, '').trim();
+    
+    // Clean up any trailing whitespace and normalize line breaks
+    cleanInstructions = cleanInstructions.replace(/\n\s*\n\s*\n/g, '\n\n').trim();
+
+    // Default holidays list (separate from instructions)
     const holidays = [
       '- Jan 1: New Year\'s Day',
       '- Jan 20: Martin Luther King Jr. Day',
@@ -181,7 +187,7 @@ const ActionDetail: React.FC = () => {
       '- Dec 25: Christmas Day'
     ];
     
-    return { objective, subject, body, holidays, recipientName };
+    return { objective, subject, body, cleanInstructions, holidays, recipientName };
   };
 
 
@@ -357,7 +363,7 @@ const ActionDetail: React.FC = () => {
     );
   }
 
-  const { objective, subject, body, holidays, recipientName } = parseInstructions(action.instructions);
+  const { objective, subject, body, cleanInstructions, holidays, recipientName } = parseInstructions(action.instructions);
   const runsData = action.action_runs.length > 0 ? action.action_runs : [];
 
   return (
@@ -501,34 +507,107 @@ const ActionDetail: React.FC = () => {
                       key: 'process-notes',
                       label: 'Processing notes',
                       children: (
-                        <div style={{ padding: '16px' }}>
-                          <div style={{ marginBottom: '16px' }}>
-                            <Text strong style={{ display: 'block', marginBottom: '8px' }}>Objective</Text>
-                            <Text>{objective}</Text>
+                        <div style={{ padding: '20px' }}>
+                          {/* Objective Section */}
+                          <div style={{ marginBottom: '24px' }}>
+                            <div style={{ 
+                              display: 'flex', 
+                              alignItems: 'center', 
+                              marginBottom: '12px',
+                              padding: '8px 0',
+                              borderBottom: '2px solid #f0f0f0'
+                            }}>
+                              <Text strong style={{ fontSize: '16px', color: '#1890ff' }}>🎯 Objective</Text>
+                            </div>
+                            <div style={{ 
+                              padding: '12px 16px',
+                              backgroundColor: '#f6f8fa',
+                              borderRadius: '8px',
+                              border: '1px solid #e1e4e8'
+                            }}>
+                              <Text style={{ fontSize: '14px', lineHeight: '1.6' }}>{objective}</Text>
+                            </div>
                           </div>
 
-                          {/* add a action_instructions data UI below where xponance holdiays should not come as its below */}
-
-                          <div style={{ marginBottom: '16px' }}>
-                            <Text strong style={{ display: 'block', marginBottom: '8px' }}>Instructions</Text>
-                            <Text>{action.instructions.split('\n').map((line, index) => (
-                              <Text key={index}>{line}</Text>
-                            ))}</Text>
-                          </div>
+                          {/* Processing Instructions Section */}
+                          {cleanInstructions && (
+                            <div style={{ marginBottom: '24px' }}>
+                              <div style={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                marginBottom: '12px',
+                                padding: '8px 0',
+                                borderBottom: '2px solid #f0f0f0'
+                              }}>
+                                <Text strong style={{ fontSize: '16px', color: '#52c41a' }}>📋 Processing Instructions</Text>
+                              </div>
+                              <div style={{ 
+                                padding: '16px',
+                                backgroundColor: '#f6ffed',
+                                borderRadius: '8px',
+                                border: '1px solid #b7eb8f',
+                                lineHeight: '1.6'
+                              }}>
+                                <div style={{ fontSize: '14px', whiteSpace: 'pre-wrap' }}>
+                                  {cleanInstructions}
+                                </div>
+                              </div>
+                            </div>
+                          )}
                           
+                          {/* Xponance Holidays Section */}
                           <div>
-                            <Text strong style={{ display: 'block', marginBottom: '8px' }}>Xponance holidays</Text>
+                            <div style={{ 
+                              display: 'flex', 
+                              alignItems: 'center', 
+                              marginBottom: '12px',
+                              padding: '8px 0',
+                              borderBottom: '2px solid #f0f0f0'
+                            }}>
+                              <Text strong style={{ fontSize: '16px', color: '#722ed1' }}>🏖️ Xponance Holidays</Text>
+                            </div>
                             <Collapse 
                               size="small"
+                              ghost
                               items={[{
                                 key: 'holidays',
-                                label: `${holidays.length} holidays`,
+                                label: (
+                                  <Text style={{ fontSize: '14px', fontWeight: '500' }}>
+                                    View {holidays.length} company holidays
+                                  </Text>
+                                ),
                                 children: (
-                                  <ul style={{ paddingLeft: '20px', margin: 0 }}>
-                                    {holidays.map((holiday, idx) => (
-                                      <li key={idx}>{holiday.replace(/^-\s*/, '')}</li>
-                                    ))}
-                                  </ul>
+                                  <div style={{ 
+                                    padding: '12px',
+                                    backgroundColor: '#fafafa',
+                                    borderRadius: '6px',
+                                    border: '1px solid #f0f0f0'
+                                  }}>
+                                    <Row gutter={[16, 8]}>
+                                      {holidays.map((holiday, idx) => {
+                                        const [date, name] = holiday.replace(/^-\s*/, '').split(': ');
+                                        return (
+                                          <Col xs={24} sm={12} key={idx}>
+                                            <div style={{ 
+                                              display: 'flex', 
+                                              alignItems: 'center',
+                                              padding: '6px 8px',
+                                              backgroundColor: '#fff',
+                                              borderRadius: '4px',
+                                              border: '1px solid #e8e8e8'
+                                            }}>
+                                              <Text strong style={{ fontSize: '12px', color: '#1890ff', minWidth: '60px' }}>
+                                                {date}
+                                              </Text>
+                                              <Text style={{ fontSize: '13px', marginLeft: '8px' }}>
+                                                {name}
+                                              </Text>
+                                            </div>
+                                          </Col>
+                                        );
+                                      })}
+                                    </Row>
+                                  </div>
                                 )
                               }]}
                             />

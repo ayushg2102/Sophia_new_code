@@ -470,7 +470,7 @@ const PoliticalContributionsDashboard: React.FC = () => {
               ))}
             </Select>
           </Col>
-          <Col span={9}>
+          <Col span={7}>
             <Input
               placeholder="Search by employee name"
               allowClear
@@ -486,7 +486,7 @@ const PoliticalContributionsDashboard: React.FC = () => {
               icon={<ReloadOutlined />}
               onClick={handleFreshRun}
               loading={loading}
-              style={{ width: '100%' }}
+              style={{ width: '100%',marginLeft: '105px' }}
             >
               Execute fresh run
             </Button>
