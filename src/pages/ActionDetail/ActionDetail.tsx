@@ -110,27 +110,64 @@ const ActionDetail: React.FC = () => {
 
   // Parse action instructions for process notes
   const parseInstructions = (instructions: string) => {
-    const lines = instructions.split('\n');
+    if (!instructions) {
+      return {
+        objective: '',
+        subject: 'Reminder – Sub task',
+        body: '\n\nHope you are doing well!\n\nI wanted to remind you that "Sub task" is due on <Sub Task Due Date>.\nHere are some notes for your task:\nWebsite Review Alert & Monitoring\n\n',
+        holidays: [
+          '- Jan 1: New Year\'s Day',
+          '- Jan 20: Martin Luther King Jr. Day',
+          '- Feb 17: Presidents\' Day',
+          '- May 26: Memorial Day',
+          '- Jun 19: Juneteenth',
+          '- Jul 4: Independence Day',
+          '- Sep 1: Labor Day',
+          '- Oct 13: Columbus Day',
+          '- Nov 11: Veterans Day',
+          '- Nov 27: Thanksgiving',
+          '- Dec 25: Christmas Day'
+        ]
+      };
+    }
+
+    // Split instructions by line breaks and filter out empty lines
+    const lines = instructions.split('\n').filter(line => line.trim());
+    
+    // First line is the objective
     const objective = lines[0] || '';
     
-    // Extract email template
-    const subjectMatch = instructions.match(/Subject: "([^"]+)"/i);
+    // Extract email template subject
+    const subjectMatch = instructions.match(/Subject:\s*["""]([^"""]+)["""]/i);
     const subject = subjectMatch ? subjectMatch[1] : 'Reminder – Sub task';
     
-    // Extract email body (everything between Hi and Regards)
-    const bodyMatch = instructions.match(/Hi [^,]+,([\s\S]*?)Regards,/i);
-    const body = bodyMatch ? bodyMatch[1].trim() : `
-Hope you are doing well!
-
-I wanted to remind you that "Sub task" is due on <Sub Task Due Date>.  
-Here are some notes for your task:  
-Website Review Alert & Monitoring
-
-`;
+    // Extract email body (everything between "Hi" and "Regards")
+    const bodyMatch = instructions.match(/Hi\s+([^,\n]+),\s*([\s\S]*?)\s*Regards,/i);
+    let body = '';
+    let recipientName = 'Spencer';
     
-    // Extract holidays
-    const holidayMatch = instructions.match(/Xponance Holidays:([\s\S]*?)$/i);
-    const holidays = holidayMatch ? holidayMatch[1].trim().split('\n').filter(line => line.trim()) : [
+    if (bodyMatch) {
+      recipientName = bodyMatch[1].trim();
+      body = bodyMatch[2].trim();
+      // Clean up the body formatting
+      body = body.replace(/\s+/g, ' ').replace(/\.\s+/g, '.\n\n').trim();
+    } else {
+      // Fallback: look for content after "Use the following email format:"
+      const formatMatch = instructions.match(/Use the following email format:\s*([\s\S]*?)(?=Before sending|Xponance Holidays|$)/i);
+      if (formatMatch) {
+        const emailContent = formatMatch[1];
+        const emailBodyMatch = emailContent.match(/Hi\s+([^,\n]+),\s*([\s\S]*?)\s*Regards,/i);
+        if (emailBodyMatch) {
+          recipientName = emailBodyMatch[1].trim();
+          body = emailBodyMatch[2].trim();
+          // Clean up the body formatting
+          body = body.replace(/\s+/g, ' ').replace(/\.\s+/g, '.\n\n').trim();
+        }
+      }
+    }
+
+    // Default holidays list (omit from instructions as requested)
+    const holidays = [
       '- Jan 1: New Year\'s Day',
       '- Jan 20: Martin Luther King Jr. Day',
       '- Feb 17: Presidents\' Day',
@@ -144,8 +181,10 @@ Website Review Alert & Monitoring
       '- Dec 25: Christmas Day'
     ];
     
-    return { objective, subject, body, holidays };
+    return { objective, subject, body, holidays, recipientName };
   };
+
+
 
   // Runs history table columns
   const runsColumns = [
@@ -318,7 +357,7 @@ Website Review Alert & Monitoring
     );
   }
 
-  const { objective, subject, body, holidays } = parseInstructions(action.instructions);
+  const { objective, subject, body, holidays, recipientName } = parseInstructions(action.instructions);
   const runsData = action.action_runs.length > 0 ? action.action_runs : [];
 
   return (
@@ -399,7 +438,7 @@ Website Review Alert & Monitoring
                     },
                     {
                       key: 'process-notes',
-                      label: 'Process notes',
+                      label: 'Processing notes',
                       children: (
                         <div style={{ padding: '16px' }}>
                           <div style={{ marginBottom: '16px' }}>
@@ -423,10 +462,13 @@ Website Review Alert & Monitoring
                               fontSize: '13px',
                               border: '1px solid #e8e8e8'
                             }}>
-                              Hi Spencer,{body}
-                              Regards,  
-                              Sophia  
-                              Compliance Assistant
+                              Hi {recipientName},
+
+{body}
+
+Regards,
+Sophia
+Compliance Assistant
                             </div>
                           </div>
                           

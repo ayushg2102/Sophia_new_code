@@ -97,6 +97,12 @@ const TaskView: React.FC = () => {
               }));
               setActionsData(transformedActions);
               
+              // Set default expanded rows for tasks that allow expansion
+              if (taskData.task_short_description !== "Social Media" && taskData.task_short_description !== "Political Contributions") {
+                const allActionKeys = transformedActions.map(action => action.key);
+                setExpandedRowKeys(allActionKeys);
+              }
+              
               // Fetch action details for all actions immediately
               fetchAllActionDetails(taskData.actions);
             } else {
