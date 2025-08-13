@@ -2,478 +2,607 @@ import React, { useState, useEffect } from "react";
 import {
   Layout,
   Card,
-  Tag,
+  Table,
   Button,
   Space,
   Typography,
-  Divider,
   Row,
   Col,
   Progress,
-  Input,
-  Select,
   message,
   Spin,
-  Alert,
+  List,
+  Collapse,
 } from "antd";
 import {
   ArrowLeftOutlined,
-  CalendarOutlined,
-  SyncOutlined,
-  UserOutlined,
-  EditOutlined,
-  CheckOutlined,
-  CloseOutlined,
+  LinkOutlined,
+  RightOutlined,
+  LoadingOutlined,
+  ClockCircleOutlined,
+  CheckCircleOutlined,
+  ExclamationCircleOutlined,
 } from "@ant-design/icons";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
-import "./TaskView.css";
-import { Action, Subtask, Task } from "../../types";
-import dayjs from "dayjs";
-import "./TaskView.css";
+import { Task } from "../../types";
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
+const { Panel } = Collapse;
+
+// Interface for action data
+interface ActionData {
+  key: string;
+  action: string;
+  noOfRuns: number;
+  lastRun: string;
+  nextRunDue: string;
+  status: 'done' | 'ongoing' | 'overdue' | 'due';
+}
+
+// Interface for occurrence data
+interface OccurrenceData {
+  key: string;
+  period: string;
+  dueDate: string;
+  status: 'done' | 'ongoing' | 'overdue' | 'due';
+}
 
 const TaskView: React.FC = () => {
   const { taskId } = useParams<{ taskId: string }>();
   const navigate = useNavigate();
-  const [editingId, setEditingId] = useState<string | null>(null);
-  const [editedName, setEditedName] = useState("");
-  // Remove mockTasks from main state
-  // const [tasks, setTasks] = useState<Task[]>([...mockTasks]);
   const [task, setTask] = useState<Task | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [actionsData, setActionsData] = useState<ActionData[]>([]);
+  const [taskDetails, setTaskDetails] = useState<any>(null);
+  const [expandedRowKeys, setExpandedRowKeys] = useState<readonly React.Key[]>([]);
+  const [actionRunHistory, setActionRunHistory] = useState<{[key: string]: any[]}>({});
+  const [loadingActionDetails, setLoadingActionDetails] = useState<{[key: string]: boolean}>({});
+
 
   useEffect(() => {
     const fetchTaskDetail = async () => {
       setLoading(true);
-      setError(null);
       try {
+        // API call to fetch task details
         const response = await fetch(`/api/sub-task-details/${taskId}`);
-        if (!response.ok) throw new Error('Failed to fetch task details');
-        const data = await response.json();
-        console.log(data,"response123")
-        const apiTask = data.data;
-        console.log(apiTask,"apiTask")
-        setTask({
-          task_id: apiTask.task_id,
-          task_category: apiTask.task_category,
-          task_short_description: apiTask.task_short_description,
-          frequency: apiTask.frequency,
-          task_due_date: apiTask.task_due_date,
-          status: apiTask.status || 'active',
-          description: apiTask.description,
-          subtasks: apiTask.subtasks || [],
-          actions: apiTask.actions || [],
-        });
-        console.log(task?.actions,"task1231")
-        console.log(task?.actions?.map((action_instruction) => action_instruction.action_instruction),"action123")
-      } catch {
-        setError('Could not load task details. Please try again.');
+        if (response.ok) {
+          const apiResponse = await response.json();
+          console.log(apiResponse, "API Response");
+          
+          if (apiResponse.status === 'success' && apiResponse.data) {
+            const taskData = apiResponse.data;
+            
+            // Set task data from API response
+            const task: Task = {
+              task_id: taskData.task_id,
+              task_category: taskData.task_category,
+              task_short_description: taskData.task_short_description,
+              frequency: taskData.frequency,
+              task_due_date: taskData.task_due_date,
+              status: taskData.status,
+              subtasks: taskData.subtasks || [],
+              actions: taskData.actions || []
+            };
+            setTask(task);
+            
+            // Set task details for sidebar
+            setTaskDetails({
+              category: taskData.task_category,
+              nextDueDate: taskData.task_due_date,
+              frequency: taskData.frequency,
+              description: taskData.description,
+              // Calculate next due date from subtasks if available
+              nextDueDate: taskData.subtasks?.find((st: any) => st.status === 'due')?.due_date || taskData.task_due_date
+            });
+            
+            // Transform actions data for the table
+            if (taskData.actions && taskData.actions.length > 0) {
+              const transformedActions = taskData.actions.map((action: any, index: number) => ({
+                key: action.action_id || `action-${index}`,
+                action: action.action_instruction || action.action_description || 'No description available',
+                noOfRuns: action.action_runs?.length || 0, // Will be updated after fetching action details
+                lastRun: action.action_updated_date ? new Date(action.action_updated_date).toLocaleDateString() : '--',
+                nextRunDue: action.action_trigger_date ? new Date(action.action_trigger_date).toLocaleDateString() : '--',
+                status: action.adjusted_relative_trigger_date ? 
+                  (new Date(action.adjusted_relative_trigger_date) < new Date() ? 'overdue' : 'due') : 'due'
+              }));
+              setActionsData(transformedActions);
+              
+              // Fetch action details for all actions immediately
+              fetchAllActionDetails(taskData.actions);
+            } else {
+              setActionsData([]);
+            }
+          } else {
+            throw new Error('Invalid API response format');
+          }
+        } else {
+          throw new Error('Failed to fetch task details');
+        }
+      } catch (error) {
+        console.error('Error fetching task:', error);
+        message.error('Failed to load task details');
+        // Set empty data on error
         setTask(null);
+        setTaskDetails(null);
+        setActionsData([]);
       } finally {
         setLoading(false);
       }
     };
-    if (taskId) fetchTaskDetail();
+
+    fetchTaskDetail();
   }, [taskId]);
 
-  const handleEdit = (subtask: Subtask) => {
-    setEditingId(subtask.subtask_id);
-    setEditedName(subtask.subtask_short_description);
+  // Status icon helper
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'done':
+        return <CheckCircleOutlined style={{ color: '#52c41a' }} />;
+      case 'ongoing':
+        return <LoadingOutlined style={{ color: '#faad14' }} />;
+      case 'overdue':
+        return <ExclamationCircleOutlined style={{ color: '#ff4d4f' }} />;
+      case 'due':
+        return <ClockCircleOutlined style={{ color: '#d9d9d9' }} />;
+      default:
+        return <ClockCircleOutlined style={{ color: '#d9d9d9' }} />;
+    }
   };
 
-  const handleSave = (subtaskId: string) => {
-    if (!editedName.trim()) {
-      message.error('Subtask name cannot be empty');
-      return;
+  // Fetch action details for all actions at once
+  const fetchAllActionDetails = async (actions: any[]) => {
+    const actionIds = actions.map(action => action.action_id).filter(Boolean);
+    
+    // Set loading state for all actions
+    const loadingState = actionIds.reduce((acc, id) => ({ ...acc, [id]: true }), {});
+    setLoadingActionDetails(loadingState);
+    
+    // Fetch all action details in parallel
+    const fetchPromises = actionIds.map(async (actionId) => {
+      try {
+        const response = await fetch(`/api/action-details/${actionId}`);
+        if (response.ok) {
+          const apiResponse = await response.json();
+          if (apiResponse.status === 'success' && apiResponse.data) {
+            const runHistory = apiResponse.data.action_runs?.map((run: any, index: number) => ({
+              key: `${actionId}-run-${index}`,
+              runSummary: run.human_msg ? (run.human_msg.length > 50 ? run.human_msg.substring(0, 50) + '...' : run.human_msg) : '--',
+              runDate: run.run_timestamp ? new Date(run.run_timestamp).toLocaleString() : '--',
+              status: run.run_status || 'Unknown',
+              occurrence: run.subtask_name || '--',
+              dueDate: run.subtask_due_date ? new Date(run.subtask_due_date).toLocaleDateString() : '--'
+            })) || [];
+            
+            const noOfRuns = apiResponse.data.action_runs?.length || 0;
+            
+            return { actionId, runHistory, noOfRuns };
+          }
+        } else {
+          console.error(`Failed to fetch action details for ${actionId}`);
+          return { actionId, runHistory: [], noOfRuns: 0 };
+        }
+      } catch (error) {
+        console.error(`Error fetching action details for ${actionId}:`, error);
+        return { actionId, runHistory: [], noOfRuns: 0 };
+      }
+    });
+    
+    // Wait for all requests to complete
+    const results = await Promise.all(fetchPromises);
+    
+    // Update state with all results
+    const newRunHistory: {[key: string]: any[]} = {};
+    const newLoadingState: {[key: string]: boolean} = {};
+    const newRunCounts: {[key: string]: number} = {};
+    
+    results.forEach(result => {
+      if (result) {
+        newRunHistory[result.actionId] = result.runHistory;
+        newLoadingState[result.actionId] = false;
+        newRunCounts[result.actionId] = result.noOfRuns || 0;
+      }
+    });
+    
+    setActionRunHistory(prev => ({ ...prev, ...newRunHistory }));
+    setLoadingActionDetails(prev => ({ ...prev, ...newLoadingState }));
+    
+    // Update actionsData with the actual run counts
+    setActionsData(prevActions => 
+      prevActions.map(action => ({
+        ...action,
+        noOfRuns: newRunCounts[action.key] || 0
+      }))
+    );
+  };
+
+
+
+  // Expandable row render function
+  const expandedRowRender = (record: ActionData) => {
+    const actionId = record.key;
+    const runHistory = actionRunHistory[actionId] || [];
+    const isLoading = loadingActionDetails[actionId];
+
+    const historyColumns = [
+      {
+        title: 'Run summary',
+        dataIndex: 'runSummary',
+        key: 'runSummary',
+        width: '30%',
+        render: (text: string) => (
+          <Text style={{ fontSize: '14px' }}>{text}</Text>
+        ),
+      },
+      {
+        title: 'Run date & time',
+        dataIndex: 'runDate',
+        key: 'runDate',
+        width: '25%',
+        render: (text: string) => (
+          <Text style={{ fontSize: '14px' }}>{text}</Text>
+        ),
+      },
+      {
+        title: 'Status',
+        dataIndex: 'status',
+        key: 'status',
+        width: '15%',
+        render: (status: string) => {
+          const getStatusColor = (status: string) => {
+            switch (status.toLowerCase()) {
+              case 'completed':
+              case 'success':
+                return '#52c41a';
+              case 'failed':
+              case 'error':
+                return '#ff4d4f';
+              case 'running':
+              case 'in_progress':
+                return '#faad14';
+              default:
+                return '#8c8c8c';
+            }
+          };
+          
+          return (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+              <CheckCircleOutlined style={{ color: getStatusColor(status) }} />
+              <Text style={{ color: getStatusColor(status), textTransform: 'capitalize' }}>{status}</Text>
+            </div>
+          );
+        },
+      },
+      {
+        title: 'Occurrence',
+        dataIndex: 'occurrence',
+        key: 'occurrence',
+        width: '30%',
+        render: (text: string, record: any) => (
+          <div>
+            <Text style={{ fontWeight: 500, fontSize: '14px' }}>{text}</Text>
+            <br />
+            <Text type="secondary" style={{ fontSize: '12px' }}>Due: {record.dueDate}</Text>
+          </div>
+        ),
+      },
+      // {
+      //   title: '',
+      //   key: 'actions',
+      //   width: '20%',
+      //   render: () => (
+      //     <div style={{ display: 'flex', gap: 8 }}>
+      //       <Button type="link" icon={<LinkOutlined />} size="small" />
+      //       <Button type="link" icon={<RightOutlined />} size="small" />
+      //     </div>
+      //   ),
+      // },
+    ];
+
+    if (isLoading) {
+      return (
+        <div style={{ margin: '0 48px', padding: '20px', textAlign: 'center' }}>
+          <Spin size="small" />
+          <Text style={{ marginLeft: 8 }}>Loading run history...</Text>
+        </div>
+      );
     }
 
-    const updatedTasks = task?.subtasks?.map(s => 
-      s.subtask_id === subtaskId 
-        ? { ...s, subtask_short_description: editedName }
-        : s
+    if (runHistory.length === 0 && !isLoading) {
+      return (
+        <div style={{ margin: '0 48px', padding: '20px', textAlign: 'center' }}>
+          <Text type="secondary">No run history available for this action.</Text>
+        </div>
+      );
+    }
+
+    return (
+      <Table
+        columns={historyColumns}
+        dataSource={runHistory}
+        pagination={false}
+        size="small"
+        style={{ margin: '0 48px' }}
+        rowKey="key"
+      />
     );
-    setTask(prev => prev ? { ...prev, subtasks: updatedTasks } : null);
-    setEditingId(null);
-    message.success('Subtask updated successfully');
   };
 
-  const handleStatusChange = (subtaskId: string, newStatus: 'completed' | 'in-progress' | 'due') => {
-    const updatedTasks = task?.subtasks?.map(s => 
-      s.subtask_id === subtaskId 
-        ? { ...s, status: newStatus }
-        : s
-    );
-    setTask(prev => prev ? { ...prev, subtasks: updatedTasks } : null);
-    message.success('Status updated successfully');
+  // Table columns configuration
+  const columns = [
+    {
+      title: 'Actions',
+      dataIndex: 'action',
+      key: 'action',
+      width: '40%',
+      render: (text: string) => {
+        // Truncate text to show only "Send a reminder email 1 week before the due date for the Sub task."
+        const truncatedText = text.includes('Send a reminder email 1 week before the due date for the Sub task.') 
+          ? 'Send a reminder email 1 week before the due date for the Sub task.'
+          : text.length > 80 
+            ? text.substring(0, 80) + '...'
+            : text;
+        
+        return (
+          <Text style={{ fontSize: '14px' }} title={text}>
+            {truncatedText}
+          </Text>
+        );
+      },
+    },
+    {
+      title: 'No. of runs',
+      dataIndex: 'noOfRuns',
+      key: 'noOfRuns',
+      width: '15%',
+      align: 'center' as const,
+      render: (runs: number) => (
+        <Text style={{ fontSize: '14px', fontWeight: 500 }}>{runs}</Text>
+      ),
+    },
+    {
+      title: 'Last run',
+      dataIndex: 'lastRun',
+      key: 'lastRun',
+      width: '15%',
+      align: 'center' as const,
+      render: (date: string) => (
+        <Text style={{ fontSize: '14px' }}>{date}</Text>
+      ),
+    },
+    {
+      title: 'Next run due',
+      dataIndex: 'nextRunDue',
+      key: 'nextRunDue',
+      width: '15%',
+      align: 'center' as const,
+      render: (date: string) => (
+        <Text style={{ fontSize: '14px' }}>{date}</Text>
+      ),
+    },
+    {
+      title: '',
+      key: 'actions',
+      width: '15%',
+      align: 'center' as const,
+      render: () => (
+        <Space size="small">
+          <Button
+            type="text"
+            icon={<LinkOutlined />}
+            size="small"
+            style={{ color: '#1890ff' }}
+          />
+          <Button
+            type="text"
+            icon={<RightOutlined />}
+            size="small"
+            style={{ color: '#1890ff' }}
+          />
+        </Space>
+      ),
+    },
+  ];
+
+  // Calculate status counts for donut chart
+  const statusCounts = {
+    done: actionsData.filter((item: ActionData) => item.status === 'done').length,
+    ongoing: actionsData.filter((item: ActionData) => item.status === 'ongoing').length,
+    overdue: actionsData.filter((item: ActionData) => item.status === 'overdue').length,
+    due: actionsData.filter((item: ActionData) => item.status === 'due').length,
   };
 
-  const handleCancel = () => {
-    setEditingId(null);
-    setEditedName("");
-  };
+  const totalItems = Object.values(statusCounts).reduce((sum, count) => sum + count, 0);
+  const donePercentage = totalItems > 0 ? Math.round((statusCounts.done / totalItems) * 100) : 0;
+
+  // Transform subtasks data for occurrences
+  const occurrencesData: OccurrenceData[] = task?.subtasks?.map((subtask: any, index: number) => {
+    // Extract period from subtask description or use index
+    const period = subtask.subtask_short_description?.includes('Quarter') ? 
+      subtask.subtask_short_description.split(' - ')[1] || `Period ${index + 1}` : 
+      `Period ${index + 1}`;
+    
+    return {
+      key: subtask._id || `subtask-${index}`,
+      period: period,
+      dueDate: subtask.due_date ? new Date(subtask.due_date).toLocaleDateString() : '--',
+      status: subtask.status === 'completed' ? 'done' : 
+              subtask.status === 'due' ? 'due' : 
+              subtask.status === 'overdue' ? 'overdue' : 'ongoing'
+    };
+  }) || [];
 
   if (loading) {
     return (
-      <Layout>
+      <Layout style={{ minHeight: '100vh', background: '#f5f5f5' }}>
         <Header />
-        <Content style={{ padding: "24px" }}>
-          <Spin size="large" style={{ display: 'block', margin: '40px auto' }} />
+        <Content style={{ padding: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Spin size="large" />
         </Content>
       </Layout>
     );
   }
-
-  if (error) {
-    return (
-      <Layout>
-        <Header />
-        <Content style={{ padding: "24px" }}>
-          <Alert message="Error" description={error} type="error" showIcon />
-        </Content>
-      </Layout>
-    );
-  }
-
-  if (!task) {
-    return (
-      <Layout>
-        <Header />
-        <Content style={{ padding: "24px" }}>
-          <div>Task not found</div>
-        </Content>
-      </Layout>
-    );
-  }
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "completed":
-        return "green";
-      case "in-progress":
-        return "blue";
-      case "due":
-        return "orange";
-      default:
-        return "default";
-    }
-  };
-
-  const handleBackClick = () => {
-    navigate("/dashboard");
-  };
 
   return (
-    <Layout className="task-view-layout">
+    <Layout style={{ minHeight: '100vh', background: '#f5f5f5' }}>
       <Header />
-      <Content className="task-view-content">
-        <div className="task-view-container">
-          <div className="task-view-header">
+      <Content style={{ padding: '24px' }}>
+        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          {/* Header Section */}
+          <div style={{ marginBottom: '24px' }}>
             <Button
+              type="text"
               icon={<ArrowLeftOutlined />}
-              onClick={handleBackClick}
-              className="back-button"
+              onClick={() => navigate(-1)}
+              style={{ padding: '4px 8px', marginBottom: '16px' }}
             >
-              Back to Dashboard
+              Back
             </Button>
+            <Title level={2} style={{ margin: '0 0 8px 0', fontSize: '24px', fontWeight: 600 }}>
+              {task?.task_short_description || 'Social Media Alerts and Monitoring'}
+            </Title>
+            <Text type="secondary" style={{ fontSize: '14px' }}>
+              Alerts & Compliance monitoring
+            </Text>
           </div>
 
-          <Card className="task-info-card">
-            <div className="task-info-header">
-              <div>
-                <Title level={2} className="task-title">
-                  {task.task_short_description}
-                </Title>
-                <Text className="task-category">{task.task_category}</Text>
-              </div>
-              <div className="task-tags">
-                <Tag color={getStatusColor(task.status)} className="status-tag">
-                  {task.status.charAt(0).toUpperCase() + task.status.slice(1)}
-                </Tag>
-                <Tag color="yellow" className="frequency-tag">
-                  {task.frequency}
-                </Tag>
-              </div>
-            </div>
-
-            <div className="task-progress">
-              <div className="progress-status">
-                {task.subtasks?.filter(subtask => subtask.status === 'completed').length || 0}/
-                {task.subtasks?.length || 0} subtasks completed
-              </div>
-              <Progress 
-                percent={Math.round(((task.subtasks?.filter(subtask => subtask.status === 'completed').length || 0) / (task.subtasks?.length || 1)) * 100)} 
-                showInfo={false}
-                strokeColor="#1890ff"
-                trailColor="#f0f0f0"
-                strokeWidth={8}
-              />
-            </div>
-
-            {/* <Divider /> */}
-            {task.description && (
-              <>
-                <Divider />
-                <div className="task-description">
-                  <Title level={4}>Description</Title>
-                  <Text>{task.description}</Text>
+          {/* Main Content */}
+          <Row gutter={24} style={{ alignItems: 'stretch' }}>
+            {/* Left Column - Actions Table */}
+            <Col xs={24} lg={16}>
+              <Card style={{ borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)', height: '100%' }}>
+                <div style={{ marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Text strong style={{ fontSize: '16px' }}>Actions</Text>
                 </div>
-              </>
-            )}
-            <Row gutter={[24, 16]} className="task-details">
-              {/* <Col xs={24} sm={12} md={6}>
-                <div className="task-detail-item">
-                  <CalendarOutlined className="detail-icon" />
-                  <div>
-                    <Text strong>Renewal Date</Text>
-                    <br />
-                    <Text>
-                      {task.renewal_date ? dayjs(task.renewal_date).format("MM/DD/-YYYY") : '01/21/2025'}
-                    </Text>
-                  </div>
-                </div>
-              </Col> */}
-              <Col xs={24} sm={12} md={6}>
-                <div className="task-detail-item">
-                  <SyncOutlined className="detail-icon" />
-                  <div>
-                    <Text strong>Frequency</Text>
-                    <br />
-                    <Text>{task.frequency || 'N/A'}</Text>
-                  </div>
-                </div>
-              </Col>
-              <Col xs={24} sm={12} md={6}>
-                <div className="task-detail-item">
-                  <UserOutlined className="detail-icon" />
-                  <div>
-                    <Text strong>Sub-tasks</Text>
-                    <br />
-                    <Text>{task.subtasks?.length || 0} tasks</Text>
-                  </div>
-                </div>
-              </Col>
-              {/* <Col xs={24} sm={12} md={6}>
-                <div className="task-detail-item">
-                  <CalendarOutlined className="detail-icon" />
-                  <div>
-                    <Text strong>Last Run</Text>
-                    <br />
-                    <Text>
-                      {task.last_run_date ? dayjs(task.last_run_date).format("MM/DD/YYYY") : '01/21/2025'}
-                    </Text>
-                  </div>
-                </div>
-              </Col> */}
-            </Row>
-          </Card>
-
-          <Row gutter={24}>
-            <Col span={12}>
-              <Card className="subtasks-card">
-                <Title level={3} className="subtasks-title">
-                  Subtasks
-                </Title>
-
-                <div className="subtasks-list subtasks-list-scroll">
-                  {task.subtasks?.map((subtask: Subtask) => (
-                    <Card
-                      key={subtask.subtask_id}
-                      className="subtask-card"
-                      // hoverable
-                      // onClick={() => handleSubtaskCardClick(subtask.subtask_id)}
-                    >
-                      <div className="subtask-header">
-                        <div className="subtask-info">
-                          <div className="subtask-title-container">
-                            {editingId === subtask.subtask_id ? (
-                              <Input
-                                value={editedName}
-                                onChange={(e) => setEditedName(e.target.value)}
-                                onPressEnter={() => handleSave(subtask.subtask_id)}
-                                autoFocus
-                                style={{ marginRight: 8, flex: 1 }}
-                              />
-                            ) : (
-                              <Title level={5} className="subtask-title">
-                                {subtask.subtask_short_description}
-                              </Title>
-                            )}
-                          </div>
-                          <div className="subtask-tags">
-                            {editingId === subtask.subtask_id ? (
-                              <>
-                                <Select
-                                  value={subtask.status}
-                                  onChange={(value) => handleStatusChange(subtask.subtask_id, value)}
-                                  style={{ width: 120, marginRight: 8 }}
-                                  size="small"
-                                  dropdownMatchSelectWidth={false}
-                                >
-                                  <Select.Option value="completed">Completed</Select.Option>
-                                  <Select.Option value="in-progress">In Progress</Select.Option>
-                                  <Select.Option value="due">Due</Select.Option>
-                                </Select>
-                              </>
-                            ) : (
-                              <>
-                                <Tag 
-                                  color={getStatusColor(subtask.status)}
-                                  className="subtask-status"
-                                  style={{
-                                    backgroundColor: subtask.status === 'completed' ? '#f6ffed' : 'inherit',
-                                    borderColor: subtask.status === 'completed' ? '#b7eb8f' : 'd9d9d9',
-                                    color: subtask.status === 'completed' ? '#52c41a' : 'inherit',
-                                    marginRight: 8
-                                  }}
-                                >
-                                  {subtask.status.charAt(0).toUpperCase() + subtask.status.slice(1)}
-                                </Tag>
-                                <Tag color="blue">Auto-Generated</Tag>
-                              </>
-                            )}
-                          </div>
-                          <div className="subtask-actions">
-                            {editingId === subtask.subtask_id ? (
-                              <>
-                                <Button 
-                                  type="text" 
-                                  icon={<CheckOutlined />} 
-                                  onClick={() => handleSave(subtask.subtask_id)}
-                                  size="small"
-                                />
-                                <Button 
-                                  type="text" 
-                                  icon={<CloseOutlined />} 
-                                  onClick={handleCancel}
-                                  size="small"
-                                />
-                              </>
-                            ) : (
-                              <Button 
-                                type="text" 
-                                icon={<EditOutlined />} 
-                                onClick={() => handleEdit(subtask)}
-                                size="small"
-                              />
-                            )}
-                          </div>
-                        </div>
-                      </div>
-
-                      <Space
-                        direction="vertical"
-                        size={4}
-                        className="subtask-details"
-                      >
-                        <Text type="secondary">
-                          <CalendarOutlined /> Due: {subtask.due_date ? dayjs(subtask.due_date).format("MM/DD/YYYY") : 'N/A'}
-                        </Text>
-                        {subtask.period_considered && (
-                          <Text type="secondary">
-                            <CalendarOutlined /> Period: {subtask.period_considered}
-                          </Text>
-                        )}
-                        {subtask.employees_analyzed && (
-                          <Text type="secondary">
-                            <UserOutlined /> Employees: {subtask.employees_analyzed}
-                          </Text>
-                        )}
-                        {subtask.duration && (
-                          <Text type="secondary">Duration: {subtask.duration}</Text>
-                        )}
-                      </Space>
-                    </Card>
-                  ))}
-                </div>
+                <Table
+                  columns={columns}
+                  dataSource={actionsData}
+                  rowKey="key"
+                  expandable={{
+                    expandedRowRender: (record) => expandedRowRender(record),
+                    expandedRowKeys,
+                    onExpandedRowsChange: setExpandedRowKeys,
+                  }}
+                  pagination={false}
+                  size="middle"
+                />
               </Card>
             </Col>
-            <Col span={12}>
-              <Card className="subtasks-card">
-                <Title level={3} className="subtasks-title">
-                  Actions
-                </Title>
 
-                <div className="subtasks-list actions-list-scroll">
-                  {task.actions?.map((action: any) => (
-                    <Card
-                      key={action.action_id}
-                      className="action-card"
-                      style={{ marginBottom: 16 }}
-                    >
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
-                        <div>
-                          <Title level={5} style={{ marginBottom: 8 }}>
-                            {action.action_instruction ? action.action_instruction.split('\n')[0] : ''}
-                          </Title>
-                          <Text type="secondary" style={{ display: 'block', marginBottom: 16 }}>
-                            {task.frequency || "Quarterly on 15th"}
-                          </Text>
-                          
-                          <Text 
-                            style={{ 
-                              display: '-webkit-box',
-                              color: '#666', 
-                              marginBottom: 16,
-                              overflow: 'hidden',
-                              textOverflow: 'ellipsis',
-                              WebkitLineClamp: 3,
-                              WebkitBoxOrient: 'vertical'
-                            }}
+            {/* Right Column - Details Sidebar */}
+            <Col xs={24} lg={8}>
+              <Card 
+                title="Details" 
+                style={{ 
+                  borderRadius: '8px', 
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+                  height: '100%',
+                  minHeight: '600px'
+                }}
+              >
+                {/* Donut Chart */}
+                <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+                  <Progress
+                    type="circle"
+                    percent={donePercentage}
+                    format={() => `${statusCounts.done}/${totalItems}\nDone`}
+                    size={120}
+                    strokeColor="#52c41a"
+                    style={{ marginBottom: '16px' }}
+                  />
+                  
+                  {/* Status Legend */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'flex-start' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#52c41a' }}></div>
+                      <Text style={{ fontSize: '14px' }}>{statusCounts.done} Done</Text>
+                    </div>
+                    {/* <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#faad14' }}></div>
+                      <Text style={{ fontSize: '14px' }}>{statusCounts.ongoing} Ongoing</Text>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#ff4d4f' }}></div>
+                      <Text style={{ fontSize: '14px' }}>{statusCounts.overdue} Overdue</Text>
+                    </div> */}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <div style={{ width: '12px', height: '12px', borderRadius: '50%', backgroundColor: '#faad14' }}></div>
+                      <Text style={{ fontSize: '14px' }}>{statusCounts.due} Due</Text>
+                    </div>
+                  </div>
+                </div>
 
-                            title={action.action_instruction ? action.action_instruction.split('\n').slice(1).join('\n') : ''}
-                          >
-                            {action.action_instruction 
-                              ? action.action_instruction.split('\n').slice(1).join(' ').split(' ').slice(0, 50).join(' ')
-                              : ''}
-                            {action.action_instruction && action.action_instruction.split('\n').slice(1).join(' ').split(' ').length > 50 ? '...' : ''}
-                          </Text>
-                        </div>
-                        <Tag color="#1890ff" style={{ borderRadius: 16, padding: '0 12px', height: '24px', lineHeight: '24px' }}>
-                          Configured
-                        </Tag>
-                      </div>
-                      
-                      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
-                        {(action.tools_used || []).map((tool: string) => (
-                          <>
-                          <Tag key={tool} style={{ margin: 0, borderRadius: 4 }}>
-                            {tool}
-                          </Tag>
-                          
-                          </>
-                          
-                        ))}
-                        <Tag color="blue" style={{ margin: 0, borderRadius: 4 }}>
-                            Relative
-                          </Tag>
-                      </div>
+                {/* Task Details */}
+                <div style={{ marginBottom: '24px' }}>
+                  <div style={{ marginBottom: '12px' }}>
+                    <Text type="secondary" style={{ fontSize: '12px' }}>Category</Text>
+                    <br />
+                    <Text style={{ fontSize: '14px', fontWeight: 500 }}>
+                      {taskDetails?.category || task?.task_category || 'Alerts and Monitoring'}
+                    </Text>
+                  </div>
+                  <div style={{ marginBottom: '12px' }}>
+                    <Text type="secondary" style={{ fontSize: '12px' }}>Next due on</Text>
+                    <br />
+                    <Text style={{ fontSize: '14px', fontWeight: 500 }}>
+                      {taskDetails?.nextDueDate ? new Date(taskDetails.nextDueDate).toLocaleDateString() : '--'}
+                    </Text>
+                  </div>
+                  <div style={{ marginBottom: '12px' }}>
+                    <Text type="secondary" style={{ fontSize: '12px' }}>Frequency</Text>
+                    <br />
+                    <Text style={{ fontSize: '14px', fontWeight: 500 }}>
+                      {taskDetails?.frequency || task?.frequency || 'Quarterly'}
+                    </Text>
+                  </div>
+                  {taskDetails?.description && (
+                    <div style={{ marginBottom: '12px' }}>
+                      <Text type="secondary" style={{ fontSize: '12px' }}>Description</Text>
+                      <br />
+                      <Text style={{ fontSize: '14px', fontWeight: 500 }}>
+                        {taskDetails.description}
+                      </Text>
+                    </div>
+                  )}
+                  <div style={{ marginBottom: '12px' }}>
+                    <Text type="secondary" style={{ fontSize: '12px' }}>Total Subtasks</Text>
+                    <br />
+                    <Text style={{ fontSize: '14px', fontWeight: 500 }}>
+                      {task?.subtasks?.length || 0}
+                    </Text>
+                  </div>
+                </div>
 
-                    <div style={{ display: 'flex', justifyContent: 'flex-start', gap: 8,marginTop:'20px',float:'right' }}>
-                        <Button
-                          type="primary"
-                          size="middle"
-                          icon={<i className="fas fa-cog" />}
-                          style={{ 
-                            borderRadius: 4,
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 8
-                          }}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            navigate(`/action/${action.action_id}`, { state: { taskName: task.task_short_description, actionId: action.action_id, instructions: action.action_instruction } });
-                          }}
-                        >
-                          View Details
-                        </Button>
-                        
-                      </div>
-                    </Card>
-                  ))}
+                {/* Occurrences */}
+                <div>
+                  <Text type="secondary" style={{ fontSize: '12px', display: 'block', marginBottom: '12px' }}>
+                    Occurrence({occurrencesData.length})
+                  </Text>
+                  
+                  <Collapse ghost>
+                    <Panel header={`${occurrencesData.length} items`} key="1">
+                      <List
+                        size="small"
+                        dataSource={occurrencesData}
+                        renderItem={(item: OccurrenceData) => (
+                          <List.Item style={{ padding: '8px 0', border: 'none' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', width: '100%' }}>
+                              {getStatusIcon(item.status)}
+                              <div style={{ flex: 1 }}>
+                                <Text style={{ fontSize: '14px' }}>{item.period}</Text>
+                                <br />
+                                <Text type="secondary" style={{ fontSize: '12px' }}>
+                                  Due: {item.dueDate}
+                                </Text>
+                              </div>
+                            </div>
+                          </List.Item>
+                        )}
+                      />
+                    </Panel>
+                  </Collapse>
                 </div>
               </Card>
             </Col>

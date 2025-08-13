@@ -40,8 +40,6 @@ const TaskView: React.FC = () => {
   const navigate = useNavigate();
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editedName, setEditedName] = useState("");
-  // Remove mockTasks from main state
-  // const [tasks, setTasks] = useState<Task[]>([...mockTasks]);
   const [task, setTask] = useState<Task | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
