@@ -566,7 +566,7 @@ const TaskView: React.FC = () => {
                   columns={columns}
                   dataSource={actionsData}
                   rowKey="key"
-                  expandable={(task?.task_short_description === "Social Media" || task?.task_short_description === "Political Contributions") ? undefined : {
+                  expandable={{
                     expandedRowRender: (record) => expandedRowRender(record),
                     expandedRowKeys,
                     onExpandedRowsChange: setExpandedRowKeys,
