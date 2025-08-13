@@ -201,7 +201,7 @@ const ActionDetail: React.FC = () => {
       title: 'Run Log',
       dataIndex: 'human_msg',
       key: 'human_msg',
-      width: '55%',
+      width: '52%',
       render: (text: string, record: ActionRun) => {
         const rowKey = `${record.subtask_id}-${record.step_id}`;
         const isExpanded = expandedRunLogs.has(rowKey);
@@ -523,7 +523,7 @@ const ActionDetail: React.FC = () => {
           {/* Main Content */}
           <Row gutter={16} style={{ alignItems: 'stretch', flex: 1, minHeight: 0 }}>
             {/* Left Column - Tabs */}
-            <Col xs={24} lg={16}>
+            <Col xs={24} lg={18}>
               <Card style={{ borderRadius: '6px', boxShadow: '0 1px 4px rgba(0,0,0,0.08)', height: '100%' }}>
                 <div style={{ marginBottom: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <Text strong style={{ fontSize: '15px' }}>Action Details</Text>
@@ -667,7 +667,7 @@ const ActionDetail: React.FC = () => {
             </Col>
 
             {/* Right Column - Details Sidebar */}
-            <Col xs={24} lg={8} style={{ display: 'flex', flexDirection: 'column' }}>
+            <Col xs={24} lg={6} style={{ display: 'flex', flexDirection: 'column' }}>
               <DetailsSidebar
                 statusCounts={sidebarData.statusCounts}
                 totalItems={sidebarData.totalSubtasks}

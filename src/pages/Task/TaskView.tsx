@@ -557,7 +557,7 @@ const TaskView: React.FC = () => {
           {/* Main Content */}
           <Row gutter={16} style={{ alignItems: 'stretch', flex: 1, minHeight: 0 }}>
             {/* Left Column - Actions Table */}
-            <Col xs={24} lg={16}>
+            <Col xs={24} lg={18}>
               <Card style={{ borderRadius: '6px', boxShadow: '0 1px 4px rgba(0,0,0,0.08)', height: '100%' }}>
                 <div style={{ marginBottom: '12px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <Text strong style={{ fontSize: '15px' }}>Actions</Text>
@@ -579,7 +579,7 @@ const TaskView: React.FC = () => {
             </Col>
 
             {/* Right Column - Details Sidebar */}
-            <Col xs={24} lg={8} style={{ display: 'flex', flexDirection: 'column' }}>
+            <Col xs={24} lg={6} style={{ display: 'flex', flexDirection: 'column' }}>
               <DetailsSidebar
                 statusCounts={statusCounts}
                 totalItems={totalSubtasks}
