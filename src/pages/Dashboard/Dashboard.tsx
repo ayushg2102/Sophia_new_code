@@ -287,7 +287,7 @@ const Dashboard: React.FC = () => {
                                     key: 'frequency',
                                     width: 120,
                                     render: (frequency: string) => (
-                                      <Tag color={frequency === 'Daily' ? 'yellow' : frequency === 'Weekly' ? 'orange' : frequency === 'Monthly' ? 'blue' : 'default'}>
+                                      <Tag color={'blue'}>
                                         {frequency}
                                       </Tag>
                                     ),

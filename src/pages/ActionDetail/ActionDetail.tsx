@@ -585,7 +585,7 @@ const ActionDetail: React.FC = () => {
                                 padding: '8px 0',
                                 borderBottom: '2px solid #f0f0f0'
                               }}>
-                                <Text strong style={{ fontSize: '16px', color: '#52c41a' }}>📋 Processing Instructions</Text>
+                                <Text strong style={{ fontSize: '16px', color: '#1890ff' }}>📋 Processing Instructions</Text>
                               </div>
                               <div style={{ 
                                 padding: '16px',
@@ -610,7 +610,7 @@ const ActionDetail: React.FC = () => {
                               padding: '8px 0',
                               borderBottom: '2px solid #f0f0f0'
                             }}>
-                              <Text strong style={{ fontSize: '16px', color: '#722ed1' }}>🏖️ Xponance Holidays</Text>
+                              <Text strong style={{ fontSize: '16px', color: '#1890ff' }}>🏖️ Xponance Holidays</Text>
                             </div>
                             <Collapse 
                               size="small"

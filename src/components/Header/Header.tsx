@@ -70,6 +70,7 @@ const Header: React.FC = () => {
                 <Avatar src={SophiaUser} className="user-avatar" size={44} />
               </div>
             </Dropdown>
+            <Button onClick={handleLogout} icon={<LogoutOutlined />} />
           </Space>
         </div>
       </div>
