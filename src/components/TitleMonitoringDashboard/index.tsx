@@ -106,22 +106,24 @@ const TitleMonitoringDashboard: React.FC = () => {
         const documents = await fetchSocialMediaCompliance();
         setAllDocuments(documents);
         
-        // Create run date options from documents
-        const runDateOptions = documents.map(doc => ({
+        // Sort documents by created_at descending (latest first), then create run date options
+        const sortedDocuments = documents.sort((a, b) => dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf());
+        
+        const runDateOptions = sortedDocuments.map(doc => ({
           label: `${dayjs(doc.created_at).format('MMM D, YYYY')} - ${formatPeriod(doc.period)}`,
           value: doc._id
         }));
         
         setRunDates([{ label: 'All Runs', value: 'All' }, ...runDateOptions]);
         
-        // Auto-select the last document and transform its data
-        if (documents.length > 0) {
-          const lastDocument = documents[documents.length - 1];
-          const lastDocData = transformTitleDataFromDocument(lastDocument);
+        // Auto-select the first document (most recent) and transform its data
+        if (sortedDocuments.length > 0) {
+          const mostRecentDocument = sortedDocuments[0];
+          const mostRecentData = transformTitleDataFromDocument(mostRecentDocument);
           
-          setTitleData(lastDocData);
-          setSelectedDocument(lastDocument);
-          setRunDateFilter(lastDocument._id);
+          setTitleData(mostRecentData);
+          setSelectedDocument(mostRecentDocument);
+          setRunDateFilter(mostRecentDocument._id);
         } else {
           // Fallback to empty data if no documents
           setTitleData([]);
@@ -314,7 +316,6 @@ const TitleMonitoringDashboard: React.FC = () => {
               style={{ width: '100%' }}
               onChange={handleRunDateChange}
             >
-              <Option value="All">All Run Dates</Option>
               {runDates.map(date => (
                 <Option key={date.value} value={date.value}>
                   {date.label}

@@ -173,22 +173,24 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
         const documents = await fetchSocialMediaCompliance();
         setAllDocuments(documents);
         
-        // Create run date options from created_at values
-        const runDateOptions = documents.map(doc => ({
+        // Sort documents by created_at descending (latest first), then create run date options
+        const sortedDocuments = documents.sort((a, b) => dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf());
+        
+        const runDateOptions = sortedDocuments.map(doc => ({
           label: `${dayjs(doc.created_at).format('MMM D, YYYY')} - ${formatPeriod(doc.period)}`,
           value: doc._id
         }));
         
         setRunDates([{ label: 'All Runs', value: 'All' }, ...runDateOptions]);
         
-        // Auto-select the last document and load its data
-        if (documents.length > 0) {
-          const lastDocument = documents[documents.length - 1];
-          const lastDocData = transformSocialMediaFromDocument(lastDocument);
+        // Auto-select the first document (most recent) and load its data
+        if (sortedDocuments.length > 0) {
+          const mostRecentDocument = sortedDocuments[0];
+          const mostRecentData = transformSocialMediaFromDocument(mostRecentDocument);
           
-          setSocialMediaData(lastDocData);
-          setSelectedDocument(lastDocument);
-          setRunDateFilter(lastDocument._id);
+          setSocialMediaData(mostRecentData);
+          setSelectedDocument(mostRecentDocument);
+          setRunDateFilter(mostRecentDocument._id);
         } else {
           // Fallback: Load all data if no documents
           const allData: SocialMediaData[] = [];
@@ -200,10 +202,10 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
           setSocialMediaData(allData);
         }
         
-        if (documents.length > 0) {
-          const lastDocument = documents[documents.length - 1];
-          const lastDocData = transformSocialMediaFromDocument(lastDocument);
-          message.success(`Loaded ${documents.length} document runs, showing latest run with ${lastDocData.length} social media records`);
+        if (sortedDocuments.length > 0) {
+          const mostRecentDocument = sortedDocuments[0];
+          const mostRecentData = transformSocialMediaFromDocument(mostRecentDocument);
+          message.success(`Loaded ${sortedDocuments.length} document runs, showing most recent run with ${mostRecentData.length} social media records`);
         }
       } catch (error) {
         console.error('Error loading social media compliance:', error);
