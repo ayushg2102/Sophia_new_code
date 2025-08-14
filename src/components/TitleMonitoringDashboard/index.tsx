@@ -323,7 +323,7 @@ const TitleMonitoringDashboard: React.FC = () => {
               ))}
             </Select>
           </Col>
-          <Col xs={24} md={10}>
+          <Col xs={24} md={10} lg={6}>
             <Input.Search
               placeholder="Search employees..."
               allowClear
@@ -332,11 +332,12 @@ const TitleMonitoringDashboard: React.FC = () => {
               style={{ width: '100%' }}
             />
           </Col>
-          <Col xs={24} md={6} style={{ textAlign: 'right' }}>
+          <Col xs={24} md={6} style={{ textAlign: 'right', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
             <Button 
               type="primary" 
               icon={<ReloadOutlined />}
               onClick={handleFreshRun}
+              style={{ marginLeft: 20 }}
             >
               Execute Fresh Run
             </Button>
