@@ -136,22 +136,24 @@ const PoliticalContributionsDashboard: React.FC = () => {
         const documents = await fetchPoliticalContributions();
         setAllDocuments(documents);
         
-        // Create run date options from created_at values
-        const runDateOptions = documents.map(doc => ({
+        // Sort documents by created_at descending (latest first), then create run date options
+        const sortedDocuments = documents.sort((a, b) => dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf());
+        
+        const runDateOptions = sortedDocuments.map(doc => ({
           label: `${dayjs(doc.created_at).format('MMM D, YYYY')} - ${formatPeriod(doc.period)}`,
           value: doc._id
         }));
         
         setRunDates([{ label: 'All Runs', value: 'All' }, ...runDateOptions]);
         
-        // Auto-select the last document and load its data
-        if (documents.length > 0) {
-          const lastDocument = documents[documents.length - 1];
-          const lastDocContributions = transformContributionsFromDocument(lastDocument);
+        // Auto-select the first document (most recent) and load its data
+        if (sortedDocuments.length > 0) {
+          const mostRecentDocument = sortedDocuments[0];
+          const mostRecentContributions = transformContributionsFromDocument(mostRecentDocument);
           
-          setContributions(lastDocContributions);
-          setSelectedDocument(lastDocument);
-          setRunDateFilter(lastDocument._id);
+          setContributions(mostRecentContributions);
+          setSelectedDocument(mostRecentDocument);
+          setRunDateFilter(mostRecentDocument._id);
         } else {
           // Fallback: Load all contributions if no documents
           const allContributions: Contribution[] = [];
@@ -163,10 +165,10 @@ const PoliticalContributionsDashboard: React.FC = () => {
           setContributions(allContributions);
         }
         
-        if (documents.length > 0) {
-          const lastDocument = documents[documents.length - 1];
-          const lastDocContributions = transformContributionsFromDocument(lastDocument);
-          message.success(`Loaded ${documents.length} document runs, showing latest run with ${lastDocContributions.length} contribution records`);
+        if (sortedDocuments.length > 0) {
+          const mostRecentDocument = sortedDocuments[0];
+          const mostRecentContributions = transformContributionsFromDocument(mostRecentDocument);
+          message.success(`Loaded ${sortedDocuments.length} document runs, showing most recent run with ${mostRecentContributions.length} contribution records`);
         }
       } catch (error) {
         console.error('Error loading political contributions:', error);
