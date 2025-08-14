@@ -257,7 +257,7 @@ const Dashboard: React.FC = () => {
                                           {task.task_short_description}
                                         </Text>
                                         <div style={{ marginTop: 8 }}>
-                                          <Tag color={task.frequency === 'Daily' ? 'yellow' : 'default'}>{task.frequency}</Tag>
+                                          <Tag color={'blue'}>{task.frequency}</Tag>
                                         </div>
                                       </Card>
                                     </Col>
