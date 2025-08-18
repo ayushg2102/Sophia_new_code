@@ -17,7 +17,7 @@ const { Title } = Typography;
 const { Option } = Select;
 
 // API endpoint for social media compliance
-const API_ENDPOINT = 'http://74.225.189.243:4001/api/collection/social-media-compliance';
+const API_ENDPOINT = 'https://sophia-new-code.vercel.app/api/collection/social-media-compliance';
 
 // Interface definitions
 interface SocialMediaData {
