@@ -248,15 +248,13 @@ const TaskView: React.FC = () => {
         width: '25%',
         align: 'center' as const,
         render: (text: string) => (
-          <div style={{ padding: '12px 16px', textAlign: 'center' }}>
-            <div style={{ 
-              fontSize: '14px', 
-              fontWeight: '500',
-              color: '#262626'
-            }}>
-              {text}
-            </div>
-          </div>
+          <Text style={{ 
+            fontSize: '14px', 
+            fontWeight: '500',
+            color: '#262626'
+          }}>
+            {text}
+          </Text>
         ),
       },
       {
@@ -408,7 +406,7 @@ const TaskView: React.FC = () => {
       <div style={{ 
         margin: '0 24px', 
         padding: '16px',
-        backgroundColor: '#fafafa',
+        backgroundColor: 'white',
         borderRadius: '8px'
       }}>
         <Table
