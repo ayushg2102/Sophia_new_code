@@ -487,11 +487,7 @@ const TaskView: React.FC = () => {
             size="small"
             style={{ color: '#1890ff' }}
             onClick={() => {
-              if (task?.task_short_description === "Social Media") {
-                navigate('/social-media-dashboard');
-              } else if (task?.task_short_description === "Political Contributions") {
-                navigate('/political-contributions-dashboard');
-              } else {
+              
                 navigate(`/action/${record.key}`, { 
                   state: { 
                     task: task,
@@ -502,7 +498,7 @@ const TaskView: React.FC = () => {
                     donePercentage: donePercentage
                   }
                 });
-              }
+              
             }}
           />
         </Space>
