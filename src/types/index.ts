@@ -1,4 +1,5 @@
 export interface Task {
+  border: any;
   task_id: string;
   task_category: string;
   task_short_description: string;

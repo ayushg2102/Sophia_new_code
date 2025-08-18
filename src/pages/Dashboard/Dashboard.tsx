@@ -54,6 +54,7 @@ const Dashboard: React.FC = () => {
       task_short_description: taskData.task_name,
       frequency: taskData.frequency,
       task_due_date: taskData.due_date,
+      border:taskData.border,
       status: 'active',
       description: taskData.description,
       subtasks: taskData.subtasks.map((subtask: any, index: number) => ({
@@ -88,7 +89,8 @@ const Dashboard: React.FC = () => {
           task_due_date: item.task_due_date || '',
           status: 'active',
           description: item.RPY_Com || '',
-          subtasks: []
+          subtasks: [],
+          border:item.border
         }));
 
         setTasks(dynamicTaskData);
@@ -246,6 +248,7 @@ const Dashboard: React.FC = () => {
                                           alignItems: 'center',
                                           cursor: 'pointer',
                                           textAlign: 'center',
+                                          border: task.border?'1px solid #006400':'none'
                                         }}
                                         onClick={() =>{
                                           console.log(task,"123")
