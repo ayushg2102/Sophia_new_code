@@ -229,7 +229,7 @@ const DetailsSidebar: React.FC<DetailsSidebarProps> = ({
           {statusCounts.due > 0 && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#faad14' }}></div>
-              <Text style={{ fontSize: '13px' }}>{statusCounts.due} Due</Text>
+              <Text style={{ fontSize: '13px' }}>{statusCounts.due} Not Due</Text>
             </div>
           )}
         </div>
