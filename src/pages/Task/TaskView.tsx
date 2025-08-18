@@ -371,7 +371,14 @@ const TaskView: React.FC = () => {
               type="link" 
               icon={<RightOutlined />} 
               size="small"
-              onClick={() => handleViewLogs(record)}
+              onClick={() => {
+                if (task?.task_short_description === "Social Media") {
+                  navigate('/social-media-dashboard');
+                } else if (task?.task_short_description === "Political Contributions") {
+                  navigate('/political-contributions-dashboard');
+                }
+                handleViewLogs(record)
+              }}
             >
               View Logs
             </Button>
@@ -498,7 +505,6 @@ const TaskView: React.FC = () => {
                     donePercentage: donePercentage
                   }
                 });
-              
             }}
           />
         </Space>
