@@ -54,7 +54,7 @@ const DetailsSidebar: React.FC<DetailsSidebarProps> = ({
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'done':
-        return <CheckCircleOutlined style={{ color: '#52c41a' }} />;
+        return <CheckCircleOutlined style={{ color: '#006400' }} />;
       case 'ongoing':
         return <LoadingOutlined style={{ color: '#faad14' }} />;
       case 'overdue':
