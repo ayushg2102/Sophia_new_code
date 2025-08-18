@@ -7,9 +7,9 @@ import {
   Typography, 
   Spin, 
   Alert, 
-  Collapse, 
+  // Collapse, 
   Tabs, 
-  Table, 
+  // Table, 
   Row,
   Col,
   Space
@@ -17,13 +17,13 @@ import {
 import dayjs from 'dayjs';
 import { 
   ArrowLeftOutlined, 
-  CheckCircleOutlined,
-  DownOutlined,
-  RightOutlined
+  // CheckCircleOutlined,
+  // DownOutlined,
+  // RightOutlined
 } from '@ant-design/icons';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/Header/Header';
-import DetailsSidebar from '../../components/DetailsSidebar';
+// import DetailsSidebar from '../../components/DetailsSidebar';
 import './ActionDetail.css';
 
 const { Content } = Layout;
@@ -60,8 +60,8 @@ const ActionDetail: React.FC = () => {
   const location = useLocation();
   const [action, setAction] = useState<ActionDetailType | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('runs-history');
-  const [expandedRunLogs, setExpandedRunLogs] = useState<Set<string>>(new Set());
+  const [activeTab, setActiveTab] = useState('process-notes');
+  // const [expandedRunLogs, setExpandedRunLogs] = useState<Set<string>>(new Set());
 
   // Get task data from navigation state (passed from TaskView)
   const passedTaskData = location.state as {
@@ -112,207 +112,207 @@ const ActionDetail: React.FC = () => {
   }, [actionId]);
 
   // Parse action instructions for process notes
-  const parseInstructions = (instructions: string) => {
-    if (!instructions) {
-      return {
-        objective: '',
-        subject: 'Reminder – Sub task',
-        body: '\n\nHope you are doing well!\n\nI wanted to remind you that "Sub task" is due on <Sub Task Due Date>.\nHere are some notes for your task:\nWebsite Review Alert & Monitoring\n\n',
-        holidays: [
-          '- Jan 1: New Year\'s Day',
-          '- Jan 20: Martin Luther King Jr. Day',
-          '- Feb 17: Presidents\' Day',
-          '- May 26: Memorial Day',
-          '- Jun 19: Juneteenth',
-          '- Jul 4: Independence Day',
-          '- Sep 1: Labor Day',
-          '- Oct 13: Columbus Day',
-          '- Nov 11: Veterans Day',
-          '- Nov 27: Thanksgiving',
-          '- Dec 25: Christmas Day'
-        ]
-      };
-    }
+  // const parseInstructions = (instructions: string) => {
+  //   if (!instructions) {
+  //     return {
+  //       objective: '',
+  //       subject: 'Reminder – Sub task',
+  //       body: '\n\nHope you are doing well!\n\nI wanted to remind you that "Sub task" is due on <Sub Task Due Date>.\nHere are some notes for your task:\nWebsite Review Alert & Monitoring\n\n',
+  //       holidays: [
+  //         '- Jan 1: New Year\'s Day',
+  //         '- Jan 20: Martin Luther King Jr. Day',
+  //         '- Feb 17: Presidents\' Day',
+  //         '- May 26: Memorial Day',
+  //         '- Jun 19: Juneteenth',
+  //         '- Jul 4: Independence Day',
+  //         '- Sep 1: Labor Day',
+  //         '- Oct 13: Columbus Day',
+  //         '- Nov 11: Veterans Day',
+  //         '- Nov 27: Thanksgiving',
+  //         '- Dec 25: Christmas Day'
+  //       ]
+  //     };
+  //   }
 
-    // Split instructions by line breaks and filter out empty lines
-    const lines = instructions.split('\n').filter(line => line.trim());
+  //   // Split instructions by line breaks and filter out empty lines
+  //   const lines = instructions.split('\n').filter(line => line.trim());
     
-    // First line is the objective
-    const objective = lines[0] || '';
+  //   // First line is the objective
+  //   const objective = lines[0] || '';
     
-    // Extract email template subject
-    const subjectMatch = instructions.match(/Subject:\s*["""]([^"""]+)["""]/i);
-    const subject = subjectMatch ? subjectMatch[1] : 'Reminder – Sub task';
+  //   // Extract email template subject
+  //   const subjectMatch = instructions.match(/Subject:\s*["""]([^"""]+)["""]/i);
+  //   const subject = subjectMatch ? subjectMatch[1] : 'Reminder – Sub task';
     
-    // Extract email body (everything between "Hi" and "Regards")
-    const bodyMatch = instructions.match(/Hi\s+([^,\n]+),\s*([\s\S]*?)\s*Regards,/i);
-    let body = '';
-    let recipientName = 'Spencer';
+  //   // Extract email body (everything between "Hi" and "Regards")
+  //   const bodyMatch = instructions.match(/Hi\s+([^,\n]+),\s*([\s\S]*?)\s*Regards,/i);
+  //   let body = '';
+  //   let recipientName = 'Spencer';
     
-    if (bodyMatch) {
-      recipientName = bodyMatch[1].trim();
-      body = bodyMatch[2].trim();
-      // Clean up the body formatting
-      body = body.replace(/\s+/g, ' ').replace(/\.\s+/g, '.\n\n').trim();
-    } else {
-      // Fallback: look for content after "Use the following email format:"
-      const formatMatch = instructions.match(/Use the following email format:\s*([\s\S]*?)(?=Before sending|Xponance Holidays|$)/i);
-      if (formatMatch) {
-        const emailContent = formatMatch[1];
-        const emailBodyMatch = emailContent.match(/Hi\s+([^,\n]+),\s*([\s\S]*?)\s*Regards,/i);
-        if (emailBodyMatch) {
-          recipientName = emailBodyMatch[1].trim();
-          body = emailBodyMatch[2].trim();
-          // Clean up the body formatting
-          body = body.replace(/\s+/g, ' ').replace(/\.\s+/g, '.\n\n').trim();
-        }
-      }
-    }
+  //   if (bodyMatch) {
+  //     recipientName = bodyMatch[1].trim();
+  //     body = bodyMatch[2].trim();
+  //     // Clean up the body formatting
+  //     body = body.replace(/\s+/g, ' ').replace(/\.\s+/g, '.\n\n').trim();
+  //   } else {
+  //     // Fallback: look for content after "Use the following email format:"
+  //     const formatMatch = instructions.match(/Use the following email format:\s*([\s\S]*?)(?=Before sending|Xponance Holidays|$)/i);
+  //     if (formatMatch) {
+  //       const emailContent = formatMatch[1];
+  //       const emailBodyMatch = emailContent.match(/Hi\s+([^,\n]+),\s*([\s\S]*?)\s*Regards,/i);
+  //       if (emailBodyMatch) {
+  //         recipientName = emailBodyMatch[1].trim();
+  //         body = emailBodyMatch[2].trim();
+  //         // Clean up the body formatting
+  //         body = body.replace(/\s+/g, ' ').replace(/\.\s+/g, '.\n\n').trim();
+  //       }
+  //     }
+  //   }
 
-    // Remove Xponance Holidays section from instructions
-    let cleanInstructions = instructions.replace(/Xponance Holidays:[\s\S]*?(?=\n\n|$)/i, '').trim();
+  //   // Remove Xponance Holidays section from instructions
+  //   let cleanInstructions = instructions.replace(/Xponance Holidays:[\s\S]*?(?=\n\n|$)/i, '').trim();
     
-    // Clean up any trailing whitespace and normalize line breaks
-    cleanInstructions = cleanInstructions.replace(/\n\s*\n\s*\n/g, '\n\n').trim();
+  //   // Clean up any trailing whitespace and normalize line breaks
+  //   cleanInstructions = cleanInstructions.replace(/\n\s*\n\s*\n/g, '\n\n').trim();
 
-    // Default holidays list (separate from instructions)
-    const holidays = [
-      '- Jan 1: New Year\'s Day',
-      '- Jan 20: Martin Luther King Jr. Day',
-      '- Feb 17: Presidents\' Day',
-      '- May 26: Memorial Day',
-      '- Jun 19: Juneteenth',
-      '- Jul 4: Independence Day',
-      '- Sep 1: Labor Day',
-      '- Oct 13: Columbus Day',
-      '- Nov 11: Veterans Day',
-      '- Nov 27: Thanksgiving',
-      '- Dec 25: Christmas Day'
-    ];
+  //   // Default holidays list (separate from instructions)
+  //   const holidays = [
+  //     '- Jan 1: New Year\'s Day',
+  //     '- Jan 20: Martin Luther King Jr. Day',
+  //     '- Feb 17: Presidents\' Day',
+  //     '- May 26: Memorial Day',
+  //     '- Jun 19: Juneteenth',
+  //     '- Jul 4: Independence Day',
+  //     '- Sep 1: Labor Day',
+  //     '- Oct 13: Columbus Day',
+  //     '- Nov 11: Veterans Day',
+  //     '- Nov 27: Thanksgiving',
+  //     '- Dec 25: Christmas Day'
+  //   ];
     
-    return { objective, subject, body, cleanInstructions, holidays, recipientName };
-  };
+  //   return { objective, subject, body, cleanInstructions, holidays, recipientName };
+  // };
 
 
 
   // Runs history table columns
-  const runsColumns = [
-    {
-      title: 'Run Log',
-      dataIndex: 'human_msg',
-      key: 'human_msg',
-      width: '52%',
-      render: (text: string, record: ActionRun) => {
-        const rowKey = `${record.subtask_id}-${record.step_id}`;
-        const isExpanded = expandedRunLogs.has(rowKey);
-        const shouldTruncate = text && text.length > 100;
-        const displayText = isExpanded || !shouldTruncate ? text : `${text.substring(0, 100)}...`;
+  // const runsColumns = [
+  //   {
+  //     title: 'Run Log',
+  //     dataIndex: 'human_msg',
+  //     key: 'human_msg',
+  //     width: '52%',
+  //     render: (text: string, record: ActionRun) => {
+  //       const rowKey = `${record.subtask_id}-${record.step_id}`;
+  //       const isExpanded = expandedRunLogs.has(rowKey);
+  //       const shouldTruncate = text && text.length > 100;
+  //       const displayText = isExpanded || !shouldTruncate ? text : `${text.substring(0, 100)}...`;
         
-        const toggleExpanded = () => {
-          const newExpanded = new Set(expandedRunLogs);
-          if (isExpanded) {
-            newExpanded.delete(rowKey);
-          } else {
-            newExpanded.add(rowKey);
-          }
-          setExpandedRunLogs(newExpanded);
-        };
+  //       const toggleExpanded = () => {
+  //         const newExpanded = new Set(expandedRunLogs);
+  //         if (isExpanded) {
+  //           newExpanded.delete(rowKey);
+  //         } else {
+  //           newExpanded.add(rowKey);
+  //         }
+  //         setExpandedRunLogs(newExpanded);
+  //       };
         
-        return (
-          <div style={{ whiteSpace: 'pre-wrap', lineHeight: '2.0' }}>
-            <Text strong style={{ fontSize: '13px' }}>
-              {displayText}
-            </Text>
-            {shouldTruncate && (
-              <Button
-                type="text"
-                size="small"
-                icon={isExpanded ? <DownOutlined /> : <RightOutlined />}
-                onClick={toggleExpanded}
-                style={{ 
-                  marginLeft: '8px', 
-                  padding: '0 4px',
-                  height: '20px',
-                  fontSize: '10px',
-                  color: '#1890ff'
-                }}
-              >
-                {isExpanded ? 'Show Less' : 'Show More'}
-              </Button>
-            )}
-          </div>
-        );
-      },
-    },
-    {
-      title: 'Run date & time',
-      dataIndex: 'run_timestamp',
-      key: 'run_timestamp',
-      width: '12%',
-      align: 'center' as const,
-      render: (timestamp: string) => (
-        <Text>{dayjs(timestamp).format('MM/DD/YYYY | hh:mm A')}</Text>
-      ),
-    },
-    {
-      title: 'Status',
-      dataIndex: 'run_status',
-      key: 'run_status',
-      width: '10%',
-      align: 'center' as const,
-      render: (status: string) => {
-        const getStatusConfig = (status: string) => {
-          switch (status?.toLowerCase()) {
-            case 'completed':
-            case 'success':
-              return { color: '#52c41a', bg: '#f6ffed', border: '#b7eb8f', text: 'Success' };
-            case 'failed':
-            case 'error':
-              return { color: '#ff4d4f', bg: '#fff2f0', border: '#ffccc7', text: 'Failed' };
-            case 'running':
-            case 'ongoing':
-              return { color: '#faad14', bg: '#fffbe6', border: '#ffe58f', text: 'Ongoing' };
-            default:
-              return { color: '#8c8c8c', bg: '#f5f5f5', border: '#d9d9d9', text: 'Due' };
-          }
-        };
+  //       return (
+  //         <div style={{ whiteSpace: 'pre-wrap', lineHeight: '2.0' }}>
+  //           <Text strong style={{ fontSize: '13px' }}>
+  //             {displayText}
+  //           </Text>
+  //           {shouldTruncate && (
+  //             <Button
+  //               type="text"
+  //               size="small"
+  //               icon={isExpanded ? <DownOutlined /> : <RightOutlined />}
+  //               onClick={toggleExpanded}
+  //               style={{ 
+  //                 marginLeft: '8px', 
+  //                 padding: '0 4px',
+  //                 height: '20px',
+  //                 fontSize: '10px',
+  //                 color: '#1890ff'
+  //               }}
+  //             >
+  //               {isExpanded ? 'Show Less' : 'Show More'}
+  //             </Button>
+  //           )}
+  //         </div>
+  //       );
+  //     },
+  //   },
+  //   {
+  //     title: 'Run date & time',
+  //     dataIndex: 'run_timestamp',
+  //     key: 'run_timestamp',
+  //     width: '12%',
+  //     align: 'center' as const,
+  //     render: (timestamp: string) => (
+  //       <Text>{dayjs(timestamp).format('MM/DD/YYYY | hh:mm A')}</Text>
+  //     ),
+  //   },
+  //   {
+  //     title: 'Status',
+  //     dataIndex: 'run_status',
+  //     key: 'run_status',
+  //     width: '10%',
+  //     align: 'center' as const,
+  //     render: (status: string) => {
+  //       const getStatusConfig = (status: string) => {
+  //         switch (status?.toLowerCase()) {
+  //           case 'completed':
+  //           case 'success':
+  //             return { color: '#52c41a', bg: '#f6ffed', border: '#b7eb8f', text: 'Success' };
+  //           case 'failed':
+  //           case 'error':
+  //             return { color: '#ff4d4f', bg: '#fff2f0', border: '#ffccc7', text: 'Failed' };
+  //           case 'running':
+  //           case 'ongoing':
+  //             return { color: '#faad14', bg: '#fffbe6', border: '#ffe58f', text: 'Ongoing' };
+  //           default:
+  //             return { color: '#8c8c8c', bg: '#f5f5f5', border: '#d9d9d9', text: 'Due' };
+  //         }
+  //       };
         
-        const config = getStatusConfig(status);
+  //       const config = getStatusConfig(status);
         
-        return (
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '6px',
-            padding: '4px 12px',
-            borderRadius: '16px',
-            backgroundColor: config.bg,
-            border: `1px solid ${config.border}`,
-            fontSize: '12px',
-            fontWeight: '500'
-          }}>
-            <CheckCircleOutlined style={{ color: config.color, fontSize: '14px' }} />
-            <span style={{ color: config.color }}>{config.text}</span>
-          </div>
-        );
-      },
-    },
-    {
-      title: 'Occurrence',
-      dataIndex: 'subtask_name',
-      key: 'subtask_name',
-      width: '10%',
-      render: (text: string, record: ActionRun) => (
-        <div>
-          <Text strong>{text || 'Q3 2025'}</Text>
-          <br />
-          <Text type="secondary" style={{ fontSize: '12px' }}>
-            Due: {record.subtask_due_date ? dayjs(record.subtask_due_date).format('MM/DD/YYYY') : '03/31/2025'}
-          </Text>
-        </div>
-      ),
-    },
-  ];
+  //       return (
+  //         <div style={{
+  //           display: 'inline-flex',
+  //           alignItems: 'center',
+  //           gap: '6px',
+  //           padding: '4px 12px',
+  //           borderRadius: '16px',
+  //           backgroundColor: config.bg,
+  //           border: `1px solid ${config.border}`,
+  //           fontSize: '12px',
+  //           fontWeight: '500'
+  //         }}>
+  //           <CheckCircleOutlined style={{ color: config.color, fontSize: '14px' }} />
+  //           <span style={{ color: config.color }}>{config.text}</span>
+  //         </div>
+  //       );
+  //     },
+  //   },
+  //   {
+  //     title: 'Occurrence',
+  //     dataIndex: 'subtask_name',
+  //     key: 'subtask_name',
+  //     width: '10%',
+  //     render: (text: string, record: ActionRun) => (
+  //       <div>
+  //         <Text strong>{text || 'Q3 2025'}</Text>
+  //         <br />
+  //         <Text type="secondary" style={{ fontSize: '12px' }}>
+  //           Due: {record.subtask_due_date ? dayjs(record.subtask_due_date).format('MM/DD/YYYY') : '03/31/2025'}
+  //         </Text>
+  //       </div>
+  //     ),
+  //   },
+  // ];
 
   // Use passed task data from TaskView or fallback to default values
   const sidebarData = passedTaskData ? {
@@ -338,41 +338,41 @@ const ActionDetail: React.FC = () => {
   };
 
   // Mock runs data if no API data
-  const mockRunsData = [
-    {
-      run_timestamp: '2025-06-12T04:45:00.000Z',
-      run_status: 'completed',
-      description: 'Process media content',
-      human_msg: 'Process media content',
-      resume_at: '',
-      step_id: 1,
-      subtask_due_date: '2025-03-31T00:00:00.000Z',
-      subtask_id: 'q3-2025',
-      subtask_name: 'Q3 2025'
-    },
-    {
-      run_timestamp: '2025-06-12T04:45:00.000Z',
-      run_status: 'completed',
-      description: 'Identify keywords or trigger phrases',
-      human_msg: 'Identify keywords or trigger phrases',
-      resume_at: '',
-      step_id: 2,
-      subtask_due_date: '2025-03-31T00:00:00.000Z',
-      subtask_id: 'q3-2025-2',
-      subtask_name: 'Q3 2025'
-    },
-    {
-      run_timestamp: '2025-06-12T04:45:00.000Z',
-      run_status: 'completed',
-      description: 'Prepared excel file with analysis notes',
-      human_msg: 'Prepared excel file with analysis notes',
-      resume_at: '',
-      step_id: 3,
-      subtask_due_date: '2025-03-31T00:00:00.000Z',
-      subtask_id: 'q3-2025-3',
-      subtask_name: 'Q3 2025'
-    }
-  ];
+  // const mockRunsData = [
+  //   {
+  //     run_timestamp: '2025-06-12T04:45:00.000Z',
+  //     run_status: 'completed',
+  //     description: 'Process media content',
+  //     human_msg: 'Process media content',
+  //     resume_at: '',
+  //     step_id: 1,
+  //     subtask_due_date: '2025-03-31T00:00:00.000Z',
+  //     subtask_id: 'q3-2025',
+  //     subtask_name: 'Q3 2025'
+  //   },
+  //   {
+  //     run_timestamp: '2025-06-12T04:45:00.000Z',
+  //     run_status: 'completed',
+  //     description: 'Identify keywords or trigger phrases',
+  //     human_msg: 'Identify keywords or trigger phrases',
+  //     resume_at: '',
+  //     step_id: 2,
+  //     subtask_due_date: '2025-03-31T00:00:00.000Z',
+  //     subtask_id: 'q3-2025-2',
+  //     subtask_name: 'Q3 2025'
+  //   },
+  //   {
+  //     run_timestamp: '2025-06-12T04:45:00.000Z',
+  //     run_status: 'completed',
+  //     description: 'Prepared excel file with analysis notes',
+  //     human_msg: 'Prepared excel file with analysis notes',
+  //     resume_at: '',
+  //     step_id: 3,
+  //     subtask_due_date: '2025-03-31T00:00:00.000Z',
+  //     subtask_id: 'q3-2025-3',
+  //     subtask_name: 'Q3 2025'
+  //   }
+  // ];
 
   if (loading) {
     return (
@@ -401,7 +401,6 @@ const ActionDetail: React.FC = () => {
     );
   }
 
-  const { objective, subject, body, cleanInstructions, holidays, recipientName } = parseInstructions(action.instructions);
   const runsData = action.action_runs.length > 0 ? action.action_runs : [];
 
   return (
@@ -411,7 +410,7 @@ const ActionDetail: React.FC = () => {
         {/* Main Layout with Full Height Sidebar */}
         <Row gutter={16} style={{ flex: 1, minHeight: 0 }}>
           {/* Left Column - Header + Info Cards + Action Details */}
-          <Col xs={24} lg={18} style={{ display: 'flex', flexDirection: 'column' }}>
+          <Col xs={24} lg={24} style={{ display: 'flex', flexDirection: 'column' }}>
             {/* Header Section */}
             <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -533,28 +532,28 @@ const ActionDetail: React.FC = () => {
                   onChange={setActiveTab}
                   size="small"
                   items={[
-                    {
-                      key: 'runs-history',
-                      label: 'Runs history',
-                      children: (
-                        <div>
-                          <Table
-                            columns={runsColumns}
-                            dataSource={runsData}
-                            rowKey={(record, index) => `${record.subtask_id}-${record.step_id || index}`}
-                            pagination={false}
-                            size="small"
-                            style={{ fontSize: '13px' }}
-                          />
-                        </div>
-                      ),
-                    },
+                    // {
+                    //   key: 'runs-history',
+                    //   label: 'Runs history',
+                    //   children: (
+                    //     <div>
+                    //       <Table
+                    //         columns={runsColumns}
+                    //         dataSource={runsData}
+                    //         rowKey={(record, index) => `${record.subtask_id}-${record.step_id || index}`}
+                    //         pagination={false}
+                    //         size="small"
+                    //         style={{ fontSize: '13px' }}
+                    //       />
+                    //     </div>
+                    //   ),
+                    // },
                     {
                       key: 'process-notes',
-                      label: 'Processing notes',
+                      label: 'Process notes',
                       children: (
                         <div style={{ padding: '20px' }}>
-                          {/* Objective Section */}
+                          {/* Instructions Section - Raw data from backend */}
                           <div style={{ marginBottom: '24px' }}>
                             <div style={{ 
                               display: 'flex', 
@@ -563,100 +562,19 @@ const ActionDetail: React.FC = () => {
                               padding: '8px 0',
                               borderBottom: '2px solid #f0f0f0'
                             }}>
-                              <Text strong style={{ fontSize: '16px', color: '#1890ff' }}>🎯 Objective</Text>
+                              <Text strong style={{ fontSize: '16px', color: '#1890ff' }}>📋 Instructions</Text>
                             </div>
                             <div style={{ 
-                              padding: '12px 16px',
+                              padding: '16px',
                               backgroundColor: '#f6f8fa',
                               borderRadius: '8px',
-                              border: '1px solid #e1e4e8'
+                              border: '1px solid #e1e4e8',
+                              lineHeight: '1.6'
                             }}>
-                              <Text style={{ fontSize: '14px', lineHeight: '1.6' }}>{objective}</Text>
-                            </div>
-                          </div>
-
-                          {/* Processing Instructions Section */}
-                          {cleanInstructions && (
-                            <div style={{ marginBottom: '24px' }}>
-                              <div style={{ 
-                                display: 'flex', 
-                                alignItems: 'center', 
-                                marginBottom: '12px',
-                                padding: '8px 0',
-                                borderBottom: '2px solid #f0f0f0'
-                              }}>
-                                <Text strong style={{ fontSize: '16px', color: '#1890ff' }}>📋 Processing Instructions</Text>
-                              </div>
-                              <div style={{ 
-                                padding: '16px',
-                                backgroundColor: '#f6ffed',
-                                borderRadius: '8px',
-                                border: '1px solid #b7eb8f',
-                                lineHeight: '1.6'
-                              }}>
-                                <div style={{ fontSize: '14px', whiteSpace: 'pre-wrap' }}>
-                                  {cleanInstructions}
-                                </div>
+                              <div style={{ fontSize: '14px', whiteSpace: 'pre-wrap' }}>
+                                {action.instructions || 'No instructions available'}
                               </div>
                             </div>
-                          )}
-                          
-                          {/* Xponance Holidays Section */}
-                          <div>
-                            <div style={{ 
-                              display: 'flex', 
-                              alignItems: 'center', 
-                              marginBottom: '12px',
-                              padding: '8px 0',
-                              borderBottom: '2px solid #f0f0f0'
-                            }}>
-                              <Text strong style={{ fontSize: '16px', color: '#1890ff' }}>🏖️ Xponance Holidays</Text>
-                            </div>
-                            <Collapse 
-                              size="small"
-                              ghost
-                              items={[{
-                                key: 'holidays',
-                                label: (
-                                  <Text style={{ fontSize: '14px', fontWeight: '500' }}>
-                                    View {holidays.length} company holidays
-                                  </Text>
-                                ),
-                                children: (
-                                  <div style={{ 
-                                    padding: '12px',
-                                    backgroundColor: '#fafafa',
-                                    borderRadius: '6px',
-                                    border: '1px solid #f0f0f0'
-                                  }}>
-                                    <Row gutter={[16, 8]}>
-                                      {holidays.map((holiday, idx) => {
-                                        const [date, name] = holiday.replace(/^-\s*/, '').split(': ');
-                                        return (
-                                          <Col xs={24} sm={12} key={idx}>
-                                            <div style={{ 
-                                              display: 'flex', 
-                                              alignItems: 'center',
-                                              padding: '6px 8px',
-                                              backgroundColor: '#fff',
-                                              borderRadius: '4px',
-                                              border: '1px solid #e8e8e8'
-                                            }}>
-                                              <Text strong style={{ fontSize: '12px', color: '#1890ff', minWidth: '60px' }}>
-                                                {date}
-                                              </Text>
-                                              <Text style={{ fontSize: '13px', marginLeft: '8px' }}>
-                                                {name}
-                                              </Text>
-                                            </div>
-                                          </Col>
-                                        );
-                                      })}
-                                    </Row>
-                                  </div>
-                                )
-                              }]}
-                            />
                           </div>
                         </div>
                       ),
@@ -667,7 +585,7 @@ const ActionDetail: React.FC = () => {
           </Col>
 
           {/* Right Column - Full Height Details Sidebar */}
-          <Col xs={24} lg={6} style={{ display: 'flex', flexDirection: 'column' }}>
+          {/* <Col xs={24} lg={6} style={{ display: 'flex', flexDirection: 'column' }}>
             <DetailsSidebar
               statusCounts={sidebarData.statusCounts}
               totalItems={sidebarData.totalSubtasks}
@@ -680,7 +598,7 @@ const ActionDetail: React.FC = () => {
               occurrences={sidebarData.occurrences}
               style={{ height: '100%', flex: 1 }}
             />
-          </Col>
+          </Col> */}
         </Row>
       </Content>
     </Layout>

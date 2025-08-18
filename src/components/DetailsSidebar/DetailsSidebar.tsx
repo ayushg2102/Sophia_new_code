@@ -281,7 +281,7 @@ const DetailsSidebar: React.FC<DetailsSidebarProps> = ({
       {/* Occurrences */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
         <Text type="secondary" style={{ fontSize: '11px', display: 'block', marginBottom: '10px' }}>
-          Occurrence({occurrences.length})
+        Sub Tasks({occurrences.length})
         </Text>
         
         <div style={{ flex: 1, overflow: 'hidden' }}>

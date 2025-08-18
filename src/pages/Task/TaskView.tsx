@@ -206,25 +206,25 @@ const TaskView: React.FC = () => {
     const isLoading = loadingActionDetails[actionId];
 
     const historyColumns = [
-      {
-        title: 'Run summary',
-        dataIndex: 'runSummary',
-        key: 'runSummary',
-        width: '35%',
-        align: 'left' as const,
-        render: (text: string) => (
-          <div style={{ padding: '12px 16px' }}>
-            <div style={{ 
-              fontSize: '14px', 
-              lineHeight: '1.4',
-              color: '#262626',
-              fontWeight: '400'
-            }}>
-              {text}
-            </div>
-          </div>
-        ),
-      },
+      // {
+      //   title: 'Run summary',
+      //   dataIndex: 'runSummary',
+      //   key: 'runSummary',
+      //   width: '35%',
+      //   align: 'left' as const,
+      //   render: (text: string) => (
+      //     <div style={{ padding: '12px 16px' }}>
+      //       <div style={{ 
+      //         fontSize: '14px', 
+      //         lineHeight: '1.4',
+      //         color: '#262626',
+      //         fontWeight: '400'
+      //       }}>
+      //         {text}
+      //       </div>
+      //     </div>
+      //   ),
+      // },
       {
         title: 'Run date & time',
         dataIndex: 'runDate',
@@ -319,7 +319,7 @@ const TaskView: React.FC = () => {
         },
       },
       {
-        title: 'Occurrence',
+        title: 'Sub Tasks',
         dataIndex: 'occurrence',
         key: 'occurrence',
         width: '25%',
@@ -345,17 +345,18 @@ const TaskView: React.FC = () => {
           </div>
         ),
       },
-      // {
-      //   title: '',
-      //   key: 'actions',
-      //   width: '20%',
-      //   render: () => (
-      //     <div style={{ display: 'flex', gap: 8 }}>
-      //       <Button type="link" icon={<LinkOutlined />} size="small" />
-      //       <Button type="link" icon={<RightOutlined />} size="small" />
-      //     </div>
-      //   ),
-      // },
+      {
+        title: 'Action',
+        key: 'actions',
+        width: '20%',
+        render: () => (
+          <div style={{ display: 'flex', gap: 8 }}>
+            <Button type="link" icon={<RightOutlined />} size="small" >
+            View Logs
+            </Button>
+          </div>
+        ),
+      },
     ];
 
     if (isLoading) {
@@ -442,16 +443,16 @@ const TaskView: React.FC = () => {
         <Text style={{ fontSize: '14px' }}>{date}</Text>
       ),
     },
-    {
-      title: 'Trigger Date',
-      dataIndex: 'nextRunDue',
-      key: 'nextRunDue',
-      width: '15%',
-      align: 'center' as const,
-      render: (date: string) => (
-        <Text style={{ fontSize: '14px' }}>{date}</Text>
-      ),
-    },
+    // {
+    //   title: 'Trigger Date',
+    //   dataIndex: 'nextRunDue',
+    //   key: 'nextRunDue',
+    //   width: '15%',
+    //   align: 'center' as const,
+    //   render: (date: string) => (
+    //     <Text style={{ fontSize: '14px' }}>{date}</Text>
+    //   ),
+    // },
     {
       title: '',
       key: 'actions',
@@ -533,7 +534,23 @@ const TaskView: React.FC = () => {
       <Content style={{ padding: '16px 24px', height: 'calc(100vh - 64px)', display: 'flex', flexDirection: 'column' }}>
         {/* Main Layout with Full Height Sidebar */}
         <Row gutter={16} style={{ flex: 1, minHeight: 0 }}>
-          {/* Left Column - Header + Actions */}
+          {/* Left Column - Task Details Sidebar */}
+          <Col xs={24} lg={6} style={{ display: 'flex', flexDirection: 'column' }}>
+            <DetailsSidebar
+              statusCounts={statusCounts}
+              totalItems={totalSubtasks}
+              donePercentage={donePercentage}
+              category={taskDetails?.category || task?.task_category || 'Alerts and Monitoring'}
+              nextDueDate={taskDetails?.nextDueDate ? new Date(taskDetails.nextDueDate).toLocaleDateString() : '--'}
+              frequency={taskDetails?.frequency || task?.frequency || 'Quarterly'}
+              description={taskDetails?.description}
+              totalSubtasks={task?.subtasks?.length || 0}
+              occurrences={occurrencesData}
+              style={{ height: '100%', flex: 1 }}
+            />
+          </Col>
+
+          {/* Right Column - Header + Actions */}
           <Col xs={24} lg={18} style={{ display: 'flex', flexDirection: 'column' }}>
             {/* Header Section */}
             <div style={{ marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -578,22 +595,6 @@ const TaskView: React.FC = () => {
                 />
               </div>
             </Card>
-          </Col>
-
-          {/* Right Column - Full Height Details Sidebar */}
-          <Col xs={24} lg={6} style={{ display: 'flex', flexDirection: 'column' }}>
-            <DetailsSidebar
-              statusCounts={statusCounts}
-              totalItems={totalSubtasks}
-              donePercentage={donePercentage}
-              category={taskDetails?.category || task?.task_category || 'Alerts and Monitoring'}
-              nextDueDate={taskDetails?.nextDueDate ? new Date(taskDetails.nextDueDate).toLocaleDateString() : '--'}
-              frequency={taskDetails?.frequency || task?.frequency || 'Quarterly'}
-              description={taskDetails?.description}
-              totalSubtasks={task?.subtasks?.length || 0}
-              occurrences={occurrencesData}
-              style={{ height: '100%', flex: 1 }}
-            />
           </Col>
         </Row>
       </Content>
