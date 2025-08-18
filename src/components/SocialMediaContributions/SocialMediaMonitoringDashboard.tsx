@@ -11,12 +11,13 @@ import {
 import dayjs from 'dayjs';
 import TitleMonitoringDashboard from '../TitleMonitoringDashboard';
 import Header from '../Header/Header';
+import { useLocation } from 'react-router-dom';
 
 const { Title } = Typography;
 const { Option } = Select;
 
 // API endpoint for social media compliance
-const API_ENDPOINT = 'https://sophia.xponance.com/api/collection/social-media-compliance';
+const API_ENDPOINT = 'http://74.225.189.243:4001/api/collection/social-media-compliance';
 
 // Interface definitions
 interface SocialMediaData {
@@ -97,9 +98,10 @@ const transformSocialMediaFromDocument = (doc: DocumentData): SocialMediaData[] 
 };
 
 // Function to fetch social media compliance data from API
-const fetchSocialMediaCompliance = async (): Promise<DocumentData[]> => {
+const fetchSocialMediaCompliance = async (runId?: string): Promise<DocumentData[]> => {
   try {
-    const response = await fetch(API_ENDPOINT, {
+    const url = runId ? `${API_ENDPOINT}?run_id=${runId}` : API_ENDPOINT;
+    const response = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -151,6 +153,9 @@ const mockData: SocialMediaData[] = [
 ];
 
 const SocialMediaMonitoringDashboard: React.FC = () => {
+  const location = useLocation();
+  const runIdFromState = location.state?.run_id;
+  
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
   const [debouncedSearchText, setDebouncedSearchText] = useState('');
@@ -165,51 +170,48 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
   const [allDocuments, setAllDocuments] = useState<DocumentData[]>([]);
   const [selectedDocument, setSelectedDocument] = useState<DocumentData | null>(null);
 
-  // Load and transform data on component mount
+  // Load data on component mount
   useEffect(() => {
     const loadData = async () => {
       try {
         setLoading(true);
-        const documents = await fetchSocialMediaCompliance();
+        const documents = await fetchSocialMediaCompliance(runIdFromState);
         setAllDocuments(documents);
         
-        // Sort documents by created_at descending (latest first), then create run date options
-        const sortedDocuments = documents.sort((a, b) => dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf());
-        
-        const runDateOptions = sortedDocuments.map(doc => ({
-          label: `${dayjs(doc.created_at).format('MMM D, YYYY')} - ${formatPeriod(doc.period)}`,
+        // Create run date options from documents
+        const runDateOptions = documents.map(doc => ({
+          label: dayjs(doc.created_at).format('MMM D, YYYY'),
           value: doc._id
         }));
+        setRunDates(runDateOptions);
         
-        setRunDates([{ label: 'All Runs', value: 'All' }, ...runDateOptions]);
-        
-        // Auto-select the first document (most recent) and load its data
-        if (sortedDocuments.length > 0) {
-          const mostRecentDocument = sortedDocuments[0];
-          const mostRecentData = transformSocialMediaFromDocument(mostRecentDocument);
-          
-          setSocialMediaData(mostRecentData);
-          setSelectedDocument(mostRecentDocument);
-          setRunDateFilter(mostRecentDocument._id);
-        } else {
-          // Fallback: Load all data if no documents
-          const allData: SocialMediaData[] = [];
-          documents.forEach(doc => {
-            const docData = transformSocialMediaFromDocument(doc);
-            allData.push(...docData);
-          });
-          
-          setSocialMediaData(allData);
-        }
-        
-        if (sortedDocuments.length > 0) {
-          const mostRecentDocument = sortedDocuments[0];
-          const mostRecentData = transformSocialMediaFromDocument(mostRecentDocument);
-          message.success(`Loaded ${sortedDocuments.length} document runs, showing most recent run with ${mostRecentData.length} social media records`);
+        // Auto-select the latest document (first in array) or the specific run if provided
+        if (documents.length > 0) {
+          if (runIdFromState) {
+            // Find the specific document by run_id
+            const specificDoc = documents.find(doc => doc._id === runIdFromState);
+            if (specificDoc) {
+              setSelectedDocument(specificDoc);
+              setRunDateFilter(specificDoc._id);
+              const transformedData = transformSocialMediaFromDocument(specificDoc);
+              setSocialMediaData(transformedData);
+            } else {
+              // Fallback to first document if run_id not found
+              setSelectedDocument(documents[0]);
+              setRunDateFilter(documents[0]._id);
+              const transformedData = transformSocialMediaFromDocument(documents[0]);
+              setSocialMediaData(transformedData);
+            }
+          } else {
+            setSelectedDocument(documents[0]);
+            setRunDateFilter(documents[0]._id);
+            const transformedData = transformSocialMediaFromDocument(documents[0]);
+            setSocialMediaData(transformedData);
+          }
         }
       } catch (error) {
-        console.error('Error loading social media compliance:', error);
-        message.error('Failed to load social media compliance data from API');
+        console.error('Failed to load social media data:', error);
+        message.error('Failed to load social media data');
         // Fallback to mock data on error
         setSocialMediaData(mockData);
       } finally {
@@ -218,7 +220,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
     };
     
     loadData();
-  }, []);
+  }, [runIdFromState]);
 
   // Filter data based on selected run date
   useEffect(() => {
@@ -287,40 +289,30 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
     setSearchText(e.target.value);
     setCurrentPage(1);
   }, []);
+
   const handleFileDownload = () => {
     const link = document.createElement('a');
     link.href = '/assets/Files/social_media_20250804_155626.xlsx';
-    link.download = 'social_media_20250804_155626.xlsx';
+    link.download = 'social_media_compliance.xlsx';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    message.success('File downloaded successfully');
   };
-  // Handler for fresh run
-  const handleFreshRun = async () => {
+
+  // Handler for refreshing data
+  const handleRefresh = async () => {
     try {
       setLoading(true);
-      const documents = await fetchSocialMediaCompliance();
+      const documents = await fetchSocialMediaCompliance(runIdFromState);
       setAllDocuments(documents);
       
-      // Create run date options from created_at values
-      const runDateOptions = documents.map(doc => ({
-        label: `${dayjs(doc.created_at).format('MMM D, YYYY')} - ${formatPeriod(doc.period)}`,
-        value: doc._id
-      }));
-      
-      setRunDates([{ label: 'All Runs', value: 'All' }, ...runDateOptions]);
-      
-      // Auto-select the last document after refresh
       if (documents.length > 0) {
-        const lastDocument = documents[documents.length - 1];
-        const lastDocData = transformSocialMediaFromDocument(lastDocument);
-        
-        setSocialMediaData(lastDocData);
-        setSelectedDocument(lastDocument);
-        setRunDateFilter(lastDocument._id);
-      } else {
-        // Reset to show all data if no documents
-        setRunDateFilter('All');
+        const latestDoc = documents[0];
+        setSelectedDocument(latestDoc);
+        setRunDateFilter(latestDoc._id);
+        const transformedData = transformSocialMediaFromDocument(latestDoc);
+        setSocialMediaData(transformedData);
       }
       
       message.success('Social media compliance data refreshed successfully');
@@ -528,7 +520,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
           <Button 
             type="primary" 
             icon={<ReloadOutlined />}
-            onClick={handleFreshRun}
+            onClick={handleRefresh}
             loading={loading}
             style={{ width: '100%' }}
           >

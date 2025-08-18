@@ -151,6 +151,7 @@ const TaskView: React.FC = () => {
           if (apiResponse.status === 'success' && apiResponse.data) {
             const runHistory = apiResponse.data.action_runs?.map((run: any, index: number) => ({
               key: `${actionId}-run-${index}`,
+              run_id: run.action_run_id,
               runSummary: run.human_msg ? (run.human_msg.length > 50 ? run.human_msg.substring(0, 50) + '...' : run.human_msg) : '--',
               fullRunSummary: run.human_msg || 'No run summary available for this execution.',
               runDate: run.run_timestamp ? new Date(run.run_timestamp).toLocaleString() : '--',
@@ -371,11 +372,16 @@ const TaskView: React.FC = () => {
               size="small"
               onClick={() => {
                 if (task?.task_short_description === "Social Media") {
-                  navigate('/social-media-dashboard');
+                  navigate('/social-media-dashboard', { 
+                    state: { run_id: record.run_id } 
+                  });
                 } else if (task?.task_short_description === "Political Contributions") {
-                  navigate('/political-contributions-dashboard');
+                  navigate('/political-contributions-dashboard', { 
+                    state: { run_id: record.run_id } 
+                  });
+                } else {
+                  handleViewLogs(record);
                 }
-                handleViewLogs(record)
               }}
             >
               View Logs

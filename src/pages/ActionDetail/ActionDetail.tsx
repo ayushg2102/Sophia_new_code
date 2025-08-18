@@ -511,7 +511,6 @@ const ActionDetail: React.FC = () => {
                         padding: '2px 8px',
                         fontSize: '11px',
                         fontWeight: '500',
-                        cursor: 'pointer'
                       }}
                     >
                       {tool}

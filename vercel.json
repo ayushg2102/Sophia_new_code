@@ -11,6 +11,14 @@
     {
       "source": "/api/action-details/:actionId",
       "destination": "http://74.225.189.243:4001/api/action-details/:actionId"
+    },
+    {
+      "source": "/api/collection/political-contributions",
+      "destination": "http://74.225.189.243:4001/api/collection/political-contributions"
+    },
+    {
+      "source": "/api/collection/political-contributions",
+      "destination": "http://74.225.189.243:4001/api/collection/political-contributions"
     }      
   ]
 }

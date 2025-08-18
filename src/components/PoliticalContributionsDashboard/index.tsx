@@ -1,18 +1,15 @@
 import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { 
-  Row, 
-  Col, 
-  Typography,
-  Card, 
-  Select, 
-  Input, 
-  Button, 
-  Table, 
-  Spin,
-  message,
+  Table, Card, Row, Col, Typography, Badge, Select, Input, Button, 
+  Spin, Tag, Empty, message 
 } from 'antd';
-import { SearchOutlined, ReloadOutlined, DownloadOutlined } from '@ant-design/icons';
+import { 
+  LinkedinOutlined, TwitterOutlined, FacebookOutlined, 
+  SearchOutlined, ReloadOutlined, 
+  DownloadOutlined
+} from '@ant-design/icons';
 import dayjs from 'dayjs';
+import { useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
 const { Text } = Typography;
 const { Option } = Select;
@@ -40,7 +37,7 @@ interface DocumentData {
 }
 
 // API endpoint for political contributions
-const API_ENDPOINT = 'https://sophia.xponance.com/api/collection/political-contributions';
+const API_ENDPOINT = 'http://74.225.189.243:4001/api/collection/political-contributions';
 
 // Helper function to format period string
 const formatPeriod = (period: string): string => {
@@ -94,9 +91,10 @@ const transformContributionsFromDocument = (doc: DocumentData): Contribution[] =
 };
 
 // Function to fetch political contributions data from API
-const fetchPoliticalContributions = async (): Promise<DocumentData[]> => {
+const fetchPoliticalContributions = async (runId?: string): Promise<DocumentData[]> => {
   try {
-    const response = await fetch(API_ENDPOINT, {
+    const url = runId ? `${API_ENDPOINT}?run_id=${runId}` : API_ENDPOINT;
+    const response = await fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -116,6 +114,9 @@ const fetchPoliticalContributions = async (): Promise<DocumentData[]> => {
 };
 
 const PoliticalContributionsDashboard: React.FC = () => {
+  const location = useLocation();
+  const runIdFromState = location.state?.run_id;
+  
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -128,58 +129,55 @@ const PoliticalContributionsDashboard: React.FC = () => {
   const [allDocuments, setAllDocuments] = useState<DocumentData[]>([]);
   const [selectedDocument, setSelectedDocument] = useState<DocumentData | null>(null);
   
-  // Load and transform data on component mount
+  // Load data on component mount
   useEffect(() => {
     const loadData = async () => {
       try {
         setLoading(true);
-        const documents = await fetchPoliticalContributions();
+        const documents = await fetchPoliticalContributions(runIdFromState);
         setAllDocuments(documents);
         
-        // Sort documents by created_at descending (latest first), then create run date options
-        const sortedDocuments = documents.sort((a, b) => dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf());
-        
-        const runDateOptions = sortedDocuments.map(doc => ({
-          label: `${dayjs(doc.created_at).format('MMM D, YYYY')} - ${formatPeriod(doc.period)}`,
+        // Create run date options from documents
+        const runDateOptions = documents.map(doc => ({
+          label: dayjs(doc.created_at).format('MMM D, YYYY'),
           value: doc._id
         }));
+        setRunDates(runDateOptions);
         
-        setRunDates([{ label: 'All Runs', value: 'All' }, ...runDateOptions]);
-        
-        // Auto-select the first document (most recent) and load its data
-        if (sortedDocuments.length > 0) {
-          const mostRecentDocument = sortedDocuments[0];
-          const mostRecentContributions = transformContributionsFromDocument(mostRecentDocument);
-          
-          setContributions(mostRecentContributions);
-          setSelectedDocument(mostRecentDocument);
-          setRunDateFilter(mostRecentDocument._id);
-        } else {
-          // Fallback: Load all contributions if no documents
-          const allContributions: Contribution[] = [];
-          documents.forEach(doc => {
-            const docContributions = transformContributionsFromDocument(doc);
-            allContributions.push(...docContributions);
-          });
-          
-          setContributions(allContributions);
-        }
-        
-        if (sortedDocuments.length > 0) {
-          const mostRecentDocument = sortedDocuments[0];
-          const mostRecentContributions = transformContributionsFromDocument(mostRecentDocument);
-          message.success(`Loaded ${sortedDocuments.length} document runs, showing most recent run with ${mostRecentContributions.length} contribution records`);
+        // Auto-select the latest document (first in array) or the specific run if provided
+        if (documents.length > 0) {
+          if (runIdFromState) {
+            // Find the specific document by run_id
+            const specificDoc = documents.find(doc => doc._id === runIdFromState);
+            if (specificDoc) {
+              setSelectedDocument(specificDoc);
+              setRunDateFilter(specificDoc._id);
+              const transformedData = transformContributionsFromDocument(specificDoc);
+              setContributions(transformedData);
+            } else {
+              // Fallback to first document if run_id not found
+              setSelectedDocument(documents[0]);
+              setRunDateFilter(documents[0]._id);
+              const transformedData = transformContributionsFromDocument(documents[0]);
+              setContributions(transformedData);
+            }
+          } else {
+            setSelectedDocument(documents[0]);
+            setRunDateFilter(documents[0]._id);
+            const transformedData = transformContributionsFromDocument(documents[0]);
+            setContributions(transformedData);
+          }
         }
       } catch (error) {
-        console.error('Error loading political contributions:', error);
-        message.error('Failed to load political contributions data from API');
+        console.error('Failed to load political contributions data:', error);
+        message.error('Failed to load political contributions data');
       } finally {
         setLoading(false);
       }
     };
     
     loadData();
-  }, []);
+  }, [runIdFromState]);
 
   // Filter data based on selected run date
   useEffect(() => {
@@ -316,28 +314,15 @@ const PoliticalContributionsDashboard: React.FC = () => {
   const handleFreshRun = async () => {
     try {
       setLoading(true);
-      const documents = await fetchPoliticalContributions();
+      const documents = await fetchPoliticalContributions(runIdFromState);
       setAllDocuments(documents);
       
-      // Create run date options from created_at values
-      const runDateOptions = documents.map(doc => ({
-        label: `${dayjs(doc.created_at).format('MMM D, YYYY')} - ${formatPeriod(doc.period)}`,
-        value: doc._id
-      }));
-      
-      setRunDates([{ label: 'All Runs', value: 'All' }, ...runDateOptions]);
-      
-      // Auto-select the last document after refresh
       if (documents.length > 0) {
-        const lastDocument = documents[documents.length - 1];
-        const lastDocContributions = transformContributionsFromDocument(lastDocument);
-        
-        setContributions(lastDocContributions);
-        setSelectedDocument(lastDocument);
-        setRunDateFilter(lastDocument._id);
-      } else {
-        // Reset to show all data if no documents
-        setRunDateFilter('All');
+        const latestDoc = documents[0];
+        setSelectedDocument(latestDoc);
+        setRunDateFilter(latestDoc._id);
+        const transformedData = transformContributionsFromDocument(latestDoc);
+        setContributions(transformedData);
       }
       
       message.success('Political contributions data refreshed successfully');
