@@ -442,7 +442,7 @@ const PoliticalContributionsDashboard: React.FC = () => {
           marginRight: 0,
           alignItems: 'center'
         }}>
-          <Col span={10}>
+          {/* <Col span={10}>
             <Select
               value={runDateFilter}
               style={{ width: '100%' }}
@@ -456,7 +456,7 @@ const PoliticalContributionsDashboard: React.FC = () => {
                 </Option>
               ))}
             </Select>
-          </Col>
+          </Col> */}
           <Col span={7}>
             <Input
               placeholder="Search by employee name"
@@ -468,15 +468,15 @@ const PoliticalContributionsDashboard: React.FC = () => {
             />
           </Col>
           <Col span={5} style={{ textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            <Button 
+            {/* <Button 
               type="primary" 
               icon={<ReloadOutlined />}
               onClick={handleFreshRun}
               loading={loading}
-              style={{ width: '100%',marginLeft: '105px' }}
+              style={{ width: '100%',marginLeft: '105px',cursor:"default" }}
             >
               Execute fresh run
-            </Button>
+            </Button> */}
             <Button 
               type="primary" 
               icon={<DownloadOutlined />}

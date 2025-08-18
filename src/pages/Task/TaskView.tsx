@@ -270,7 +270,7 @@ const TaskView: React.FC = () => {
               case 'completed':
               case 'success':
                 return {
-                  color: '#52c41a',
+                  color: '#006400',
                   backgroundColor: '#f6ffed',
                   borderColor: '#b7eb8f',
                   text: 'Completed'

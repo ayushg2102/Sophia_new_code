@@ -115,7 +115,7 @@ const DetailsSidebar: React.FC<DetailsSidebarProps> = ({
               cy={center}
               r={radius}
               fill="none"
-              stroke="#52c41a"
+              stroke="#006400"
               strokeWidth={strokeWidth}
               strokeDasharray={`${doneLength} ${circumference}`}
               strokeDashoffset={-doneOffset}
@@ -160,7 +160,7 @@ const DetailsSidebar: React.FC<DetailsSidebarProps> = ({
               cy={center}
               r={radius}
               fill="none"
-              stroke="#faad14"
+              stroke="#808080"
               strokeWidth={strokeWidth}
               strokeDasharray={`${dueLength} ${circumference}`}
               strokeDashoffset={-dueOffset}
@@ -182,7 +182,7 @@ const DetailsSidebar: React.FC<DetailsSidebarProps> = ({
             lineHeight: '1.2'
           }}
         >
-          <div style={{ fontSize: '20px', color: '#52c41a' }}>{statusCounts.done}/{totalItems}</div>
+          <div style={{ fontSize: '20px', color: '#006400' }}>{statusCounts.done}/{totalItems}</div>
           <div style={{ fontSize: '12px', color: '#666' }}>Done</div>
         </div>
       </div>
@@ -211,7 +211,7 @@ const DetailsSidebar: React.FC<DetailsSidebarProps> = ({
         {/* Status Legend */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', alignItems: 'flex-start' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#52c41a' }}></div>
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#006400' }}></div>
             <Text style={{ fontSize: '13px' }}>{statusCounts.done} Done</Text>
           </div>
           {statusCounts.ongoing > 0 && (
@@ -228,7 +228,7 @@ const DetailsSidebar: React.FC<DetailsSidebarProps> = ({
           )}
           {statusCounts.due > 0 && (
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#faad14' }}></div>
+              <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#808080' }}></div>
               <Text style={{ fontSize: '13px' }}>{statusCounts.due} Not Due</Text>
             </div>
           )}

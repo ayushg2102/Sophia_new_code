@@ -473,7 +473,7 @@ const ActionDetail: React.FC = () => {
                   Trigger type
                 </Text>
                 <Tag 
-                  color={action.trigger_type === 'relative' ? 'green' : 'blue'}
+                  color={action.trigger_type === 'relative' ? '#006400' : '#1890ff'}
                   style={{ 
                     textTransform: 'capitalize',
                     borderRadius: '16px',
