@@ -37,7 +37,7 @@ interface DocumentData {
 }
 
 // API endpoint for political contributions
-const API_ENDPOINT = 'http://74.225.189.243:4001/api/collection/political-contributions';
+const API_ENDPOINT = 'api/collection/political-contributions';
 
 // Helper function to format period string
 const formatPeriod = (period: string): string => {
