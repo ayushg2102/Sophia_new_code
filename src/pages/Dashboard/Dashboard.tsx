@@ -252,16 +252,31 @@ const Dashboard: React.FC = () => {
                                           handleTaskClick(task.task_id)}
                                         } 
                                       >
-                                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                                          <Title level={5} style={{ marginBottom: 8 }}>{task.task_short_description}</Title>
-                                          {/* <Text type="secondary" style={{ marginBottom: 8, display: 'block' }}>
-                                            {task.task_short_description}
-                                          </Text> */}
+                                        <Title level={5} style={{ marginBottom: 8 }}>{task.task_short_description}</Title>
+                                        {/* <Text type="secondary" style={{ marginBottom: 8, display: 'block' }}>
+                                          {task.task_short_description}
+                                        </Text> */}
+                                        <div style={{ 
+                                          position: 'absolute',
+                                          bottom: 0,
+                                          left: 0,
+                                          right: 0,
+                                          // background: '#1890ff',
+                                          padding: '8px',
+                                          display: 'flex',
+                                          justifyContent: 'center',
+                                          alignItems: 'center'
+                                        }}>
+                                          <Tag style={{ 
+                                            backgroundColor: '#f0f0f0', 
+                                            color: '#1890ff',
+                                            // border: 'none',
+                                            fontWeight: '500'
+                                          }}>
+                                            {task.frequency}
+                                          </Tag>
                                         </div>
-                                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                          <Tag color={'blue'}>{task.frequency}</Tag>
-                                        </div>
-                                      </Card>
+                                      </Card>   
                                     </Col>
                                   ))
                                 )}
