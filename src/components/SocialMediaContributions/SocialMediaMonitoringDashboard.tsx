@@ -491,7 +491,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
         marginRight: 0,
         alignItems: 'center'
       }}>
-        <Col span={8}>
+        {/* <Col span={8}>
           <Select
             value={runDateFilter}
             style={{ width: '100%' }}
@@ -505,7 +505,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
               </Option>
             ))}
           </Select>
-        </Col>
+        </Col> */}
         <Col span={10}>
           <Input
             placeholder="Search by employee name"
@@ -517,7 +517,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
           />
         </Col>
         <Col span={6} style={{ textAlign: 'center', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Button 
+          {/* <Button 
             type="primary" 
             icon={<ReloadOutlined />}
             onClick={handleRefresh}
@@ -525,7 +525,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
             style={{ width: '100%' }}
           >
             Execute fresh run
-          </Button>
+          </Button> */}
           <Button 
               type="primary" 
               icon={<DownloadOutlined />}

@@ -310,7 +310,7 @@ const TitleMonitoringDashboard: React.FC = () => {
     <Header />
     <div style={{ width: '100%', padding: '24px' }}>
      <Row gutter={[16, 16]} style={{ marginBottom: 24 }} align="middle">
-          <Col xs={24} md={8}>
+          {/* <Col xs={24} md={8}>
             <Select
               value={runDateFilter}
               style={{ width: '100%' }}
@@ -322,7 +322,7 @@ const TitleMonitoringDashboard: React.FC = () => {
                 </Option>
               ))}
             </Select>
-          </Col>
+          </Col> */}
           <Col xs={24} md={10} lg={6}>
             <Input.Search
               placeholder="Search employees..."
@@ -333,14 +333,14 @@ const TitleMonitoringDashboard: React.FC = () => {
             />
           </Col>
           <Col xs={24} md={6} style={{ textAlign: 'right', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-            <Button 
+            {/* <Button 
               type="primary" 
               icon={<ReloadOutlined />}
               onClick={handleFreshRun}
               style={{ marginLeft: 20 }}
             >
               Execute Fresh Run
-            </Button>
+            </Button> */}
             <Button 
               type="primary" 
               icon={<DownloadOutlined />}
