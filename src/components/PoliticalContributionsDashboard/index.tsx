@@ -37,7 +37,7 @@ interface DocumentData {
 }
 
 // API endpoint for political contributions
-const API_ENDPOINT = 'api/collection/political-contributions';
+const API_ENDPOINT = 'https://sophia-new-code.vercel.app/api/collection/political-contributions';
 
 // Helper function to format period string
 const formatPeriod = (period: string): string => {
