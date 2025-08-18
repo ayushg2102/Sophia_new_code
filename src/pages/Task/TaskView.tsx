@@ -449,7 +449,7 @@ const TaskView: React.FC = () => {
             : text;
         
         return (
-          <Text style={{ fontSize: '14px' }} title={text}>
+          <Text style={{ fontSize: '14px' }}>
             {truncatedText}
           </Text>
         );
