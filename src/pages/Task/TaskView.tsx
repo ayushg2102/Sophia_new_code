@@ -102,7 +102,7 @@ const TaskView: React.FC = () => {
               
               // Set default expanded rows for tasks that allow expansion
               // if (taskData.task_short_description !== "Social Media" && taskData.task_short_description !== "Political Contributions") {
-                const allActionKeys = transformedActions.map(action => action.key);
+                const allActionKeys = transformedActions.map((action: { key: any; }) => action.key);
                 setExpandedRowKeys(allActionKeys);
               // }
               
