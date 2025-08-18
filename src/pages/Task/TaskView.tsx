@@ -371,11 +371,11 @@ const TaskView: React.FC = () => {
               icon={<RightOutlined />} 
               size="small"
               onClick={() => {
-                if (task?.task_short_description === "Social Media") {
+                if (task?.task_short_description === "Social Media Review") {
                   navigate('/social-media-dashboard', { 
                     state: { run_id: record.run_id } 
                   });
-                } else if (task?.task_short_description === "Political Contributions") {
+                } else if (task?.task_short_description === "Political Contributions Review") {
                   navigate('/political-contributions-dashboard', { 
                     state: { run_id: record.run_id } 
                   });

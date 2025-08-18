@@ -242,7 +242,7 @@ const Dashboard: React.FC = () => {
                                           minHeight: 180,
                                           display: 'flex',
                                           flexDirection: 'column',
-                                          justifyContent: 'flex-start',
+                                          justifyContent: 'space-between',
                                           alignItems: 'center',
                                           cursor: 'pointer',
                                           textAlign: 'center',
@@ -252,11 +252,13 @@ const Dashboard: React.FC = () => {
                                           handleTaskClick(task.task_id)}
                                         } 
                                       >
-                                        <Title level={5} style={{ marginBottom: 8 }}>{task.task_short_description}</Title>
-                                        <Text type="secondary" style={{ marginBottom: 8, display: 'block' }}>
-                                          {task.task_short_description}
-                                        </Text>
-                                        <div style={{ marginTop: 8 }}>
+                                        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                                          <Title level={5} style={{ marginBottom: 8 }}>{task.task_short_description}</Title>
+                                          {/* <Text type="secondary" style={{ marginBottom: 8, display: 'block' }}>
+                                            {task.task_short_description}
+                                          </Text> */}
+                                        </div>
+                                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                           <Tag color={'blue'}>{task.frequency}</Tag>
                                         </div>
                                       </Card>
