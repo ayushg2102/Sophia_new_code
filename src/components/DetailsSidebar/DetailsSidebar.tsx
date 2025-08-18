@@ -281,11 +281,11 @@ const DetailsSidebar: React.FC<DetailsSidebarProps> = ({
       {/* Occurrences */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
         <Text type="secondary" style={{ fontSize: '11px', display: 'block', marginBottom: '10px' }}>
-        Sub Tasks({occurrences.length})
+          Sub Tasks({occurrences.length})
         </Text>
         
         <div style={{ flex: 1, overflow: 'hidden' }}>
-          <Collapse ghost style={{ height: '100%' }}>
+          <Collapse defaultActiveKey={["1"]} ghost style={{ height: '100%' }}>
             <Panel header={`${occurrences.length} items`} key="1" style={{ height: '100%' }}>
               <div style={{ maxHeight: '300px', overflow: 'auto' }}>
                 <List

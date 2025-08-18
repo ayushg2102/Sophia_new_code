@@ -10,6 +10,7 @@ import {
   Col,
   Spin,
   message,
+  Modal,
 } from "antd";
 import {
   ArrowLeftOutlined,
@@ -47,6 +48,8 @@ const TaskView: React.FC = () => {
   const [expandedRowKeys, setExpandedRowKeys] = useState<readonly React.Key[]>([]);
   const [actionRunHistory, setActionRunHistory] = useState<{[key: string]: any[]}>({});
   const [loadingActionDetails, setLoadingActionDetails] = useState<{[key: string]: boolean}>({});
+  const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
+  const [selectedRunData, setSelectedRunData] = useState<any>(null);
 
 
   useEffect(() => {
@@ -149,6 +152,7 @@ const TaskView: React.FC = () => {
             const runHistory = apiResponse.data.action_runs?.map((run: any, index: number) => ({
               key: `${actionId}-run-${index}`,
               runSummary: run.human_msg ? (run.human_msg.length > 50 ? run.human_msg.substring(0, 50) + '...' : run.human_msg) : '--',
+              fullRunSummary: run.human_msg || 'No run summary available for this execution.',
               runDate: run.run_timestamp ? new Date(run.run_timestamp).toLocaleString() : '--',
               status: run.run_status || 'Unknown',
               occurrence: run.subtask_name || '--',
@@ -198,6 +202,18 @@ const TaskView: React.FC = () => {
   };
 
 
+
+  // Handle view logs button click
+  const handleViewLogs = (runData: any) => {
+    setSelectedRunData(runData);
+    setIsModalVisible(true);
+  };
+
+  // Handle modal close
+  const handleModalClose = () => {
+    setIsModalVisible(false);
+    setSelectedRunData(null);
+  };
 
   // Expandable row render function
   const expandedRowRender = (record: ActionData) => {
@@ -349,10 +365,15 @@ const TaskView: React.FC = () => {
         title: 'Action',
         key: 'actions',
         width: '20%',
-        render: () => (
+        render: (_: any, record: any) => (
           <div style={{ display: 'flex', gap: 8 }}>
-            <Button type="link" icon={<RightOutlined />} size="small" >
-            View Logs
+            <Button 
+              type="link" 
+              icon={<RightOutlined />} 
+              size="small"
+              onClick={() => handleViewLogs(record)}
+            >
+              View Logs
             </Button>
           </div>
         ),
@@ -502,14 +523,9 @@ const TaskView: React.FC = () => {
 
   // Transform subtasks data for occurrences
   const occurrencesData: OccurrenceData[] = task?.subtasks?.map((subtask: any, index: number) => {
-    // Extract period from subtask description or use index
-    const period = subtask.subtask_short_description?.includes('Quarter') ? 
-      subtask.subtask_short_description.split(' - ')[1] || `Period ${index + 1}` : 
-      `Period ${index + 1}`;
-    
     return {
       key: subtask._id || `subtask-${index}`,
-      period: period,
+      period: subtask.subtask_short_description || `Subtask ${index + 1}`,
       dueDate: subtask.due_date ? new Date(subtask.due_date).toLocaleDateString() : '--',
       status: subtask.status === 'completed' ? 'done' : 
               subtask.status === 'due' ? 'due' : 
@@ -598,6 +614,87 @@ const TaskView: React.FC = () => {
           </Col>
         </Row>
       </Content>
+      
+      {/* Run Summary Modal */}
+      <Modal
+        title="Run Summary Details"
+        open={isModalVisible}
+        onCancel={handleModalClose}
+        footer={[
+          <Button key="close" onClick={handleModalClose}>
+            Close
+          </Button>
+        ]}
+        width={800}
+        style={{ top: 20 }}
+      >
+        {selectedRunData && (
+          <div style={{ padding: '16px 0' }}>
+            <Row gutter={[16, 16]}>
+              <Col span={24}>
+                <Card size="small" style={{ marginBottom: 16 }}>
+                  <Row gutter={16}>
+                    <Col span={12}>
+                      <div>
+                        <Text strong style={{ color: '#595959' }}>Run Date & Time:</Text>
+                        <div style={{ marginTop: 4 }}>
+                          <Text style={{ fontSize: '14px' }}>{selectedRunData.runDate}</Text>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col span={12}>
+                      <div>
+                        <Text strong style={{ color: '#595959' }}>Status:</Text>
+                        <div style={{ marginTop: 4 }}>
+                          <Text style={{ fontSize: '14px' }}>{selectedRunData.status}</Text>
+                        </div>
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row gutter={16} style={{ marginTop: 16 }}>
+                    <Col span={12}>
+                      <div>
+                        <Text strong style={{ color: '#595959' }}>Sub Task:</Text>
+                        <div style={{ marginTop: 4 }}>
+                          <Text style={{ fontSize: '14px' }}>{selectedRunData.occurrence}</Text>
+                        </div>
+                      </div>
+                    </Col>
+                    <Col span={12}>
+                      <div>
+                        <Text strong style={{ color: '#595959' }}>Due Date:</Text>
+                        <div style={{ marginTop: 4 }}>
+                          <Text style={{ fontSize: '14px' }}>{selectedRunData.dueDate}</Text>
+                        </div>
+                      </div>
+                    </Col>
+                  </Row>
+                </Card>
+              </Col>
+              <Col span={24}>
+                <Card size="small">
+                  <div style={{ marginBottom: 12 }}>
+                    <Text strong style={{ color: '#595959', fontSize: '16px' }}>Run Summary:</Text>
+                  </div>
+                  <div style={{ 
+                    padding: '16px',
+                    backgroundColor: '#fafafa',
+                    borderRadius: '6px',
+                    border: '1px solid #f0f0f0',
+                    minHeight: '200px',
+                    whiteSpace: 'pre-wrap',
+                    lineHeight: '1.6'
+                  }}>
+                    <Text style={{ fontSize: '14px', color: '#262626' }}>
+                      {selectedRunData.fullRunSummary || selectedRunData.runSummary || 'No run summary available for this execution.'}
+                    </Text>
+                  </div>
+                </Card>
+              </Col>
+            </Row>
+          </div>
+        )}
+      </Modal>
     </Layout>
   );
 };
