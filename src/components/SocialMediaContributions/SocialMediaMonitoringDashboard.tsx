@@ -583,33 +583,35 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
                   setKeywordsFilter(value.length > 0 ? value.join(',') : 'All');
                 }}
               >
-                <Option value="Financial">Financial</Option>
-                <Option value="Political">Political</Option>
-                <Option value="Portfolio">Portfolio</Option>
-                <Option value="Retirement">Retirement</Option>
-                <Option value="Tax">Tax</Option>
-                <Option value="Fee">Fee</Option>
-                <Option value="Return">Return</Option>
-                <Option value="Diversification">Diversification</Option>
-                <Option value="Securities">Securities</Option>
-                <Option value="Market">Market</Option>
-                <Option value="Asset">Asset</Option>
-                <Option value="Bonds">Bonds</Option>
-                <Option value="Stock">Stock</Option>
-                <Option value="Regulation">Regulation</Option>
-                <Option value="Compliance">Compliance</Option>
-                <Option value="Advice">Advice</Option>
-                <Option value="Guarantee">Guarantee</Option>
-                <Option value="Performance">Performance</Option>
-                <Option value="Financial Planning">Financial Planning</Option>
-                <Option value="Fiduciary">Fiduciary</Option>
-                <Option value="Elite">Elite</Option>
-                <Option value="Perfect">Perfect</Option>
-                <Option value="Best">Best</Option>
-                <Option value="Free">Free</Option>
-                <Option value="No risk">No risk</Option>
-                <Option value="Insider information">Insider information</Option>
-              </Select>
+  <Option value="all">All</Option>
+  <Option value="Investment">Investment</Option>
+  <Option value="Risk">Risk</Option>
+  <Option value="Portfolio">Portfolio</Option>
+  <Option value="Retirement">Retirement</Option>
+  <Option value="Tax">Tax</Option>
+  <Option value="Fee">Fee</Option>
+  <Option value="Return">Return</Option>
+  <Option value="Diversification">Diversification</Option>
+  <Option value="Securities">Securities</Option>
+  <Option value="Market">Market</Option>
+  <Option value="Asset">Asset</Option>
+  <Option value="Bonds">Bonds</Option>
+  <Option value="Stock">Stock</Option>
+  <Option value="Regulation">Regulation</Option>
+  <Option value="Compliance">Compliance</Option>
+  <Option value="Advice">Advice</Option>
+  <Option value="Guarantee">Guarantee</Option>
+  <Option value="Performance">Performance</Option>
+  <Option value="Financial Planning">Financial Planning</Option>
+  <Option value="Fiduciary">Fiduciary</Option>
+  <Option value="Elite">Elite</Option>
+  <Option value="Perfect">Perfect</Option>
+  <Option value="Best">Best</Option>
+  <Option value="Free">Free</Option>
+  <Option value="No risk">No risk</Option>
+  <Option value="Insider information">Insider information</Option>
+</Select>
+
             </div>
           </Col>
           <Col xs={24} md={6}>
