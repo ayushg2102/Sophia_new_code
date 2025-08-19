@@ -1,7 +1,7 @@
 // API Configuration Constants
 export const API_CONFIG = {
     // Base URL for the main API server
-    BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://74.225.189.243:4001',
+    BASE_URL: import.meta.env.VITE_API_BASE_URL || 'https://sophia.xponance.com',
 
     // Base URL for external services
     EXTERNAL_BASE_URL: import.meta.env.VITE_EXTERNAL_API_BASE_URL || 'https://sophia.xponance.com',
@@ -9,20 +9,20 @@ export const API_CONFIG = {
     // API Endpoints
     ENDPOINTS: {
         // Main API endpoints (direct calls to correct server)
-        TASKS: `${import.meta.env.VITE_API_BASE_URL || 'http://74.225.189.243:4001'}/api/tasks`,
-        SUB_TASK_DETAILS: (taskId: string) => `${import.meta.env.VITE_API_BASE_URL || 'http://74.225.189.243:4001'}/api/sub-task-details/${taskId}`,
-        ACTION_DETAILS: (actionId: string) => `${import.meta.env.VITE_API_BASE_URL || 'http://74.225.189.243:4001'}/api/action-details/${actionId}`,
-        COLLECTION_POLITICAL_CONTRIBUTIONS: `${import.meta.env.VITE_API_BASE_URL || 'http://74.225.189.243:4001'}/api/collection/political-contributions`,
-        COLLECTION_SOCIAL_MEDIA_COMPLIANCE: `${import.meta.env.VITE_API_BASE_URL || 'http://74.225.189.243:4001'}/api/collection/social-media-compliance`,
-        COLLECTION_POLITICAL_CONTRIBUTIONS_RUN: (runId: string) => `${import.meta.env.VITE_API_BASE_URL || 'http://74.225.189.243:4001'}/api/collection/political-contributions/${runId}`,
-        COLLECTION_BY_NAME: (collectionName: string) => `${import.meta.env.VITE_API_BASE_URL || 'http://74.225.189.243:4001'}/api/collection/${collectionName}`,
-        REPORT: (runId: string) => `${import.meta.env.VITE_API_BASE_URL || 'http://74.225.189.243:4001'}/api/report/${runId}`,
+        TASKS: `${import.meta.env.VITE_API_BASE_URL || 'https://sophia.xponance.com'}/api/tasks`,
+        SUB_TASK_DETAILS: (taskId: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://sophia.xponance.com'}/api/sub-task-details/${taskId}`,
+        ACTION_DETAILS: (actionId: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://sophia.xponance.com'}/api/action-details/${actionId}`,
+        COLLECTION_POLITICAL_CONTRIBUTIONS: `${import.meta.env.VITE_API_BASE_URL || 'https://sophia.xponance.com'}/api/collection/political-contributions`,
+        COLLECTION_SOCIAL_MEDIA_COMPLIANCE: `${import.meta.env.VITE_API_BASE_URL || 'https://sophia.xponance.com'}/api/collection/social-media-compliance`,
+        COLLECTION_POLITICAL_CONTRIBUTIONS_RUN: (runId: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://sophia.xponance.com'}/api/collection/political-contributions/${runId}`,
+        COLLECTION_BY_NAME: (collectionName: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://sophia.xponance.com'}/api/collection/${collectionName}`,
+        REPORT: (runId: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://sophia.xponance.com'}/api/report/${runId}`,
 
         // External API endpoints (direct calls)
         AUTH_LOGIN: `${import.meta.env.VITE_EXTERNAL_API_BASE_URL || 'https://sophia.xponance.com'}/api/auth/login`,
         CALENDAR_INVITES: `${import.meta.env.VITE_EXTERNAL_API_BASE_URL || 'https://sophia.xponance.com'}/api/calendar-invites`,
         CALENDAR_LOGS: `${import.meta.env.VITE_EXTERNAL_API_BASE_URL || 'https://sophia.xponance.com'}/api/logs/calendar-invites`,
-        PROCESS_AGENT: `${import.meta.env.VITE_API_BASE_URL || 'http://74.225.189.243:4001'}/api/process-agent`,
+        PROCESS_AGENT: `${import.meta.env.VITE_API_BASE_URL || 'https://sophia.xponance.com'}/api/process-agent`,
     }
 } as const;
 
