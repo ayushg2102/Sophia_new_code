@@ -8,6 +8,7 @@ import "./SharedStyles.css";
 import { statusConfig } from './Task';
 import { CheckCircleOutlined, ClockCircleOutlined, ExclamationCircleOutlined, SyncOutlined, AlertOutlined, RocketOutlined, InfoCircleOutlined, CaretRightOutlined, FileTextOutlined, DownloadOutlined, LogoutOutlined, SearchOutlined, LikeOutlined, DislikeOutlined, MessageOutlined, CopyOutlined } from "@ant-design/icons";
 import { message } from 'antd';
+import { API_CONFIG } from '../../constants/api';
 import * as XLSX from 'xlsx';
 import { API_BASE_URL } from "../config";
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -193,7 +194,7 @@ const TaskRunDetails = () => {
 
       try {
         setLoading(true); // Set loading true when starting to fetch options
-        const apiUrl = `${API_BASE_URL}/api/collection/${currentTask.collection_name}`;
+        const apiUrl = API_CONFIG.ENDPOINTS.COLLECTION_BY_NAME(currentTask.collection_name);
         console.log(`Fetching run options from: ${apiUrl}`);
         const response = await fetch(apiUrl);
         if (!response.ok) {

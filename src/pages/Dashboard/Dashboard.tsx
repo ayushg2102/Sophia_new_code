@@ -9,6 +9,7 @@ import {
 } from '@ant-design/icons';
 import Header from '../../components/Header/Header';
 import CreateTaskModal from '../../components/CreateTaskModal/CreateTaskModal';
+import { API_CONFIG } from '../../constants/api';
 // import { mockTasks } from '../../data/mockData';
 import { Task } from '../../types';
 import './Dashboard.css';
@@ -73,7 +74,7 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await fetch('/api/tasks');
+        const response = await fetch(API_CONFIG.ENDPOINTS.TASKS);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

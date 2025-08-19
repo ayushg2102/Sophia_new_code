@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import { ArrowLeftOutlined, CalendarOutlined, ToolOutlined, ClockCircleOutlined, CaretRightOutlined } from '@ant-design/icons';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/Header/Header';
+import { API_CONFIG } from '../../constants/api';
 import './ActionDetail.css';
 import PoliticalContributionsDashboard from '../../components/PoliticalContributionsDashboard';
 import SocialMediaMonitoringDashboard from '../../components/SocialMediaContributions/SocialMediaMonitoringDashboard';
@@ -53,7 +54,7 @@ const ActionDetail: React.FC = () => {
     const fetchActionDetail = async () => {
       try {
         // Replace with your actual API endpoint
-        const response = await fetch(`/api/action-details/${actionId}`);
+        const response = await fetch(API_CONFIG.ENDPOINTS.ACTION_DETAILS(actionId));
         if (!response.ok) throw new Error('Failed to fetch action details');
         const apiData = await response.json();
         

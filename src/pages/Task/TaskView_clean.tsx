@@ -27,6 +27,7 @@ import {
 } from "@ant-design/icons";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../../components/Header/Header";
+import { API_CONFIG } from "../../constants/api";
 import "./TaskView.css";
 import { Action, Subtask, Task } from "../../types";
 import dayjs from "dayjs";
@@ -49,7 +50,7 @@ const TaskView: React.FC = () => {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(`/api/sub-task-details/${taskId}`);
+        const response = await fetch(API_CONFIG.ENDPOINTS.SUB_TASK_DETAILS(taskId));
         if (!response.ok) throw new Error('Failed to fetch task details');
         const data = await response.json();
         console.log(data,"response123")

@@ -17,6 +17,7 @@ const { Title } = Typography;
 import dayjs from 'dayjs';
 import SocialMediaMonitoringDashboard from '../SocialMediaContributions/SocialMediaMonitoringDashboard';
 import Header from '../Header/Header';
+import { getCollectionWithRunId } from '../../constants/api';
 
 
 const { Option } = Select;
@@ -44,7 +45,7 @@ interface DocumentData {
 // API fetch function
 const fetchSocialMediaCompliance = async (runId:any): Promise<DocumentData[]> => {
   try {
-    const response = await fetch(`https://sophia.xponance.com/api/collection/social-media-compliance?run_id=${runId}`)
+    const response = await fetch(getCollectionWithRunId('social-media-compliance', runId))
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

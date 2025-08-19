@@ -23,6 +23,14 @@
     {
       "source": "/api/collection/political-contributions/:runId",
       "destination": "http://74.225.189.243:4001/api/collection/political-contributions/:runId"
+    },
+    {
+      "source": "/api/collection/:collectionName",
+      "destination": "http://74.225.189.243:4001/api/collection/:collectionName"
+    },
+    {
+      "source": "/api/process-agent",
+      "destination": "http://74.225.189.243:4001/api/process-agent"
     }
   ]
 }

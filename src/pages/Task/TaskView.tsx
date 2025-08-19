@@ -20,6 +20,7 @@ import {
 import { useParams, useNavigate } from "react-router-dom";
 import Header from '../../components/Header/Header';
 import DetailsSidebar, { OccurrenceData } from '../../components/DetailsSidebar';
+import { API_CONFIG } from '../../constants/api';
 import './TaskView.css';
 import { Task } from "../../types";
 
@@ -57,7 +58,7 @@ const TaskView: React.FC = () => {
       setLoading(true);
       try {
         // API call to fetch task details
-        const response = await fetch(`/api/sub-task-details/${taskId}`);
+        const response = await fetch(API_CONFIG.ENDPOINTS.SUB_TASK_DETAILS(taskId));
         if (response.ok) {
           const apiResponse = await response.json();
           console.log(apiResponse, "API Response");
@@ -152,7 +153,7 @@ const TaskView: React.FC = () => {
     // Fetch all action details in parallel
     const fetchPromises = actionIds.map(async (actionId) => {
       try {
-        const response = await fetch(`/api/action-details/${actionId}`);
+        const response = await fetch(API_CONFIG.ENDPOINTS.ACTION_DETAILS(actionId));
         if (response.ok) {
           const apiResponse = await response.json();
           if (apiResponse.status === 'success' && apiResponse.data) {

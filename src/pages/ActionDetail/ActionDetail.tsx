@@ -23,6 +23,7 @@ import {
 } from '@ant-design/icons';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/Header/Header';
+import { API_CONFIG } from '../../constants/api';
 // import DetailsSidebar from '../../components/DetailsSidebar';
 import './ActionDetail.css';
 
@@ -79,7 +80,7 @@ const ActionDetail: React.FC = () => {
     
     setLoading(true);
     try {
-      const response = await fetch(`/api/action-details/${actionId}`);
+      const response = await fetch(API_CONFIG.ENDPOINTS.ACTION_DETAILS(actionId));
       if (response.ok) {
         const apiResponse = await response.json();
         if (apiResponse.status === 'success' && apiResponse.data) {

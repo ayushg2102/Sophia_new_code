@@ -11,6 +11,7 @@ import {
 import dayjs from 'dayjs';
 import { useLocation } from 'react-router-dom';
 import Header from '../Header/Header';
+import { API_CONFIG } from '../../constants/api';
 const { Text } = Typography;
 const { Option } = Select;
 
@@ -37,7 +38,7 @@ interface DocumentData {
 }
 
 // API endpoint for political contributions
-const API_ENDPOINT = 'https://sophia-new-code.vercel.app/api/collection/political-contributions';
+const API_ENDPOINT = API_CONFIG.ENDPOINTS.COLLECTION_POLITICAL_CONTRIBUTIONS;
 
 // Helper function to format period string
 const formatPeriod = (period: string): string => {

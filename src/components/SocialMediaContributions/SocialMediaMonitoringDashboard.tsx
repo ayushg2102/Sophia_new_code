@@ -12,12 +12,13 @@ import dayjs from 'dayjs';
 import TitleMonitoringDashboard from '../TitleMonitoringDashboard';
 import Header from '../Header/Header';
 import { useLocation } from 'react-router-dom';
+import { API_CONFIG } from '../../constants/api';
 
 const { Title } = Typography;
 const { Option } = Select;
 
 // API endpoint for social media compliance
-const API_ENDPOINT = 'https://sophia-new-code.vercel.app/api/collection/social-media-compliance';
+const API_ENDPOINT = API_CONFIG.ENDPOINTS.COLLECTION_SOCIAL_MEDIA_COMPLIANCE;
 
 // Interface definitions
 interface SocialMediaData {
