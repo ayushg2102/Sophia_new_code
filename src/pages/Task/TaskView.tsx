@@ -93,13 +93,13 @@ const TaskView: React.FC = () => {
               const transformedActions = taskData.actions.map((action: any, index: number) => {
                 console.log('Action data:', action); // Debug log
                 console.log('Action runs:', action.action_runs); // Debug log
-                
+                console.log("ACTHIST",actionRunHistory)
+
                 return {
                   key: action.action_id || `action-${index}`,
                   action: action.action_instructions || action.action_instruction || action.action_description || 'No description available',
                   noOfRuns: action.action_runs?.length || 0, // Will be updated after fetching action details
-                  lastRun: action.action_runs && action.action_runs.length > 0 && action.action_runs[0].subtask_due_date 
-                    ,
+                  lastRun: action.action_runs && action.action_runs.length > 0 && action.action_runs[0].subtask_due_date,
                   nextRunDue: action.trigger_date ? new Date(action.trigger_date).toLocaleDateString() : '--',
                   status: action.adjusted_relative_trigger_date ? 
                     (new Date(action.adjusted_relative_trigger_date) < new Date() ? 'overdue' : 'due') : 'due'
@@ -169,15 +169,18 @@ const TaskView: React.FC = () => {
             
             const noOfRuns = apiResponse.data.action_runs?.length || 0;
             
-            return { actionId, runHistory, noOfRuns };
+            // Get the most recent run's due date for lastRun
+            const mostRecentDueDate = runHistory.length > 0 ? runHistory[0].dueDate : '--';
+            
+            return { actionId, runHistory, noOfRuns, mostRecentDueDate };
           }
         } else {
           console.error(`Failed to fetch action details for ${actionId}`);
-          return { actionId, runHistory: [], noOfRuns: 0 };
+          return { actionId, runHistory: [], noOfRuns: 0, mostRecentDueDate: '--' };
         }
       } catch (error) {
         console.error(`Error fetching action details for ${actionId}:`, error);
-        return { actionId, runHistory: [], noOfRuns: 0 };
+        return { actionId, runHistory: [], noOfRuns: 0, mostRecentDueDate: '--' };
       }
     });
     
@@ -188,23 +191,26 @@ const TaskView: React.FC = () => {
     const newRunHistory: {[key: string]: any[]} = {};
     const newLoadingState: {[key: string]: boolean} = {};
     const newRunCounts: {[key: string]: number} = {};
+    const newLastRunDates: {[key: string]: string} = {};
     
     results.forEach(result => {
       if (result) {
         newRunHistory[result.actionId] = result.runHistory;
         newLoadingState[result.actionId] = false;
         newRunCounts[result.actionId] = result.noOfRuns || 0;
+        newLastRunDates[result.actionId] = result.mostRecentDueDate || '--';
       }
     });
     
     setActionRunHistory(prev => ({ ...prev, ...newRunHistory }));
     setLoadingActionDetails(prev => ({ ...prev, ...newLoadingState }));
     
-    // Update actionsData with the actual run counts
+    // Update actionsData with the actual run counts and last run dates
     setActionsData(prevActions => 
       prevActions.map(action => ({
         ...action,
-        noOfRuns: newRunCounts[action.key] || 0
+        noOfRuns: newRunCounts[action.key] || 0,
+        lastRun: newLastRunDates[action.key] || action.lastRun
       }))
     );
   };
