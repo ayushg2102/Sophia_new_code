@@ -74,6 +74,7 @@ const TaskView: React.FC = () => {
               task_due_date: taskData.task_due_date,
               status: taskData.status,
               subtasks: taskData.subtasks || [],
+              border:taskData.border,
               actions: taskData.actions || []
             };
             setTask(task);
@@ -89,15 +90,21 @@ const TaskView: React.FC = () => {
             
             // Transform actions data for the table
             if (taskData.actions && taskData.actions.length > 0) {
-              const transformedActions = taskData.actions.map((action: any, index: number) => ({
-                key: action.action_id || `action-${index}`,
-                action: action.action_instruction || action.action_description || 'No description available',
-                noOfRuns: action.action_runs?.length || 0, // Will be updated after fetching action details
-                lastRun: action.action_updated_date ? new Date(action.action_updated_date).toLocaleDateString() : '--',
-                nextRunDue: action.action_trigger_date ? new Date(action.action_trigger_date).toLocaleDateString() : '--',
-                status: action.adjusted_relative_trigger_date ? 
-                  (new Date(action.adjusted_relative_trigger_date) < new Date() ? 'overdue' : 'due') : 'due'
-              }));
+              const transformedActions = taskData.actions.map((action: any, index: number) => {
+                console.log('Action data:', action); // Debug log
+                console.log('Action runs:', action.action_runs); // Debug log
+                
+                return {
+                  key: action.action_id || `action-${index}`,
+                  action: action.action_instructions || action.action_instruction || action.action_description || 'No description available',
+                  noOfRuns: action.action_runs?.length || 0, // Will be updated after fetching action details
+                  lastRun: action.action_runs && action.action_runs.length > 0 && action.action_runs[0].subtask_due_date 
+                    ,
+                  nextRunDue: action.trigger_date ? new Date(action.trigger_date).toLocaleDateString() : '--',
+                  status: action.adjusted_relative_trigger_date ? 
+                    (new Date(action.adjusted_relative_trigger_date) < new Date() ? 'overdue' : 'due') : 'due'
+                };
+              });
               setActionsData(transformedActions);
               
               // Set default expanded rows for tasks that allow expansion

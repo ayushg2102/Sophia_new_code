@@ -42,7 +42,7 @@ interface DocumentData {
 }
 
 // API fetch function
-const fetchSocialMediaCompliance = async (runId): Promise<DocumentData[]> => {
+const fetchSocialMediaCompliance = async (runId:any): Promise<DocumentData[]> => {
   try {
     const response = await fetch(`https://sophia.xponance.com/api/collection/social-media-compliance?run_id=${runId}`)
     if (!response.ok) {
