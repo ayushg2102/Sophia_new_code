@@ -51,6 +51,7 @@ const TaskView: React.FC = () => {
   const [loadingActionDetails, setLoadingActionDetails] = useState<{[key: string]: boolean}>({});
   const [isModalVisible, setIsModalVisible] = useState<boolean>(false);
   const [selectedRunData, setSelectedRunData] = useState<any>(null);
+  const [actionTriggerTypes, setActionTriggerTypes] = useState({});
 
 
   useEffect(() => {
@@ -103,10 +104,20 @@ const TaskView: React.FC = () => {
                   lastRun: action.action_runs && action.action_runs.length > 0 && action.action_runs[0].subtask_due_date,
                   nextRunDue: action.trigger_date ? new Date(action.trigger_date).toLocaleDateString() : '--',
                   status: action.adjusted_relative_trigger_date ? 
-                    (new Date(action.adjusted_relative_trigger_date) < new Date() ? 'overdue' : 'due') : 'due'
+                    (new Date(action.adjusted_relative_trigger_date) < new Date() ? 'overdue' : 'due') : 'due',
+                  trigger_type:action.trigger_type
                 };
               });
               setActionsData(transformedActions);
+              
+              // Store trigger types for each action
+              const triggerTypes = taskData.actions.reduce((acc: {[key: string]: string}, action: any, index: number) => {
+                const actionKey = action.action_id || `action-${index}`;
+                console.log(action,"IMPR");
+                acc[actionKey] = action.action_trigger_type || 'relative';
+                return acc;
+              }, {});
+              setActionTriggerTypes(triggerTypes);
               
               // Set default expanded rows for tasks that allow expansion
               // if (taskData.task_short_description !== "Social Media" && taskData.task_short_description !== "Political Contributions") {
@@ -219,8 +230,11 @@ const TaskView: React.FC = () => {
 
 
   // Handle view logs button click
-  const handleViewLogs = (runData: any) => {
-    setSelectedRunData(runData);
+  const handleViewLogs = (runData: any, actionKey?: string) => {
+    setSelectedRunData({
+      ...runData,
+      actionKey: actionKey // Store the action key to access trigger type
+    });
     setIsModalVisible(true);
   };
 
@@ -235,32 +249,16 @@ const TaskView: React.FC = () => {
     const actionId = record.key;
     const runHistory = actionRunHistory[actionId] || [];
     const isLoading = loadingActionDetails[actionId];
+    const triggerType = actionTriggerTypes[actionId] || 'relative';
+    const isFixedTrigger = triggerType === 'fixed';
 
-    const historyColumns = [
-      // {
-      //   title: 'Run summary',
-      //   dataIndex: 'runSummary',
-      //   key: 'runSummary',
-      //   width: '35%',
-      //   align: 'left' as const,
-      //   render: (text: string) => (
-      //     <div style={{ padding: '12px 16px' }}>
-      //       <div style={{ 
-      //         fontSize: '14px', 
-      //         lineHeight: '1.4',
-      //         color: '#262626',
-      //         fontWeight: '400'
-      //       }}>
-      //         {text}
-      //       </div>
-      //     </div>
-      //   ),
-      // },
+    // Base columns that are always shown
+    const baseColumns = [
       {
         title: 'Run date & time',
         dataIndex: 'runDate',
         key: 'runDate',
-        width: '25%',
+        width: isFixedTrigger ? '40%' : '25%',
         align: 'center' as const,
         render: (text: string) => (
           <Text style={{ 
@@ -276,7 +274,7 @@ const TaskView: React.FC = () => {
         title: 'Status',
         dataIndex: 'status',
         key: 'status',
-        width: '15%',
+        width: isFixedTrigger ? '40%' : '15%',
         align: 'center' as const,
         render: (status: string) => {
           const getStatusConfig = (status: string) => {
@@ -346,69 +344,79 @@ const TaskView: React.FC = () => {
             </div>
           );
         },
-      },
-      {
-        title: 'Sub Tasks',
-        dataIndex: 'occurrence',
-        key: 'occurrence',
-        width: '25%',
-        align: 'left' as const,
-        render: (text: string, record: any) => (
-          <div style={{ padding: '8px 12px' }}>
-            <div style={{ 
-              fontWeight: 500, 
-              fontSize: '14px',
-              lineHeight: '1.4',
-              color: '#262626',
-              marginBottom: '4px'
-            }}>
-              {text}
-            </div>
-            <div style={{ 
-              fontSize: '12px',
-              lineHeight: '1.2',
-              color: '#8c8c8c'
-            }}>
-              Due: {record.dueDate}
-            </div>
-          </div>
-        ),
-      },
-      {
-        title: 'Action',
-        key: 'actions',
-        width: '20%',
-        render: (_: any, record: any) => (
-          <div style={{ display: 'flex', gap: 8 }}>
-            <Button 
-              type="link" 
-              icon={<RightOutlined />} 
-              size="small"
-              onClick={() => {
-                if (task?.task_short_description === "Social Media Review") {
-                  navigate('/social-media-dashboard', { 
-                    state: { run_id: record.run_id } 
-                  });
-                } else if (task?.task_short_description === "Political Contributions Review") {
-                  navigate('/political-contributions-dashboard', { 
-                    state: { run_id: record.run_id } 
-                  });
-                } else if (task?.task_short_description === "Industry Trend Analysis & Updates" || 
-                          task?.task_short_description === "Regulatory Monitoring & Updates") {
-                  navigate('/content-display', { 
-                    state: { run_id: record.run_id } 
-                  });
-                } else {
-                  handleViewLogs(record);
-                }
-              }}
-            >
-              View Logs
-            </Button>
-          </div>
-        ),
-      },
+      }
     ];
+
+    // Sub Tasks column - only shown for non-fixed triggers
+    const subTasksColumn = {
+      title: 'Sub Tasks',
+      dataIndex: 'occurrence',
+      key: 'occurrence',
+      width: '25%',
+      align: 'left' as const,
+      render: (text: string, record: any) => (
+        <div style={{ padding: '8px 12px' }}>
+          <div style={{ 
+            fontWeight: 500, 
+            fontSize: '14px',
+            lineHeight: '1.4',
+            color: '#262626',
+            marginBottom: '4px'
+          }}>
+            {text}
+          </div>
+          <div style={{ 
+            fontSize: '12px',
+            lineHeight: '1.2',
+            color: '#8c8c8c'
+          }}>
+            Due: {record.dueDate}
+          </div>
+        </div>
+      ),
+    };
+
+    // Action column
+    const actionColumn = {
+      title: 'Action',
+      key: 'actions',
+      width: '20%',
+      render: (_: any, record: any) => (
+        <div style={{ display: 'flex', gap: 8 }}>
+          <Button 
+            type="link" 
+            icon={<RightOutlined />} 
+            size="small"
+            onClick={() => {
+              if (task?.task_short_description === "Social Media Review") {
+                navigate('/social-media-dashboard', { 
+                  state: { run_id: record.run_id } 
+                });
+              } else if (task?.task_short_description === "Political Contributions Review") {
+                navigate('/political-contributions-dashboard', { 
+                  state: { run_id: record.run_id } 
+                });
+              } else if (task?.task_short_description === "Industry Trend Analysis & Updates" || 
+                        task?.task_short_description === "Regulatory Monitoring & Updates") {
+                navigate('/content-display', { 
+                  state: { run_id: record.run_id } 
+                });
+              } else {
+                handleViewLogs(record, actionId);
+              }
+            }}
+          >
+            View Logs
+          </Button>
+        </div>
+      ),
+    };
+
+    // Build columns array based on trigger type
+    console.log(isFixedTrigger,"tirgerr")
+    var historyColumns = isFixedTrigger 
+      ? [...baseColumns, actionColumn]
+      : [...baseColumns, subTasksColumn, actionColumn];
 
     if (isLoading) {
       return (
@@ -676,24 +684,33 @@ const TaskView: React.FC = () => {
                       </div>
                     </Col>
                   </Row>
-                  <Row gutter={16} style={{ marginTop: 16 }}>
-                    <Col span={12}>
-                      <div>
-                        <Text strong style={{ color: '#595959' }}>Sub Task:</Text>
-                        <div style={{ marginTop: 4 }}>
-                          <Text style={{ fontSize: '14px' }}>{selectedRunData.occurrence}</Text>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col span={12}>
-                      <div>
-                        <Text strong style={{ color: '#595959' }}>Due Date:</Text>
-                        <div style={{ marginTop: 4 }}>
-                          <Text style={{ fontSize: '14px' }}>{selectedRunData.dueDate}</Text>
-                        </div>
-                      </div>
-                    </Col>
-                  </Row>
+                  {/* Conditionally render Sub Task and Due Date row based on trigger_type */}
+                  {(() => {
+                    const actionKey = selectedRunData.actionKey;
+                    const triggerType = actionKey ? (actionTriggerTypes as any)[actionKey] : 'relative';
+                    const isRelativeTrigger = triggerType === 'relative';
+                    
+                    return isRelativeTrigger ? (
+                      <Row gutter={16} style={{ marginTop: 16 }}>
+                        <Col span={12}>
+                          <div>
+                            <Text strong style={{ color: '#595959' }}>Sub Task:</Text>
+                            <div style={{ marginTop: 4 }}>
+                              <Text style={{ fontSize: '14px' }}>{selectedRunData.occurrence}</Text>
+                            </div>
+                          </div>
+                        </Col>
+                        <Col span={12}>
+                          <div>
+                            <Text strong style={{ color: '#595959' }}>Due Date:</Text>
+                            <div style={{ marginTop: 4 }}>
+                              <Text style={{ fontSize: '14px' }}>{selectedRunData.dueDate}</Text>
+                            </div>
+                          </div>
+                        </Col>
+                      </Row>
+                    ) : null;
+                  })()}
                 </Card>
               </Col>
               <Col span={24}>
