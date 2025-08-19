@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons';
 import Header from '../../components/Header/Header';
 import CreateTaskModal from '../../components/CreateTaskModal/CreateTaskModal';
-import { mockTasks } from '../../data/mockData';
+// import { mockTasks } from '../../data/mockData';
 import { Task } from '../../types';
 import './Dashboard.css';
 
