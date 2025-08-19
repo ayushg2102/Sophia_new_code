@@ -5,7 +5,7 @@ import {
 } from 'antd';
 import { 
   LinkedinOutlined, TwitterOutlined, FacebookOutlined, 
-  SearchOutlined, ReloadOutlined, 
+  SearchOutlined, 
   DownloadOutlined
 } from '@ant-design/icons';
 import dayjs from 'dayjs';
@@ -165,7 +165,6 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
   const [pageSize, setPageSize] = useState(10);
   const [monitoringType, setMonitoringType] = useState('Post Monitoring');
   const [socialMediaData, setSocialMediaData] = useState<SocialMediaData[]>([]);
-  const [runDates, setRunDates] = useState<{label: string, value: string}[]>([]);
   const [runDateFilter, setRunDateFilter] = useState<string>('All');
   const [allDocuments, setAllDocuments] = useState<DocumentData[]>([]);
   const [selectedDocument, setSelectedDocument] = useState<DocumentData | null>(null);
@@ -177,13 +176,6 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
         setLoading(true);
         const documents = await fetchSocialMediaCompliance(runIdFromState);
         setAllDocuments(documents);
-        
-        // Create run date options from documents
-        const runDateOptions = documents.map(doc => ({
-          label: dayjs(doc.created_at).format('MMM D, YYYY'),
-          value: doc._id
-        }));
-        setRunDates(runDateOptions);
         
         // Auto-select the latest document (first in array) or the specific run if provided
         if (documents.length > 0) {
@@ -300,34 +292,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
     message.success('File downloaded successfully');
   };
 
-  // Handler for refreshing data
-  const handleRefresh = async () => {
-    try {
-      setLoading(true);
-      const documents = await fetchSocialMediaCompliance(runIdFromState);
-      setAllDocuments(documents);
-      
-      if (documents.length > 0) {
-        const latestDoc = documents[0];
-        setSelectedDocument(latestDoc);
-        setRunDateFilter(latestDoc._id);
-        const transformedData = transformSocialMediaFromDocument(latestDoc);
-        setSocialMediaData(transformedData);
-      }
-      
-      message.success('Social media compliance data refreshed successfully');
-    } catch (error) {
-      console.error('Error refreshing social media compliance:', error);
-      message.error('Failed to refresh social media compliance data');
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  // Handler for run date change
-  const handleRunDateChange = (value: string) => {
-    setRunDateFilter(value);
-  };
 
 
 
@@ -337,7 +302,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
 
   // If monitoring type is 'Title Monitoring', render the TitleMonitoringDashboard
   if (monitoringType === 'Title Monitoring') {
-    return <TitleMonitoringDashboard />;
+    return <TitleMonitoringDashboard runId={runIdFromState} />;
   }
 
   // Table columns

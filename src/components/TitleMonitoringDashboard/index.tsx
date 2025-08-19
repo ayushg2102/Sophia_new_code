@@ -12,7 +12,7 @@ import {
   Badge,
 
 } from 'antd';
-import { SearchOutlined, ReloadOutlined, DownloadOutlined } from '@ant-design/icons';
+import { SearchOutlined, DownloadOutlined } from '@ant-design/icons';
 const { Title } = Typography;
 import dayjs from 'dayjs';
 import SocialMediaMonitoringDashboard from '../SocialMediaContributions/SocialMediaMonitoringDashboard';
@@ -42,9 +42,9 @@ interface DocumentData {
 }
 
 // API fetch function
-const fetchSocialMediaCompliance = async (): Promise<DocumentData[]> => {
+const fetchSocialMediaCompliance = async (runId): Promise<DocumentData[]> => {
   try {
-    const response = await fetch('https://sophia.xponance.com/api/collection/social-media-compliance');
+    const response = await fetch(`https://sophia.xponance.com/api/collection/social-media-compliance?run_id=${runId}`)
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -87,14 +87,17 @@ const formatPeriod = (period: string): string => {
 
 
 
-const TitleMonitoringDashboard: React.FC = () => {
+interface TitleMonitoringDashboardProps {
+  runId?: string;
+}
+
+const TitleMonitoringDashboard: React.FC<TitleMonitoringDashboardProps> = ({ runId: propRunId }) => {
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
   const [categoryFilter, setCategoryFilter] = useState<string>('All');
   const [runDateFilter, setRunDateFilter] = useState<string>('All');
   const [monitoringType, setMonitoringType] = useState<string>('Title Monitoring');
   const [titleData, setTitleData] = useState<TitleRecord[]>([]);
-  const [runDates, setRunDates] = useState<{label: string, value: string}[]>([]);
   const [allDocuments, setAllDocuments] = useState<DocumentData[]>([]);
   const [selectedDocument, setSelectedDocument] = useState<DocumentData | null>(null);
   
@@ -103,27 +106,29 @@ const TitleMonitoringDashboard: React.FC = () => {
     const loadData = async () => {
       try {
         setLoading(true);
-        const documents = await fetchSocialMediaCompliance();
+        const documents = await fetchSocialMediaCompliance(propRunId);
         setAllDocuments(documents);
         
-        // Sort documents by created_at descending (latest first), then create run date options
+        // Sort documents by created_at descending (latest first)
         const sortedDocuments = documents.sort((a, b) => dayjs(b.created_at).valueOf() - dayjs(a.created_at).valueOf());
         
-        const runDateOptions = sortedDocuments.map(doc => ({
-          label: `${dayjs(doc.created_at).format('MMM D, YYYY')} - ${formatPeriod(doc.period)}`,
-          value: doc._id
-        }));
-        
-        setRunDates([{ label: 'All Runs', value: 'All' }, ...runDateOptions]);
-        
-        // Auto-select the first document (most recent) and transform its data
+        // Auto-select document based on propRunId or most recent
         if (sortedDocuments.length > 0) {
-          const mostRecentDocument = sortedDocuments[0];
-          const mostRecentData = transformTitleDataFromDocument(mostRecentDocument);
+          let documentToSelect = sortedDocuments[0]; // Default to most recent
           
-          setTitleData(mostRecentData);
-          setSelectedDocument(mostRecentDocument);
-          setRunDateFilter(mostRecentDocument._id);
+          // If propRunId is provided, try to find that specific document
+          if (propRunId) {
+            const specificDoc = sortedDocuments.find(doc => doc._id === propRunId);
+            if (specificDoc) {
+              documentToSelect = specificDoc;
+            }
+          }
+          
+          const documentData = transformTitleDataFromDocument(documentToSelect);
+          
+          setTitleData(documentData);
+          setSelectedDocument(documentToSelect);
+          setRunDateFilter(documentToSelect._id);
         } else {
           // Fallback to empty data if no documents
           setTitleData([]);
@@ -142,7 +147,7 @@ const TitleMonitoringDashboard: React.FC = () => {
     };
     
     loadData();
-  }, []);
+  }, [propRunId]);
   
   // Handle run date filter change
   useEffect(() => {
@@ -186,9 +191,6 @@ const TitleMonitoringDashboard: React.FC = () => {
     setCategoryFilter(value);
   };
 
-  const handleRunDateChange = (value: string) => {
-    setRunDateFilter(value);
-  };
   const changeMonitoringType = (value: string) => {
     setMonitoringType(value);
   };
@@ -202,41 +204,7 @@ const TitleMonitoringDashboard: React.FC = () => {
     document.body.removeChild(link);
   };
 
-  const handleFreshRun = async () => {
-    try {
-      setLoading(true);
-      const documents = await fetchSocialMediaCompliance();
-      setAllDocuments(documents);
-      
-      // Create run date options from created_at values
-      const runDateOptions = documents.map(doc => ({
-        label: `${dayjs(doc.created_at).format('MMM D, YYYY')} - ${formatPeriod(doc.period)}`,
-        value: doc._id
-      }));
-      
-      setRunDates([{ label: 'All Runs', value: 'All' }, ...runDateOptions]);
-      
-      // Auto-select the last document after refresh
-      if (documents.length > 0) {
-        const lastDocument = documents[documents.length - 1];
-        const lastDocData = transformTitleDataFromDocument(lastDocument);
-        
-        setTitleData(lastDocData);
-        setSelectedDocument(lastDocument);
-        setRunDateFilter(lastDocument._id);
-      } else {
-        // Reset to show all data if no documents
-        setRunDateFilter('All');
-      }
-      
-      message.success('Title monitoring data refreshed successfully');
-    } catch (error) {
-      console.error('Error refreshing title monitoring data:', error);
-      message.error('Failed to refresh title monitoring data');
-    } finally {
-      setLoading(false);
-    }
-  };
+
 
   const columns = [
     {
