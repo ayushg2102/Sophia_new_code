@@ -16,6 +16,7 @@ export const API_CONFIG = {
         COLLECTION_SOCIAL_MEDIA_COMPLIANCE: `${import.meta.env.VITE_API_BASE_URL || 'http://74.225.189.243:4001'}/api/collection/social-media-compliance`,
         COLLECTION_POLITICAL_CONTRIBUTIONS_RUN: (runId: string) => `${import.meta.env.VITE_API_BASE_URL || 'http://74.225.189.243:4001'}/api/collection/political-contributions/${runId}`,
         COLLECTION_BY_NAME: (collectionName: string) => `${import.meta.env.VITE_API_BASE_URL || 'http://74.225.189.243:4001'}/api/collection/${collectionName}`,
+        REPORT: (runId: string) => `${import.meta.env.VITE_API_BASE_URL || 'http://74.225.189.243:4001'}/api/report/${runId}`,
 
         // External API endpoints (direct calls)
         AUTH_LOGIN: `${import.meta.env.VITE_EXTERNAL_API_BASE_URL || 'https://sophia.xponance.com'}/api/auth/login`,

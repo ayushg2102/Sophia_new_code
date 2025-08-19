@@ -393,6 +393,11 @@ const TaskView: React.FC = () => {
                   navigate('/political-contributions-dashboard', { 
                     state: { run_id: record.run_id } 
                   });
+                } else if (task?.task_short_description === "Industry Trend Analysis & Updates" || 
+                          task?.task_short_description === "Regulatory Monitoring & Updates") {
+                  navigate('/content-display', { 
+                    state: { run_id: record.run_id } 
+                  });
                 } else {
                   handleViewLogs(record);
                 }

@@ -1,0 +1,93 @@
+.content-display-layout {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.content-display-content {
+  padding: 16px 0;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+}
+
+.content-display-back {
+  margin-bottom: 16px;
+  padding: 0 24px;
+}
+
+.content-display-card {
+  border-radius: 0;
+  box-shadow: none;
+  width: 100%;
+  margin: 0;
+  border-left: none;
+  border-right: none;
+}
+
+.content-display-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.content-display-title {
+  margin: 0 !important;
+  color: #262626;
+}
+
+.content-display-body {
+  line-height: 1.6;
+  color: #262626;
+}
+
+/* Style the HTML content */
+.content-display-body h1,
+.content-display-body h2,
+.content-display-body h3,
+.content-display-body h4,
+.content-display-body h5,
+.content-display-body h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  color: #262626;
+}
+
+.content-display-body p {
+  margin-bottom: 16px;
+}
+
+.content-display-body ul,
+.content-display-body ol {
+  margin-bottom: 16px;
+  padding-left: 24px;
+}
+
+.content-display-body li {
+  margin-bottom: 8px;
+}
+
+.content-display-body a {
+  color: #1677ff;
+  text-decoration: none;
+}
+
+.content-display-body a:hover {
+  text-decoration: underline;
+}
+
+.content-display-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+}
+
+.content-display-body th,
+.content-display-body td {
+  padding: 8px 12px;
+  border: 1px solid #f0f0f0;
+  text-align: left;
+}
+
+.content-display-body th {
+  background-color: #fafafa;
+  font-weight: 600;
+}

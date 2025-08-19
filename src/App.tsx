@@ -10,6 +10,7 @@ import AllTasks from './pages/Dashboard/AllTasks';
 import ExternalRedirect from './components/ExternalRedirect/ExternalRedirect';
 import SocialMediaMonitoringDashboard from './components/SocialMediaContributions/SocialMediaMonitoringDashboard';
 import PoliticalContributionsDashboard from './components/PoliticalContributionsDashboard';
+import ContentDisplay from './components/ContentDisplay/ContentDisplay';
 import { API_CONFIG } from './constants/api';
 
 const theme = {
@@ -44,6 +45,7 @@ function App() {
             <Route path="/all-tasks" element={<AllTasks />} />
             <Route path="/social-media-dashboard" element={<SocialMediaMonitoringDashboard />} />
             <Route path="/political-contributions-dashboard" element={<PoliticalContributionsDashboard />} />
+            <Route path="/content-display" element={<ContentDisplay />} />
             {/* Default route - redirect to tasks */}
             <Route path="/" element={<Navigate to="/tasks" replace />} />
             
