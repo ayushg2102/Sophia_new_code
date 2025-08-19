@@ -1,3 +1,5 @@
+import { API_CONFIG } from '../constants/api';
+
 /**
  * Utility function to handle user logout
  * Redirects to external SSO login URL
@@ -8,7 +10,7 @@ export const handleLogout = () => {
   sessionStorage.clear();
   
   // Redirect to external SSO login URL
-  window.location.href = 'https://sophia.xponance.com/api/auth/login';
+  window.location.href = API_CONFIG.ENDPOINTS.AUTH_LOGIN;
 };
 
 /**

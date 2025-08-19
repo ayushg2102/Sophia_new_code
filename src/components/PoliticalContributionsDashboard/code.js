@@ -125,7 +125,7 @@ const TaskRunDetails = () => {
       console.log('Execute fresh run for task _id:', task._id);
     }
     try {
-      const response = await fetch('https://sophia.xponance.com/api/calendar-invites', {
+      const response = await fetch(API_CONFIG.ENDPOINTS.CALENDAR_INVITES, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -150,7 +150,7 @@ const TaskRunDetails = () => {
     if (pollingRef.current) clearInterval(pollingRef.current);
     pollingRef.current = setInterval(async () => {
       try {
-        const res = await fetch('https://sophia.xponance.com/api/logs/calendar-invites');
+        const res = await fetch(API_CONFIG.ENDPOINTS.CALENDAR_LOGS);
         const data = await res.json();
         if (data.status === 'success') {
           // Logs

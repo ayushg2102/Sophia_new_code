@@ -10,6 +10,7 @@ import AllTasks from './pages/Dashboard/AllTasks';
 import ExternalRedirect from './components/ExternalRedirect/ExternalRedirect';
 import SocialMediaMonitoringDashboard from './components/SocialMediaContributions/SocialMediaMonitoringDashboard';
 import PoliticalContributionsDashboard from './components/PoliticalContributionsDashboard';
+import { API_CONFIG } from './constants/api';
 
 const theme = {
   token: {
@@ -31,7 +32,7 @@ function App() {
             {/* External SSO login redirect - only used for logout */}
             <Route
               path="/login"
-              element={<ExternalRedirect url="https://sophia.xponance.com/api/auth/login" />}
+              element={<ExternalRedirect url={API_CONFIG.ENDPOINTS.AUTH_LOGIN} />}
             />
             
             {/* Main application routes - no authentication required */}
