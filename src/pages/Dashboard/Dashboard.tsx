@@ -29,8 +29,8 @@ const CATEGORIES = [
     key: 'Compliance Reminders Management'  },
   {
     key: 'Compliance Reviews'  },
-  {
-    key: 'Document Analysis and Information Gathering'  },
+  // {
+  //   key: 'Document Analysis and Information Gathering'  },
   {
     key: 'Industry Trend Analysis & Updates'  },
   {
