@@ -21,17 +21,8 @@
       "destination": "http://74.225.189.243:4001/api/collection/social-media-compliance"
     },
     {
-      "source": "/api/collection/social-media-compliance/:runId",
-      "destination": "http://74.225.189.243:4001/api/collection/social-media-compliance/:runId"
-    },
-    {
       "source": "/api/collection/political-contributions/:runId",
       "destination": "http://74.225.189.243:4001/api/collection/political-contributions/:runId"
-    },
-    {
-      "source": "/api/collection/social-media-compliance?run_id=:runId",
-      "destination": "http://74.225.189.243:4001/api/collection/social-media-compliance?run_id=:runId"
     }
-
   ]
 }
