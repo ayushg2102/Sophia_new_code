@@ -283,14 +283,12 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
     setCurrentPage(1);
   }, []);
 
-  const handleFileDownload = () => {
-    const link = document.createElement('a');
-    link.href = '/assets/Files/social_media_20250804_155626.xlsx';
-    link.download = 'social_media_compliance.xlsx';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    message.success('File downloaded successfully');
+  const handleFileDownload = () => {    const link = document.createElement('a');
+      link.href = API_CONFIG.ENDPOINTS.DOWNLOAD_REPORT(runIdFromState);
+      // link.download = 'political_contributions_20250804_155626.xlsx';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
   };
 
 

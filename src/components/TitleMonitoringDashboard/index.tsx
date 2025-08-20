@@ -17,7 +17,7 @@ const { Title } = Typography;
 import dayjs from 'dayjs';
 import SocialMediaMonitoringDashboard from '../SocialMediaContributions/SocialMediaMonitoringDashboard';
 import Header from '../Header/Header';
-import { getCollectionWithRunId } from '../../constants/api';
+import { API_CONFIG, getCollectionWithRunId } from '../../constants/api';
 
 
 const { Option } = Select;
@@ -196,13 +196,12 @@ const TitleMonitoringDashboard: React.FC<TitleMonitoringDashboardProps> = ({ run
     setMonitoringType(value);
   };
 
-  const handleFileDownload = () => {
-    const link = document.createElement('a');
-    link.href = '/assets/Files/social_media_20250804_155626.xlsx';
-    link.download = 'social_media_20250804_155626.xlsx';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleFileDownload = () => {    const link = document.createElement('a');
+      link.href = API_CONFIG.ENDPOINTS.DOWNLOAD_REPORT(propRunId);
+      // link.download = 'political_contributions_20250804_155626.xlsx';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
   };
 
 
