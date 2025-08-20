@@ -305,8 +305,8 @@ const PoliticalContributionsDashboard: React.FC = () => {
   };
   const handleFileDownload = () => {
     const link = document.createElement('a');
-    link.href = '/assets/Files/political_contributions_20250804_155626.xlsx';
-    link.download = 'political_contributions_20250804_155626.xlsx';
+    link.href = API_CONFIG.ENDPOINTS.DOWNLOAD_REPORT(runIdFromState);
+    // link.download = 'political_contributions_20250804_155626.xlsx';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

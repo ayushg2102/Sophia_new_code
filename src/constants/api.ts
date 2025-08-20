@@ -17,7 +17,7 @@ export const API_CONFIG = {
         COLLECTION_POLITICAL_CONTRIBUTIONS_RUN: (runId: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://sophia.xponance.com'}/api/collection/political-contributions/${runId}`,
         COLLECTION_BY_NAME: (collectionName: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://sophia.xponance.com'}/api/collection/${collectionName}`,
         REPORT: (runId: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://sophia.xponance.com'}/api/report/${runId}`,
-
+        DOWNLOAD_REPORT: (runId: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://sophia.xponance.com'}/api/download-report/${runId}`,
         // External API endpoints (direct calls)
         AUTH_LOGIN: `${import.meta.env.VITE_EXTERNAL_API_BASE_URL || 'https://sophia.xponance.com'}/api/auth/login`,
         CALENDAR_INVITES: `${import.meta.env.VITE_EXTERNAL_API_BASE_URL || 'https://sophia.xponance.com'}/api/calendar-invites`,
