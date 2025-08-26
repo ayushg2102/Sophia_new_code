@@ -277,7 +277,6 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
 
 
 
-  // Handler for search change
   const handleSearchChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
     setCurrentPage(1);
