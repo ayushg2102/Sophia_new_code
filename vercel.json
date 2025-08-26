@@ -2,35 +2,35 @@
   "rewrites": [
     {
       "source": "/api/tasks",
-      "destination": "http://xponance.sophiaiq.ai:4001/api/tasks"
+      "destination": "https://xponance.sophiaiq.ai/api/tasks"
     },
     {
       "source": "/api/sub-task-details/:taskId",
-      "destination": "http://xponance.sophiaiq.ai:4001/api/sub-task-details/:taskId"
+      "destination": "https://xponance.sophiaiq.ai/api/sub-task-details/:taskId"
     },
     {
       "source": "/api/action-details/:actionId",
-      "destination": "http://xponance.sophiaiq.ai:4001/api/action-details/:actionId"
+      "destination": "https://xponance.sophiaiq.ai/api/action-details/:actionId"
     },
     {
       "source": "/api/collection/political-contributions",
-      "destination": "http://xponance.sophiaiq.ai:4001/api/collection/political-contributions"
+      "destination": "https://xponance.sophiaiq.ai/api/collection/political-contributions"
     },
     {
       "source": "/api/collection/social-media-compliance",
-      "destination": "http://xponance.sophiaiq.ai:4001/api/collection/social-media-compliance"
+      "destination": "https://xponance.sophiaiq.ai/api/collection/social-media-compliance"
     },
     {
       "source": "/api/collection/political-contributions/:runId",
-      "destination": "http://xponance.sophiaiq.ai:4001/api/collection/political-contributions/:runId"
+      "destination": "https://xponance.sophiaiq.ai/api/collection/political-contributions/:runId"
     },
     {
       "source": "/api/collection/:collectionName",
-      "destination": "http://xponance.sophiaiq.ai:4001/api/collection/:collectionName"
+      "destination": "https://xponance.sophiaiq.ai/api/collection/:collectionName"
     },
     {
       "source": "/api/process-agent",
-      "destination": "http://xponance.sophiaiq.ai:4001/api/process-agent"
+      "destination": "https://xponance.sophiaiq.ai/api/process-agent"
     }
   ]
 }

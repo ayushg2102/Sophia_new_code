@@ -10,7 +10,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://xponance.sophiaiq.ai:4001',
+        target: 'https://xponance.sophiaiq.ai',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '/api'),
       },
