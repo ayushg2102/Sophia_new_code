@@ -9,20 +9,20 @@ export const API_CONFIG = {
     // API Endpoints
     ENDPOINTS: {
         // Main API endpoints (direct calls to correct server)
-        TASKS: `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}api/tasks`,
-        SUB_TASK_DETAILS: (taskId: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}api/sub-task-details/${taskId}`,
-        ACTION_DETAILS: (actionId: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}api/action-details/${actionId}`,
-        COLLECTION_POLITICAL_CONTRIBUTIONS: `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}api/collection/political-contributions`,
-        COLLECTION_SOCIAL_MEDIA_COMPLIANCE: `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}api/collection/social-media-compliance`,
-        COLLECTION_POLITICAL_CONTRIBUTIONS_RUN: (runId: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}api/collection/political-contributions/${runId}`,
-        COLLECTION_BY_NAME: (collectionName: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}api/collection/${collectionName}`,
-        REPORT: (runId: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}api/report/${runId}`,
-        DOWNLOAD_REPORT: (runId: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}api/download-report/${runId}`,
+        TASKS: `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}/api/tasks`,
+        SUB_TASK_DETAILS: (taskId: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}/api/sub-task-details/${taskId}`,
+        ACTION_DETAILS: (actionId: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}/api/action-details/${actionId}`,
+        COLLECTION_POLITICAL_CONTRIBUTIONS: `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}/api/collection/political-contributions`,
+        COLLECTION_SOCIAL_MEDIA_COMPLIANCE: `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}/api/collection/social-media-compliance`,
+        COLLECTION_POLITICAL_CONTRIBUTIONS_RUN: (runId: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}/api/collection/political-contributions/${runId}`,
+        COLLECTION_BY_NAME: (collectionName: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}/api/collection/${collectionName}`,
+        REPORT: (runId: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}/api/report/${runId}`,
+        DOWNLOAD_REPORT: (runId: string) => `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}/api/download-report/${runId}`,
         // External API endpoints (direct calls)
-        AUTH_LOGIN: `${import.meta.env.VITE_EXTERNAL_API_BASE_URL || 'https://xponance.sophiaiq.ai'}api/auth/login`,
-        CALENDAR_INVITES: `${import.meta.env.VITE_EXTERNAL_API_BASE_URL || 'https://xponance.sophiaiq.ai'}api/calendar-invites`,
-        CALENDAR_LOGS: `${import.meta.env.VITE_EXTERNAL_API_BASE_URL || 'https://xponance.sophiaiq.ai'}api/logs/calendar-invites`,
-        PROCESS_AGENT: `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}api/process-agent`,
+        AUTH_LOGIN: `${import.meta.env.VITE_EXTERNAL_API_BASE_URL || 'https://xponance.sophiaiq.ai'}/api/auth/login`,
+        CALENDAR_INVITES: `${import.meta.env.VITE_EXTERNAL_API_BASE_URL || 'https://xponance.sophiaiq.ai'}/api/calendar-invites`,
+        CALENDAR_LOGS: `${import.meta.env.VITE_EXTERNAL_API_BASE_URL || 'https://xponance.sophiaiq.ai'}/api/logs/calendar-invites`,
+        PROCESS_AGENT: `${import.meta.env.VITE_API_BASE_URL || 'https://xponance.sophiaiq.ai'}/api/process-agent`,
     }
 } as const;
 
