@@ -42,12 +42,12 @@ const CATEGORIES = [
 ];
 
 const Dashboard: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(true);
   const [createModalVisible, setCreateModalVisible] = useState(false);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'card' | 'list'>('card');
   const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleCreateTask = (taskData: any) => {
     const newTask: Task = {
@@ -86,18 +86,25 @@ const Dashboard: React.FC = () => {
         // Transform the tasks (without sorting here)
         const dynamicTaskData = data.data.tasks.map((item: any) => ({
           task_id: item.task_id,
-          // Add other properties from the API response as needed
-          ...item
+          task_category: item["Task Category"],
+          task_short_description: (item.task_short_description || '').trim(),
+          frequency: item.Frequency || '',
+          task_due_date: item.task_due_date || '',
+          status: 'active',
+          description: item.RPY_Com || '',
+          subtasks: [],
+          border:item.border
         }));
-        
+
         setTasks(dynamicTaskData);
-      } catch (error) {
-        console.error('Error fetching tasks:', error);
-      } finally {
+      } catch (err) {
+        console.error('Error fetching tasks:', err);
+        setTasks([]);
+      }finally{
         setLoading(false);
       }
     };
-    
+
     fetchTasks();
   }, []);
 
@@ -105,15 +112,16 @@ const Dashboard: React.FC = () => {
     console.log(taskId,"TAKAKS")
     navigate(`/task/${taskId}`);
   };
-
   if (loading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <Spin size="large" tip="Loading dashboard..." />
-      </div>
+      <Layout style={{ minHeight: '100vh', background: '#f5f5f5' }}>
+        <Header />
+        <Content style={{ padding: '24px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Spin size="large" />
+        </Content>
+      </Layout>
     );
   }
-
   return (
     <Layout className="dashboard-layout" style={{ background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)' }}>
       <Header />
