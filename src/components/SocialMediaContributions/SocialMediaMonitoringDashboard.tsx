@@ -6,14 +6,14 @@ import {
 import { 
   LinkedinOutlined, TwitterOutlined, FacebookOutlined, 
   SearchOutlined, 
-  DownloadOutlined
+  DownloadOutlined, ArrowLeftOutlined
 } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import TitleMonitoringDashboard from '../TitleMonitoringDashboard';
 import Header from '../Header/Header';
 import { useLocation } from 'react-router-dom';
 import { API_CONFIG } from '../../constants/api';
-
+import './SocialMedia.css';
 const { Title } = Typography;
 const { Option } = Select;
 
@@ -161,7 +161,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
   const [searchText, setSearchText] = useState('');
   const [debouncedSearchText, setDebouncedSearchText] = useState('');
   const [keywordsFilter, setKeywordsFilter] = useState('All');
-  const [biasFilter] = useState('All');
+  const [biasFilter, setBiasFilter] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [monitoringType, setMonitoringType] = useState('Post Monitoring');
@@ -252,7 +252,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
   const filteredData = useMemo(() => {
     return socialMediaData.filter(item => {
       const matchesSearch = item.employee_name.toLowerCase().includes(debouncedSearchText.toLowerCase()) ||
-                           (item.trigger_phrase && item.trigger_phrase.toLowerCase().includes(debouncedSearchText.toLowerCase()));
+                         (item.trigger_phrase && item.trigger_phrase.toLowerCase().includes(debouncedSearchText.toLowerCase()));
       
       // Parse keywords_hit JSON string and check if any selected keywords match
       let matchesKeywords = keywordsFilter === 'All';
@@ -268,8 +268,8 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
         }
       }
       
-      const matchesBias = biasFilter === 'All' || 
-                         (item.violation && item.violation === biasFilter);
+      const itemBiasStatus = item.violation === "Yes" ? 'Detected' : item.violation === "No" ? 'Not Detected' : 'N/A';
+      const matchesBias = biasFilter === 'all' || itemBiasStatus === biasFilter;
       
       return matchesSearch && matchesKeywords && matchesBias;
     });
@@ -422,7 +422,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
         const color = itemBiasStatus === 'Detected' ? 'red' : 
                      itemBiasStatus === 'Not Detected' ? 'green' : 
                      'orange';
-        return <Badge color={color} text={itemBiasStatus} />;
+        return <Badge className="custom-badge" color={color} text={itemBiasStatus} />;
       },
       filters: [
         { text: 'Detected', value: 'Detected' },
@@ -443,6 +443,14 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
     <>
     <Header />
     <div className="social-media-dashboard" style={{ padding: '24px' }}>
+      <Button 
+        type="text" 
+        icon={<ArrowLeftOutlined />} 
+        onClick={() => window.history.back()}
+        style={{ marginBottom: 16 }}
+      >
+        Back
+      </Button>
       
       <Spin spinning={loading}>
       {/* Header Section */}
@@ -506,7 +514,7 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
             <Title level={3} style={{ margin: 0 }}>Social Media Monitoring - Analysis Run</Title>
           </Col>
           <Col>
-            <Badge status="success" text="Completed" />
+            <Tag color='green'>Completed</Tag>
           </Col>
         </Row>
 
@@ -617,11 +625,11 @@ const SocialMediaMonitoringDashboard: React.FC = () => {
               <Select
                 style={{ width: '100%' }}
                 defaultValue="all"
-                onChange={(value) => console.log('Bias:', value)}
+                onChange={(value) => setBiasFilter(value)}
               >
                 <Option value="all">All</Option>
-                <Option value="high">Detected</Option>
-                <Option value="low">Not Detected</Option>
+                <Option value="Detected">Detected</Option>
+                <Option value="Not Detected">Not Detected</Option>
               </Select>
             </div>
           </Col>

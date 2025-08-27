@@ -6,10 +6,10 @@ import {
 import { 
   LinkedinOutlined, TwitterOutlined, FacebookOutlined, 
   SearchOutlined, ReloadOutlined, 
-  DownloadOutlined
+  DownloadOutlined, ArrowLeftOutlined
 } from '@ant-design/icons';
 import dayjs from 'dayjs';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import { API_CONFIG } from '../../constants/api';
 const { Text } = Typography;
@@ -72,8 +72,8 @@ const transformContributionsFromDocument = (doc: DocumentData): Contribution[] =
     
     // Determine status based on Flag or amount thresholds
     let status: 'Red' | 'Amber' | 'Green' = 'Green';
-    if (flag === true || flag === 'Red' || amount > 2000) status = 'Red';
-    else if (flag === 'Amber' || amount > 1000) status = 'Amber';
+    if (flag === true || flag === 'Red' || amount > 350) status = 'Red';
+    else if (flag === 'Amber' || amount > 0 && amount < 350) status = 'Amber';
     
     contributions.push({
       key: employeeId,
@@ -388,9 +388,11 @@ const PoliticalContributionsDashboard: React.FC = () => {
     };
   }, [contributions, selectedDocument]);
 
+
   return (
     <>
     <Header />
+    
     <div style={{ 
       width: '100%', 
       maxWidth: '100%',
@@ -398,42 +400,15 @@ const PoliticalContributionsDashboard: React.FC = () => {
       marginTop: 24,
       boxSizing: 'border-box'
     }}>
+      <Button 
+        type="text" 
+        icon={<ArrowLeftOutlined />} 
+        onClick={() => window.history.back()}
+        style={{ marginBottom: 16 }}
+      >
+        Back
+      </Button>
       <Spin spinning={loading}>
-        {/* Selected Document Info */}
-        {/* {selectedDocument && (
-          <Card style={{ marginBottom: 16 }}>
-            <Row gutter={[16, 8]}>
-              <Col span={24}>
-                <Text strong style={{ fontSize: '16px', color: '#1890ff' }}>
-                  Selected Run Details
-                </Text>
-              </Col>
-              <Col xs={24} sm={12} md={6}>
-                <Text strong>Run ID:</Text>
-                <br />
-                <Text copyable={{ text: selectedDocument.run_id }}>
-                  {selectedDocument.run_id.substring(0, 8)}...
-                </Text>
-              </Col>
-              <Col xs={24} sm={12} md={6}>
-                <Text strong>Period:</Text>
-                <br />
-                <Text>{selectedDocument.period}</Text>
-              </Col>
-              <Col xs={24} sm={12} md={6}>
-                <Text strong>Duration:</Text>
-                <br />
-                <Text>{Math.floor(selectedDocument.duration / 60)} min {Math.floor(selectedDocument.duration % 60)} sec</Text>
-              </Col>
-              <Col xs={24} sm={12} md={6}>
-                <Text strong>Created:</Text>
-                <br />
-                <Text>{dayjs(selectedDocument.created_at).format('MMM D, YYYY HH:mm')}</Text>
-              </Col>
-            </Row>
-          </Card>
-        )} */}
-
         {/* Header Section */}
         <Row gutter={[16, 16]} style={{ 
           marginBottom: 24, 
@@ -443,21 +418,6 @@ const PoliticalContributionsDashboard: React.FC = () => {
           marginRight: 0,
           alignItems: 'center'
         }}>
-          {/* <Col span={10}>
-            <Select
-              value={runDateFilter}
-              style={{ width: '100%' }}
-              onChange={handleRunDateChange}
-              loading={loading}
-              placeholder="Filter by run date"
-            >
-              {runDates.map(date => (
-                <Option key={date.value} value={date.value}>
-                  {date.label === 'All Runs' ? 'All Runs' : `Run Date: ${date.label}`}
-                </Option>
-              ))}
-            </Select>
-          </Col> */}
           <Col span={7}>
             <Input
               placeholder="Search by employee name"

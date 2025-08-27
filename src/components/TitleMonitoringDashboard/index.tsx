@@ -12,7 +12,7 @@ import {
   Badge,
 
 } from 'antd';
-import { SearchOutlined, DownloadOutlined } from '@ant-design/icons';
+import { SearchOutlined, DownloadOutlined, ArrowLeftOutlined } from '@ant-design/icons';
 const { Title } = Typography;
 import dayjs from 'dayjs';
 import SocialMediaMonitoringDashboard from '../SocialMediaContributions/SocialMediaMonitoringDashboard';
@@ -276,7 +276,15 @@ const TitleMonitoringDashboard: React.FC<TitleMonitoringDashboardProps> = ({ run
   return (
     <>
     <Header />
-    <div style={{ width: '100%', padding: '24px' }}>
+    <div style={{ padding: 24 }}>
+      <Button 
+        type="text" 
+        icon={<ArrowLeftOutlined />} 
+        onClick={() => window.history.back()}
+        style={{ marginBottom: 16 }}
+      >
+        Back
+      </Button>
      <Row gutter={[16, 16]} style={{ marginBottom: 24 }} align="middle">
           {/* <Col xs={24} md={8}>
             <Select
