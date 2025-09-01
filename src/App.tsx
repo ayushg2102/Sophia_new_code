@@ -47,10 +47,10 @@ function App() {
             <Route path="/political-contributions-dashboard" element={<PoliticalContributionsDashboard />} />
             <Route path="/content-display" element={<ContentDisplay />} />
             {/* Default route - redirect to tasks */}
-            <Route path="/" element={<Navigate to="/tasks" replace />} />
+            <Route path="/" element={<Navigate to="/login" replace />} />
             
             {/* Fallback route - redirect to tasks */}
-            <Route path="*" element={<Navigate to="/tasks" replace />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </Router>
       </AuthProvider>
